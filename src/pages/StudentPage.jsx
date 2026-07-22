@@ -1470,7 +1470,7 @@ export default function EduxcertApp() {
   };
 
   return (
-    <div className="flex min-h-screen" style={{backgroundColor:page}}>
+    <div className="flex h-screen" style={{backgroundColor:page}}>
       <Sidebar active={nav} onNav={setNav} collapsed={collapsed}
         onToggle={()=>setCollapsed(v=>!v)}
         onLogout={()=>{setLoggedIn(false);setNav("dashboard");}}/>
