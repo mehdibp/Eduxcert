@@ -6,6 +6,7 @@ import EducatorConsolePage from "./pages/EducatorConsole";
 import PublicVerifierPage  from "./pages/PublicVerifier";
 import AdminConsolePage    from "./pages/AdminConsole";
 import EmployerPage        from "./pages/EmployerPortal";
+import SharedPages         from "./pages/SharedPages";
 
 
 function App() {
@@ -19,6 +20,7 @@ function App() {
         <Route path="/verify"   element={<PublicVerifierPage />} />
         <Route path="/admin"    element={<AdminConsolePage />} />
         <Route path="/employer" element={<EmployerPage />} />
+        <Route path="/account"   element={<SharedPages />} />
       </Routes>
     </BrowserRouter>
   )
