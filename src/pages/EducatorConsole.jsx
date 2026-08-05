@@ -1,7 +1,10 @@
 import { useState, useMemo } from "react";
 import {ink, inkSoft, gold, goldBg, goldBdr, 
         page, white, muted, border, 
-        green, greenBg, amber, amberBg, violet, violetBg, blue, blueBg, red, redBg, rose} from "../styles/tokens";
+        green, greenBg, amber, amberBg, violet, violetBg, blue, blueBg, red, redBg, rose} from "../styles/colors";
+
+import {GridIcon, BookIcon, GradeIcon, ChartIcon, PeopleIcon, LogoutIcon, CheckIcon, XIcon, 
+        PlusIcon, AlertIcon, EditIcon, CalendarIcon, UploadIcon } from "../components/icons/icons"
 
 // ════════════════════════════════════════════════
 // EDUCATOR DATA (mock — طبق data model سند ۰۶)
@@ -70,22 +73,6 @@ const TIMELINE_EVENTS = [
   { id:"e5", ts:"May 5, 2025",  type:"publish", text:"Grades published — Database Architecture (Autumn 2024)" },
 ];
 
-// ════════════════════════════════════════════════
-// ICONS
-// ════════════════════════════════════════════════
-function GridIcon({size=16,color="currentColor"}){return <svg width={size} height={size} viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="6" height="6" rx="1.5" fill={color} opacity="0.8"/><rect x="9" y="1" width="6" height="6" rx="1.5" fill={color} opacity="0.8"/><rect x="1" y="9" width="6" height="6" rx="1.5" fill={color} opacity="0.8"/><rect x="9" y="9" width="6" height="6" rx="1.5" fill={color} opacity="0.8"/></svg>;}
-function BookIcon({size=16,color="currentColor"}){return <svg width={size} height={size} viewBox="0 0 16 16" fill="none"><path d="M3 2h7a2 2 0 0 1 2 2v9H3a1 1 0 0 1-1-1V3a1 1 0 0 1 1-1z" stroke={color} strokeWidth="1.3"/><path d="M12 13a1 1 0 0 0 1-1V5h-1" stroke={color} strokeWidth="1.3"/><path d="M5 5h5M5 7.5h5M5 10h3" stroke={color} strokeWidth="1.2" strokeLinecap="round"/></svg>;}
-function GradeIcon({size=16,color="currentColor"}){return <svg width={size} height={size} viewBox="0 0 16 16" fill="none"><path d="M4 2h8a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V3a1 1 0 0 1 1-1z" stroke={color} strokeWidth="1.3"/><path d="M6 6l1.5 1.5L11 4M6 10h4" stroke={color} strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round"/></svg>;}
-function ChartIcon({size=16,color="currentColor"}){return <svg width={size} height={size} viewBox="0 0 16 16" fill="none"><rect x="2" y="9" width="3" height="5" rx="0.5" fill={color} opacity="0.6"/><rect x="6.5" y="5" width="3" height="9" rx="0.5" fill={color} opacity="0.8"/><rect x="11" y="2" width="3" height="12" rx="0.5" fill={color}/></svg>;}
-function UsersIcon({size=16,color="currentColor"}){return <svg width={size} height={size} viewBox="0 0 16 16" fill="none"><circle cx="6" cy="5" r="2.5" stroke={color} strokeWidth="1.3"/><circle cx="11" cy="5" r="2" stroke={color} strokeWidth="1.2"/><path d="M1 13c0-2.5 2-4 5-4s5 1.5 5 4" stroke={color} strokeWidth="1.3" strokeLinecap="round"/><path d="M12 9c1.5.3 3 1.2 3 4" stroke={color} strokeWidth="1.2" strokeLinecap="round"/></svg>;}
-function LogoutIcon({size=16,color="currentColor"}){return <svg width={size} height={size} viewBox="0 0 16 16" fill="none"><path d="M6 2H3a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h3" stroke={color} strokeWidth="1.3" strokeLinecap="round"/><path d="M10 11l3-3-3-3M13 8H6" stroke={color} strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round"/></svg>;}
-function CheckIcon({size=14,color=green}){return <svg width={size} height={size} viewBox="0 0 14 14" fill="none"><path d="M2 7l3.5 3.5L12 3" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>;}
-function XIcon({size=14,color=muted}){return <svg width={size} height={size} viewBox="0 0 14 14" fill="none"><path d="M2 2l10 10M12 2L2 12" stroke={color} strokeWidth="1.5" strokeLinecap="round"/></svg>;}
-function PlusIcon({size=16,color="currentColor"}){return <svg width={size} height={size} viewBox="0 0 16 16" fill="none"><path d="M8 3v10M3 8h10" stroke={color} strokeWidth="1.6" strokeLinecap="round"/></svg>;}
-function AlertIcon({size=16,color=amber}){return <svg width={size} height={size} viewBox="0 0 16 16" fill="none"><path d="M8 2L1.5 13h13L8 2z" stroke={color} strokeWidth="1.3" strokeLinejoin="round"/><path d="M8 7v3M8 11.5v.5" stroke={color} strokeWidth="1.5" strokeLinecap="round"/></svg>;}
-function EditIcon({size=14,color=muted}){return <svg width={size} height={size} viewBox="0 0 14 14" fill="none"><path d="M9.5 2.5l2 2-7 7H2.5v-2l7-7z" stroke={color} strokeWidth="1.3" strokeLinejoin="round"/></svg>;}
-function CalIcon({size=16,color="currentColor"}){return <svg width={size} height={size} viewBox="0 0 16 16" fill="none"><rect x="1.5" y="3" width="13" height="11" rx="1.5" stroke={color} strokeWidth="1.3"/><path d="M5 1.5V4M11 1.5V4M1.5 7h13" stroke={color} strokeWidth="1.3" strokeLinecap="round"/></svg>;}
-function UploadIcon({size=16}){return <svg width={size} height={size} viewBox="0 0 16 16" fill="none"><path d="M8 11V4M5 7l3-3 3 3" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"/><path d="M3 13h10" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round"/></svg>;}
 
 // ════════════════════════════════════════════════
 // SIDEBAR
@@ -95,7 +82,7 @@ const NAV = [
   { id:"courses",   label:"My Courses",  Icon:BookIcon  },
   { id:"grading",   label:"Grading",     Icon:GradeIcon },
   { id:"analytics", label:"Analytics",   Icon:ChartIcon },
-  { id:"advisees",  label:"Advisees",    Icon:UsersIcon },
+  { id:"advisees",  label:"Advisees",    Icon:PeopleIcon },
 ];
 
 function Sidebar({active, onNav, collapsed, onToggle, onLogout}) {
@@ -1030,7 +1017,7 @@ function AdviseesView() {
                 </div>
                 <button className="flex items-center gap-2 px-3 py-2 rounded-lg text-xs font-semibold"
                   style={{backgroundColor:goldBg,color:amber,border:`1px solid ${goldBdr}`}}>
-                  <CalIcon size={12} color={amber}/> Schedule meeting
+                  <CalendarIcon size={12} color={amber}/> Schedule meeting
                 </button>
               </div>
               <div className="grid grid-cols-3 gap-4 mb-5">

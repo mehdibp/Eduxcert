@@ -1,7 +1,11 @@
 import { useState, useMemo } from "react";
 import {ink, inkSoft, gold, goldLight, goldBg, goldBdr, 
         page, white, muted, border, 
-        green, greenBg, amber, amberBg, violet, violetBg, blue, blueBg, red, redBg, rose, roseBg} from "../styles/tokens";
+        green, greenBg, amber, amberBg, violet, violetBg, blue, blueBg, red, redBg, rose, roseBg} from "../styles/colors";
+
+import {GridIcon, BookIcon, SealNavIcon, CalendarIcon, MapIcon, CheckIcon, XIcon, ChevronIcon, SearchIcon,
+        FilterIcon, ShareIcon, DownloadIcon, WalletIcon, SpinIcon, SealCredIcon, DiplomaIcon, RoomIcon, 
+        ClockIcon, PeopleIcon, LogoutIcon, LightningIcon } from "../components/icons/icons"
 
 // ════════════════════════════════════════════════
 // SHARED DATA
@@ -27,144 +31,6 @@ const ic = (d, vb="0 0 16 16") => ({ size=16, color="currentColor", strokeWidth=
   </svg>
 );
 
-function GridIcon({size=16,color="currentColor"}) {
-  return <svg width={size} height={size} viewBox="0 0 16 16" fill="none">
-    <rect x="1" y="1" width="6" height="6" rx="1.5" fill={color} opacity="0.8"/>
-    <rect x="9" y="1" width="6" height="6" rx="1.5" fill={color} opacity="0.8"/>
-    <rect x="1" y="9" width="6" height="6" rx="1.5" fill={color} opacity="0.8"/>
-    <rect x="9" y="9" width="6" height="6" rx="1.5" fill={color} opacity="0.8"/>
-  </svg>;
-}
-function BookIcon({size=16,color="currentColor"}) {
-  return <svg width={size} height={size} viewBox="0 0 16 16" fill="none">
-    <path d="M3 2h7a2 2 0 0 1 2 2v9H3a1 1 0 0 1-1-1V3a1 1 0 0 1 1-1z" stroke={color} strokeWidth="1.3"/>
-    <path d="M12 13a1 1 0 0 0 1-1V5h-1" stroke={color} strokeWidth="1.3"/>
-    <path d="M5 5h5M5 7.5h5M5 10h3" stroke={color} strokeWidth="1.2" strokeLinecap="round"/>
-  </svg>;
-}
-function SealNavIcon({size=16,color="currentColor"}) {
-  return <svg width={size} height={size} viewBox="0 0 16 16" fill="none">
-    <circle cx="8" cy="8" r="6" stroke={color} strokeWidth="1.3"/>
-    <path d="M5 8.5l2 2 4-4" stroke={color} strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"/>
-  </svg>;
-}
-function CalIcon({size=16,color="currentColor"}) {
-  return <svg width={size} height={size} viewBox="0 0 16 16" fill="none">
-    <rect x="1.5" y="3" width="13" height="11" rx="1.5" stroke={color} strokeWidth="1.3"/>
-    <path d="M5 1.5V4M11 1.5V4M1.5 7h13" stroke={color} strokeWidth="1.3" strokeLinecap="round"/>
-  </svg>;
-}
-function MapIcon({size=16,color="currentColor"}) {
-  return <svg width={size} height={size} viewBox="0 0 16 16" fill="none">
-    <path d="M6 2L2 4v10l4-2 4 2 4-2V2l-4 2-4-2z" stroke={color} strokeWidth="1.3" strokeLinejoin="round"/>
-    <path d="M6 2v10M10 4v10" stroke={color} strokeWidth="1.3"/>
-  </svg>;
-}
-function CheckIcon({size=14,color=green}) {
-  return <svg width={size} height={size} viewBox="0 0 14 14" fill="none">
-    <path d="M2 7l3.5 3.5L12 3" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-  </svg>;
-}
-function XIcon({size=14}) {
-  return <svg width={size} height={size} viewBox="0 0 14 14" fill="none">
-    <path d="M2 2l10 10M12 2L2 12" stroke={muted} strokeWidth="1.5" strokeLinecap="round"/>
-  </svg>;
-}
-function ChevronIcon({open}) {
-  return <svg width="14" height="14" viewBox="0 0 14 14" fill="none"
-    style={{transform:open?"rotate(180deg)":"rotate(0)",transition:"transform .15s"}}>
-    <path d="M3 5l4 4 4-4" stroke={muted} strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"/>
-  </svg>;
-}
-function SearchIcon() {
-  return <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-    <circle cx="7" cy="7" r="5" stroke={muted} strokeWidth="1.4"/>
-    <path d="M11 11l3 3" stroke={muted} strokeWidth="1.4" strokeLinecap="round"/>
-  </svg>;
-}
-function FilterIcon() {
-  return <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-    <path d="M2 4h12M4 8h8M6 12h4" stroke={muted} strokeWidth="1.4" strokeLinecap="round"/>
-  </svg>;
-}
-function ShareIcon({size=16}) {
-  return <svg width={size} height={size} viewBox="0 0 16 16" fill="none">
-    <circle cx="12" cy="4" r="1.8" stroke="currentColor" strokeWidth="1.3"/>
-    <circle cx="4" cy="8" r="1.8" stroke="currentColor" strokeWidth="1.3"/>
-    <circle cx="12" cy="12" r="1.8" stroke="currentColor" strokeWidth="1.3"/>
-    <path d="M5.7 9l4.6 2.2M10.3 4.8L5.7 7" stroke="currentColor" strokeWidth="1.3"/>
-  </svg>;
-}
-function DownloadIcon({size=16}) {
-  return <svg width={size} height={size} viewBox="0 0 16 16" fill="none">
-    <path d="M8 3v7M5 8l3 3 3-3" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"/>
-    <path d="M3 13h10" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round"/>
-  </svg>;
-}
-function WalletIcon({size=16}) {
-  return <svg width={size} height={size} viewBox="0 0 16 16" fill="none">
-    <rect x="1.5" y="4" width="13" height="10" rx="1.5" stroke="currentColor" strokeWidth="1.3"/>
-    <path d="M1.5 7h13" stroke="currentColor" strokeWidth="1.3"/>
-    <circle cx="11.5" cy="10" r="1" fill="currentColor"/>
-  </svg>;
-}
-function SpinIcon({size=18}) {
-  return <svg width={size} height={size} viewBox="0 0 18 18" fill="none"
-    className="animate-spin" style={{animationDuration:"0.8s"}}>
-    <circle cx="9" cy="9" r="7" stroke={border} strokeWidth="2.5"/>
-    <path d="M9 2a7 7 0 0 1 7 7" stroke={gold} strokeWidth="2.5" strokeLinecap="round"/>
-  </svg>;
-}
-function SealCredIcon({size=20,color=gold}) {
-  return <svg width={size} height={size} viewBox="0 0 20 20" fill="none">
-    <circle cx="10" cy="10" r="8.5" stroke={color} strokeWidth="1.4"/>
-    {Array.from({length:20}).map((_,i)=>{
-      const a=(i/20)*Math.PI*2,x1=10+Math.cos(a)*9.2,y1=10+Math.sin(a)*9.2;
-      const x2=10+Math.cos(a)*10,y2=10+Math.sin(a)*10;
-      return <line key={i} x1={x1} y1={y1} x2={x2} y2={y2} stroke={color} strokeWidth="0.8" opacity="0.6"/>;
-    })}
-    <path d="M6.5 10.5l2.5 2.5 5-5" stroke={color} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
-  </svg>;
-}
-function DiplomaIcon({size=20,color=gold}) {
-  return <svg width={size} height={size} viewBox="0 0 20 20" fill="none">
-    <rect x="2" y="3" width="16" height="14" rx="2" stroke={color} strokeWidth="1.4"/>
-    <path d="M6 7h8M6 10h5" stroke={color} strokeWidth="1.2" strokeLinecap="round"/>
-    <circle cx="14" cy="13" r="2.5" stroke={color} strokeWidth="1.2"/>
-    <path d="M14 15.5v2.5l-1-.8-1 .8v-2.5" stroke={color} strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round"/>
-  </svg>;
-}
-function RoomIcon({size=12}) {
-  return <svg width={size} height={size} viewBox="0 0 12 12" fill="none">
-    <path d="M6 1.5C4.3 1.5 3 2.8 3 4.5c0 2.6 3 6 3 6s3-3.4 3-6c0-1.7-1.3-3-3-3z" stroke="currentColor" strokeWidth="1.2"/>
-    <circle cx="6" cy="4.5" r="1" fill="currentColor"/>
-  </svg>;
-}
-function ClockIcon({size=12}) {
-  return <svg width={size} height={size} viewBox="0 0 12 12" fill="none">
-    <circle cx="6" cy="6" r="5" stroke="currentColor" strokeWidth="1.2"/>
-    <path d="M6 3.5V6l2 1.5" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round"/>
-  </svg>;
-}
-function PeopleIcon({size=12}) {
-  return <svg width={size} height={size} viewBox="0 0 12 12" fill="none">
-    <circle cx="4.5" cy="3.5" r="1.5" stroke="currentColor" strokeWidth="1.1"/>
-    <circle cx="8"   cy="3.5" r="1.5" stroke="currentColor" strokeWidth="1.1"/>
-    <path d="M1 10c0-2 1.6-3 3.5-3s3.5 1 3.5 3" stroke="currentColor" strokeWidth="1.1" strokeLinecap="round"/>
-    <path d="M8 7c1.5.2 2.5 1 2.5 3"            stroke="currentColor" strokeWidth="1.1" strokeLinecap="round"/>
-  </svg>;
-}
-function LogoutIcon({size=16}) {
-  return <svg width={size} height={size} viewBox="0 0 16 16" fill="none">
-    <path d="M6 2H3a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h3" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round"/>
-    <path d="M10 11l3-3-3-3M13 8H6" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round"/>
-  </svg>;
-}
-function LightningIcon({size=16}) {
-  return <svg width={size} height={size} viewBox="0 0 16 16" fill="none">
-    <path d="M9.5 2L4 9h5l-2.5 5L14 7H9L9.5 2z" stroke="currentColor" strokeWidth="1.3" strokeLinejoin="round"/>
-  </svg>;
-}
 
 // ════════════════════════════════════════════════
 // SHARED UI COMPONENTS
@@ -211,7 +77,7 @@ const NAV_ITEMS = [
   {id:"dashboard",  label:"Dashboard",   Icon:GridIcon},
   {id:"courses",    label:"My Courses",  Icon:BookIcon},
   {id:"credentials",label:"Credentials", Icon:SealNavIcon},
-  {id:"timetable",  label:"Timetable",   Icon:CalIcon},
+  {id:"timetable",  label:"Timetable",   Icon:CalendarIcon},
   {id:"roadmap",    label:"Roadmap",     Icon:MapIcon},
 ];
 

@@ -1,8 +1,10 @@
 import { useState, useMemo } from "react";
 import {ink, inkSoft, gold, goldBg, goldBdr, 
   page, white, muted, border, 
-  green, greenBg, amber, amberBg, violet, violetBg, blue, blueBg, red, redBg, rose, roseBg, teal, tealBg} from "../styles/tokens";
+  green, greenBg, amber, amberBg, violet, violetBg, blue, blueBg, red, redBg, rose, roseBg, teal, tealBg} from "../styles/colors";
 
+import {GridIcon, SearchPeopleIcon, BriefcaseIcon, BadgeIcon, ChartIcon, PathIcon, LogoutIcon, 
+        CheckIcon, XIcon, PlusIcon, AlertIcon, ShieldIcon, SendIcon, } from "../components/icons/icons"
 
 // ════════════════════════════════════════════════
 // MOCK DATA
@@ -94,23 +96,6 @@ const PATHWAYS = [
     courses:["Advanced Cryptography (6 ECTS)","Security & Auth (4 ECTS)"],
     duration:"2 terms", employees:[], status:"available" },
 ];
-
-// ════════════════════════════════════════════════
-// ICONS
-// ════════════════════════════════════════════════
-function GridIcon({size=16,color="currentColor"}){return <svg width={size} height={size} viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="6" height="6" rx="1.5" fill={color} opacity="0.8"/><rect x="9" y="1" width="6" height="6" rx="1.5" fill={color} opacity="0.8"/><rect x="1" y="9" width="6" height="6" rx="1.5" fill={color} opacity="0.8"/><rect x="9" y="9" width="6" height="6" rx="1.5" fill={color} opacity="0.8"/></svg>;}
-function SearchPeopleIcon({size=16,color="currentColor"}){return <svg width={size} height={size} viewBox="0 0 16 16" fill="none"><circle cx="6" cy="6" r="4" stroke={color} strokeWidth="1.3"/><path d="M10 10l4 4" stroke={color} strokeWidth="1.4" strokeLinecap="round"/><path d="M4.5 6h3M6 4.5v3" stroke={color} strokeWidth="1.2" strokeLinecap="round"/></svg>;}
-function BriefcaseIcon({size=16,color="currentColor"}){return <svg width={size} height={size} viewBox="0 0 16 16" fill="none"><rect x="1.5" y="5" width="13" height="9" rx="1.5" stroke={color} strokeWidth="1.3"/><path d="M5 5V3.5A1.5 1.5 0 0 1 6.5 2h3A1.5 1.5 0 0 1 11 3.5V5" stroke={color} strokeWidth="1.3"/><path d="M1.5 9h13" stroke={color} strokeWidth="1.3"/></svg>;}
-function BadgeIcon({size=16,color="currentColor"}){return <svg width={size} height={size} viewBox="0 0 16 16" fill="none"><path d="M8 1.5l1.5 3 3.5.5-2.5 2.5.5 3.5L8 9.5l-3 1.5.5-3.5L3 5l3.5-.5L8 1.5z" stroke={color} strokeWidth="1.3" strokeLinejoin="round"/></svg>;}
-function ChartIcon({size=16,color="currentColor"}){return <svg width={size} height={size} viewBox="0 0 16 16" fill="none"><rect x="2" y="9" width="3" height="5" rx="0.5" fill={color} opacity="0.6"/><rect x="6.5" y="5" width="3" height="9" rx="0.5" fill={color} opacity="0.8"/><rect x="11" y="2" width="3" height="12" rx="0.5" fill={color}/></svg>;}
-function PathIcon({size=16,color="currentColor"}){return <svg width={size} height={size} viewBox="0 0 16 16" fill="none"><circle cx="3" cy="8" r="2" stroke={color} strokeWidth="1.3"/><circle cx="13" cy="4" r="2" stroke={color} strokeWidth="1.3"/><circle cx="13" cy="12" r="2" stroke={color} strokeWidth="1.3"/><path d="M5 8h4M9 8c0-2 2-4 2-4M9 8c0 2 2 4 2 4" stroke={color} strokeWidth="1.2" strokeLinecap="round"/></svg>;}
-function LogoutIcon({size=16}){return <svg width={size} height={size} viewBox="0 0 16 16" fill="none"><path d="M6 2H3a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h3" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round"/><path d="M10 11l3-3-3-3M13 8H6" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round"/></svg>;}
-function CheckIcon({size=14,color=green}){return <svg width={size} height={size} viewBox="0 0 14 14" fill="none"><path d="M2 7l3.5 3.5L12 3" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>;}
-function XIcon({size=14,color=muted}){return <svg width={size} height={size} viewBox="0 0 14 14" fill="none"><path d="M2 2l10 10M12 2L2 12" stroke={color} strokeWidth="1.5" strokeLinecap="round"/></svg>;}
-function PlusIcon({size=14}){return <svg width={size} height={size} viewBox="0 0 16 16" fill="none"><path d="M8 3v10M3 8h10" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round"/></svg>;}
-function AlertIcon({size=16,color=amber}){return <svg width={size} height={size} viewBox="0 0 16 16" fill="none"><path d="M8 2L1.5 13h13L8 2z" stroke={color} strokeWidth="1.3" strokeLinejoin="round"/><path d="M8 7v3M8 11.5v.5" stroke={color} strokeWidth="1.5" strokeLinecap="round"/></svg>;}
-function ShieldIcon({size=16,color=green}){return <svg width={size} height={size} viewBox="0 0 16 16" fill="none"><path d="M8 1.5L2 4v5c0 3.5 2.7 5.5 6 6 3.3-.5 6-2.5 6-6V4L8 1.5z" stroke={color} strokeWidth="1.3" strokeLinejoin="round"/><path d="M5.5 8l2 2L11 6" stroke={color} strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"/></svg>;}
-function SendIcon({size=14}){return <svg width={size} height={size} viewBox="0 0 14 14" fill="none"><path d="M12 2L6 7M12 2L8.5 12L6 7L1 5L12 2z" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round"/></svg>;}
 
 // ════════════════════════════════════════════════
 // SIDEBAR

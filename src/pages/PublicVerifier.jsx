@@ -1,8 +1,10 @@
 import { useState, useEffect, useRef } from "react";
 import {ink, inkSoft, gold, goldBg, goldBdr, 
   page, white, muted, border, 
-  green, greenBg, amber, amberBg, violet, violetBg, blue, blueBg, red, redBg} from "../styles/tokens";
+  green, greenBg, amber, amberBg, violet, violetBg, blue, blueBg, red, redBg} from "../styles/colors";
 
+import {CheckIcon, XCircleIcon, QuestionIcon, SpinIcon, ScanIcon, ShieldIcon, ExternalIcon, 
+        CopyIcon } from "../components/icons/icons"
 
 // ════════════════════════════════════════════════
 // MOCK CREDENTIAL SCENARIOS
@@ -63,63 +65,6 @@ const VSTEPS = [
   { id:4, label:"Trust anchor",         detail:"Issuer DID looked up in EBSI Trusted Issuers Registry", icon:"⚓" },
 ];
 
-// ════════════════════════════════════════════════
-// ICONS
-// ════════════════════════════════════════════════
-function CheckIcon({size=16,color=green}){
-  return <svg width={size} height={size} viewBox="0 0 16 16" fill="none">
-    <path d="M2.5 8.5l4 4 7-8" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-  </svg>;
-}
-function XCircleIcon({size=16,color=red}){
-  return <svg width={size} height={size} viewBox="0 0 16 16" fill="none">
-    <circle cx="8" cy="8" r="6" stroke={color} strokeWidth="1.5"/>
-    <path d="M5.5 5.5l5 5M10.5 5.5l-5 5" stroke={color} strokeWidth="1.5" strokeLinecap="round"/>
-  </svg>;
-}
-function QuestionIcon({size=16,color=amber}){
-  return <svg width={size} height={size} viewBox="0 0 16 16" fill="none">
-    <circle cx="8" cy="8" r="6" stroke={color} strokeWidth="1.5"/>
-    <path d="M6.5 6.5C6.5 5.7 7.2 5 8 5s1.5.7 1.5 1.5c0 1-1.5 1.5-1.5 2.5" stroke={color} strokeWidth="1.5" strokeLinecap="round"/>
-    <circle cx="8" cy="11.5" r="0.75" fill={color}/>
-  </svg>;
-}
-function SpinIcon({size=20}){
-  return <svg width={size} height={size} viewBox="0 0 20 20" fill="none"
-    style={{animation:"spin .7s linear infinite"}}>
-    <circle cx="10" cy="10" r="8" stroke={border} strokeWidth="2.5"/>
-    <path d="M10 2a8 8 0 0 1 8 8" stroke={gold} strokeWidth="2.5" strokeLinecap="round"/>
-  </svg>;
-}
-function ScanIcon({size=40,color=muted}){
-  return <svg width={size} height={size} viewBox="0 0 40 40" fill="none">
-    <path d="M3 12V5a2 2 0 0 1 2-2h7M28 3h7a2 2 0 0 1 2 2v7M37 28v7a2 2 0 0 1-2 2h-7M12 37H5a2 2 0 0 1-2-2v-7" stroke={color} strokeWidth="2" strokeLinecap="round"/>
-    <rect x="11" y="11" width="7" height="7" rx="1" stroke={color} strokeWidth="1.5"/>
-    <rect x="22" y="11" width="7" height="7" rx="1" stroke={color} strokeWidth="1.5"/>
-    <rect x="11" y="22" width="7" height="7" rx="1" stroke={color} strokeWidth="1.5"/>
-    <path d="M22 22h2M24 22v2M24 24h3M27 24v5M24 27h3M22 26v3M22 29h2" stroke={color} strokeWidth="1.5" strokeLinecap="round"/>
-    <path d="M8 20h24" stroke={color} strokeWidth="1.5" strokeLinecap="round" strokeDasharray="3 2"/>
-  </svg>;
-}
-function ShieldIcon({size=48,color=green}){
-  return <svg width={size} height={size} viewBox="0 0 48 48" fill="none">
-    <path d="M24 4L6 12v14c0 10.5 7.7 20.3 18 23 10.3-2.7 18-12.5 18-23V12L24 4z"
-      stroke={color} strokeWidth="2" fill={color+"18"}/>
-    <path d="M15 24l6 6 12-12" stroke={color} strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
-  </svg>;
-}
-function ExternalIcon({size=12}){
-  return <svg width={size} height={size} viewBox="0 0 12 12" fill="none">
-    <path d="M7 2h3v3M10 2L5.5 6.5M6 3H3a1 1 0 0 0-1 1v5a1 1 0 0 0 1 1h5a1 1 0 0 0 1-1V7"
-      stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round"/>
-  </svg>;
-}
-function CopyIcon({size=14}){
-  return <svg width={size} height={size} viewBox="0 0 14 14" fill="none">
-    <rect x="4" y="4" width="8" height="8" rx="1.5" stroke="currentColor" strokeWidth="1.2"/>
-    <path d="M2 10V3a1 1 0 0 1 1-1h7" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round"/>
-  </svg>;
-}
 
 // ════════════════════════════════════════════════
 // QR simulation (same seed-based approach)

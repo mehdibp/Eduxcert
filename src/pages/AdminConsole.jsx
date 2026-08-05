@@ -1,8 +1,18 @@
 import { useState, useMemo } from "react";
 import {ink, inkSoft, gold, goldBg, goldBdr, 
         page, white, muted, border, 
-        green, greenBg, amber, amberBg, violet, violetBg, blue, blueBg, red, redBg, rose} from "../styles/tokens";
+        green, greenBg, amber, amberBg, violet, violetBg, blue, blueBg, red, redBg, rose} from "../styles/colors";
 
+import {GridIcon, BookOpenIcon, DiplomaIcon, ShieldIcon, PeopleIcon, SettingsIcon, LogIcon, 
+        LogoutIcon, CheckIcon, XIcon, PlusIcon, AlertIcon, UploadIcon, SealNavIcon} from "../components/icons/icons"
+
+function QIBadge() { 
+  return <span className="inline-flex items-center gap-1.5 text-[10px] font-bold px-2.5 py-1 rounded-full" style={{backgroundColor:goldBg,color:gold,border:`1px solid ${goldBdr}`}}>
+    
+    <SealNavIcon color={gold}/>
+      QI · Quality Intelligence
+    </span>;
+}
 
 // ════════════════════════════════════════════════
 // MOCK DATA
@@ -72,23 +82,6 @@ const QI_BENCHMARKS = [
   { metric:"Skills gap score",   value:71,  peer:65,  unit:"/100" },
 ];
 
-// ════════════════════════════════════════════════
-// ICONS
-// ════════════════════════════════════════════════
-function GridIcon({size=16,color="currentColor"}){return <svg width={size} height={size} viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="6" height="6" rx="1.5" fill={color} opacity="0.8"/><rect x="9" y="1" width="6" height="6" rx="1.5" fill={color} opacity="0.8"/><rect x="1" y="9" width="6" height="6" rx="1.5" fill={color} opacity="0.8"/><rect x="9" y="9" width="6" height="6" rx="1.5" fill={color} opacity="0.8"/></svg>;}
-function BookOpenIcon({size=16,color="currentColor"}){return <svg width={size} height={size} viewBox="0 0 16 16" fill="none"><path d="M8 3C6 1.5 3 2 2 3v10c1-1 4-1.5 6 0 2-1.5 5-1 6 0V3c-1-1-4-1.5-6 0z" stroke={color} strokeWidth="1.3" strokeLinejoin="round"/><path d="M8 3v10" stroke={color} strokeWidth="1.3"/></svg>;}
-function DiplomaIcon({size=16,color="currentColor"}){return <svg width={size} height={size} viewBox="0 0 16 16" fill="none"><rect x="1.5" y="2" width="13" height="10" rx="1.5" stroke={color} strokeWidth="1.3"/><path d="M4.5 6h7M4.5 8.5h4" stroke={color} strokeWidth="1.2" strokeLinecap="round"/><circle cx="12" cy="11" r="2.5" stroke={color} strokeWidth="1.2"/><path d="M12 13.5V15l-.8-.6-.8.6v-1.5" stroke={color} strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round"/></svg>;}
-function AccredIcon({size=16,color="currentColor"}){return <svg width={size} height={size} viewBox="0 0 16 16" fill="none"><path d="M8 1.5L2 4v6c0 3.5 2.7 5.5 6 6 3.3-.5 6-2.5 6-6V4L8 1.5z" stroke={color} strokeWidth="1.3" strokeLinejoin="round"/><path d="M5.5 8l2 2L11 6" stroke={color} strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"/></svg>;}
-function UsersIcon({size=16,color="currentColor"}){return <svg width={size} height={size} viewBox="0 0 16 16" fill="none"><circle cx="6" cy="5" r="2.5" stroke={color} strokeWidth="1.3"/><circle cx="11" cy="5" r="2" stroke={color} strokeWidth="1.2"/><path d="M1 13c0-2.5 2-4 5-4s5 1.5 5 4" stroke={color} strokeWidth="1.3" strokeLinecap="round"/><path d="M12 9c1.5.3 3 1.2 3 4" stroke={color} strokeWidth="1.2" strokeLinecap="round"/></svg>;}
-function SettingsIcon({size=16,color="currentColor"}){return <svg width={size} height={size} viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="2.5" stroke={color} strokeWidth="1.3"/><path d="M8 1.5v1M8 13.5v1M1.5 8h1M13.5 8h1M3.2 3.2l.7.7M12.1 12.1l.7.7M3.2 12.8l.7-.7M12.1 3.9l.7-.7" stroke={color} strokeWidth="1.3" strokeLinecap="round"/></svg>;}
-function LogIcon({size=16,color="currentColor"}){return <svg width={size} height={size} viewBox="0 0 16 16" fill="none"><path d="M3 2h10a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3a1 1 0 0 1 1-1z" stroke={color} strokeWidth="1.3"/><path d="M5 5h6M5 8h6M5 11h3" stroke={color} strokeWidth="1.2" strokeLinecap="round"/></svg>;}
-function LogoutIcon({size=16}){return <svg width={size} height={size} viewBox="0 0 16 16" fill="none"><path d="M6 2H3a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h3" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round"/><path d="M10 11l3-3-3-3M13 8H6" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round"/></svg>;}
-function CheckIcon({size=14,color=green}){return <svg width={size} height={size} viewBox="0 0 14 14" fill="none"><path d="M2 7l3.5 3.5L12 3" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>;}
-function XIcon({size=14,color=muted}){return <svg width={size} height={size} viewBox="0 0 14 14" fill="none"><path d="M2 2l10 10M12 2L2 12" stroke={color} strokeWidth="1.5" strokeLinecap="round"/></svg>;}
-function PlusIcon({size=15}){return <svg width={size} height={size} viewBox="0 0 16 16" fill="none"><path d="M8 3v10M3 8h10" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round"/></svg>;}
-function AlertIcon({size=16,color=amber}){return <svg width={size} height={size} viewBox="0 0 16 16" fill="none"><path d="M8 2L1.5 13h13L8 2z" stroke={color} strokeWidth="1.3" strokeLinejoin="round"/><path d="M8 7v3M8 11.5v.5" stroke={color} strokeWidth="1.5" strokeLinecap="round"/></svg>;}
-function UploadIcon({size=14}){return <svg width={size} height={size} viewBox="0 0 16 16" fill="none"><path d="M8 11V4M5 7l3-3 3 3" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"/><path d="M3 13h10" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round"/></svg>;}
-function QIBadge(){return <span className="inline-flex items-center gap-1.5 text-[10px] font-bold px-2.5 py-1 rounded-full" style={{backgroundColor:goldBg,color:gold,border:`1px solid ${goldBdr}`}}><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><circle cx="5" cy="5" r="4" stroke={gold} strokeWidth="1.2"/><path d="M3 5l1.5 1.5L7 3.5" stroke={gold} strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round"/></svg>QI · Quality Intelligence</span>;}
 
 // ════════════════════════════════════════════════
 // SHARED
@@ -97,8 +90,8 @@ const NAV = [
   { id:"dashboard",   label:"Dashboard",      Icon:GridIcon    },
   { id:"programmes",  label:"Programmes",     Icon:BookOpenIcon},
   { id:"degrees",     label:"Degree Award",   Icon:DiplomaIcon },
-  { id:"accred",      label:"Accreditation",  Icon:AccredIcon  },
-  { id:"users",       label:"Users & Roles",  Icon:UsersIcon   },
+  { id:"accred",      label:"Accreditation",  Icon:ShieldIcon  },
+  { id:"users",       label:"Users & Roles",  Icon:PeopleIcon   },
   { id:"config",      label:"Tenant Config",  Icon:SettingsIcon},
   { id:"audit",       label:"Audit Log",      Icon:LogIcon     },
 ];

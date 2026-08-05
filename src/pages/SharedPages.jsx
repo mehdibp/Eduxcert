@@ -1,7 +1,10 @@
 import { useState } from "react";
 import {ink, inkSoft, gold, goldBg, goldBdr, 
         page, white, muted, border, 
-        green, greenBg, amber, amberBg, violet, violetBg, blue, blueBg, red, redBg, teal, tealBg} from "../styles/tokens";
+        green, greenBg, amber, amberBg, violet, violetBg, blue, blueBg, red, redBg, teal, tealBg} from "../styles/colors";
+
+import {UserIcon, BellIcon, GiftIcon, ShieldIcon, WalletIcon, DownloadIcon, 
+        KeyIcon, TrashIcon, CheckIcon, XIcon, ExternalIcon } from "../components/icons/icons"
 
 // ════════════════════════════════════════════════
 // DATA
@@ -65,21 +68,6 @@ const BENEFITS = [
     desc:"Free access to NUK digital archives and reading rooms.",
     icon:"📚", color:amber,  bg:amberBg  },
 ];
-
-// ════════════════════════════════════════════════
-// ICONS
-// ════════════════════════════════════════════════
-function UserIcon({size=16,color="currentColor"}){return <svg width={size} height={size} viewBox="0 0 16 16" fill="none"><circle cx="8" cy="5.5" r="3" stroke={color} strokeWidth="1.3"/><path d="M2 14c0-3 2.7-5 6-5s6 2 6 5" stroke={color} strokeWidth="1.3" strokeLinecap="round"/></svg>;}
-function BellIcon({size=16,color="currentColor"}){return <svg width={size} height={size} viewBox="0 0 16 16" fill="none"><path d="M8 2a5 5 0 0 1 5 5v3l1.5 2h-13L3 10V7a5 5 0 0 1 5-5z" stroke={color} strokeWidth="1.3"/><path d="M6.5 13a1.5 1.5 0 0 0 3 0" stroke={color} strokeWidth="1.3" strokeLinecap="round"/></svg>;}
-function GiftIcon({size=16,color="currentColor"}){return <svg width={size} height={size} viewBox="0 0 16 16" fill="none"><rect x="1.5" y="6" width="13" height="8" rx="1.5" stroke={color} strokeWidth="1.3"/><path d="M1.5 9h13M8 6v8" stroke={color} strokeWidth="1.3"/><path d="M8 6C8 4 6 2 4.5 3.5S5 6 8 6zM8 6c0-2 2-4 3.5-2.5S11 6 8 6z" stroke={color} strokeWidth="1.2"/></svg>;}
-function ShieldIcon({size=16,color=green}){return <svg width={size} height={size} viewBox="0 0 16 16" fill="none"><path d="M8 1.5L2 4v5c0 3.5 2.7 5.5 6 6 3.3-.5 6-2.5 6-6V4L8 1.5z" stroke={color} strokeWidth="1.3" strokeLinejoin="round"/><path d="M5.5 8l2 2L11 6" stroke={color} strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"/></svg>;}
-function WalletIcon({size=16,color="currentColor"}){return <svg width={size} height={size} viewBox="0 0 16 16" fill="none"><rect x="1.5" y="4" width="13" height="10" rx="1.5" stroke={color} strokeWidth="1.3"/><path d="M1.5 7h13" stroke={color} strokeWidth="1.3"/><circle cx="11.5" cy="10" r="1" fill={color}/></svg>;}
-function DownloadIcon({size=14,color="currentColor"}){return <svg width={size} height={size} viewBox="0 0 16 16" fill="none"><path d="M8 3v7M5 8l3 3 3-3" stroke={color} strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"/><path d="M3 13h10" stroke={color} strokeWidth="1.4" strokeLinecap="round"/></svg>;}
-function KeyIcon({size=14,color="currentColor"}){return <svg width={size} height={size} viewBox="0 0 16 16" fill="none"><circle cx="6" cy="8" r="3.5" stroke={color} strokeWidth="1.3"/><path d="M9 8.5l5-4.5M14 4l-1 1.5M12 5.5l-1 1" stroke={color} strokeWidth="1.3" strokeLinecap="round"/></svg>;}
-function TrashIcon({size=14,color=red}){return <svg width={size} height={size} viewBox="0 0 16 16" fill="none"><path d="M3 4h10M6 4V2h4v2M5 4v9a1 1 0 0 0 1 1h4a1 1 0 0 0 1-1V4" stroke={color} strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round"/></svg>;}
-function CheckIcon({size=14,color=green}){return <svg width={size} height={size} viewBox="0 0 14 14" fill="none"><path d="M2 7l3.5 3.5L12 3" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>;}
-function XIcon({size=14,color=muted}){return <svg width={size} height={size} viewBox="0 0 14 14" fill="none"><path d="M2 2l10 10M12 2L2 12" stroke={color} strokeWidth="1.5" strokeLinecap="round"/></svg>;}
-function ExternalIcon({size=12,color="currentColor"}){return <svg width={size} height={size} viewBox="0 0 12 12" fill="none"><path d="M7 2h3v3M10 2L5.5 6.5M6 3H3a1 1 0 0 0-1 1v5a1 1 0 0 0 1 1h5a1 1 0 0 0 1-1V7" stroke={color} strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round"/></svg>;}
 
 // ════════════════════════════════════════════════
 // SHARED UI

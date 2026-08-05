@@ -26,3 +26,5 @@ dist-ssr
 
 BuildPlan-v2
 *.zip
+test.*
+Test.*

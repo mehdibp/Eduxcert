@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { ink, inkSoft, gold, goldLight, paper, page} from "../styles/tokens";
+import { ink, inkSoft, gold, goldLight, paper, page} from "../styles/colors";
 
 
 function SealMark({ size = 88 }) {

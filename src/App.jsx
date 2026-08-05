@@ -8,6 +8,8 @@ import AdminConsolePage    from "./pages/AdminConsole";
 import EmployerPage        from "./pages/EmployerPortal";
 import SharedPages         from "./pages/SharedPages";
 
+import Test from "./test";
+
 
 function App() {
 
@@ -21,6 +23,9 @@ function App() {
         <Route path="/admin"    element={<AdminConsolePage />} />
         <Route path="/employer" element={<EmployerPage />} />
         <Route path="/account"  element={<SharedPages />} />
+
+        <Route path="/test" element={<Test/>} />
+        
       </Routes>
     </BrowserRouter>
   )
