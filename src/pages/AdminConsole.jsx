@@ -1,28 +1,8 @@
 import { useState, useMemo } from "react";
+import {ink, inkSoft, gold, goldBg, goldBdr, 
+        page, white, muted, border, 
+        green, greenBg, amber, amberBg, violet, violetBg, blue, blueBg, red, redBg, rose} from "../styles/tokens";
 
-// ════════════════════════════════════════════════
-// TOKENS
-// ════════════════════════════════════════════════
-const ink      = "#0F1729";
-const inkSoft  = "#1B2A4A";
-const gold     = "#B08D57";
-const goldBg   = "#FBF7F0";
-const goldBdr  = "#EFD8B0";
-const page     = "#F3F5F8";
-const white    = "#FFFFFF";
-const muted    = "#64748B";
-const border   = "#E2E8F0";
-const green    = "#16A34A";
-const greenBg  = "#DCFCE7";
-const amber    = "#D97706";
-const amberBg  = "#FEF3C7";
-const violet   = "#7C3AED";
-const violetBg = "#EDE9FE";
-const blue     = "#2563EB";
-const blueBg   = "#DBEAFE";
-const red      = "#DC2626";
-const redBg    = "#FEE2E2";
-const rose     = "#E11D48";
 
 // ════════════════════════════════════════════════
 // MOCK DATA

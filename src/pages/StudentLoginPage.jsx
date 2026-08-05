@@ -1,12 +1,6 @@
 import { useState } from "react";
+import { ink, inkSoft, gold, goldLight, paper, page} from "../styles/tokens";
 
-// ---- Design tokens (Eduxcert visual identity) ----
-const ink = "#0F1729";      // deep ledger-navy
-const inkSoft = "#1B2A4A";  // lighter navy for gradient
-const gold = "#B08D57";     // seal / verification gold
-const goldLight = "#D9BD8C";
-const paper = "#FFFFFF";
-const page = "#F3F5F8";
 
 function SealMark({ size = 88 }) {
   return (

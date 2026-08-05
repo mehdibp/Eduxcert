@@ -20,7 +20,7 @@ function App() {
         <Route path="/verify"   element={<PublicVerifierPage />} />
         <Route path="/admin"    element={<AdminConsolePage />} />
         <Route path="/employer" element={<EmployerPage />} />
-        <Route path="/account"   element={<SharedPages />} />
+        <Route path="/account"  element={<SharedPages />} />
       </Routes>
     </BrowserRouter>
   )
