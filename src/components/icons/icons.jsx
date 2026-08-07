@@ -18,7 +18,7 @@ export function AlertIcon({size=16, color=amber}) {
 
 // Star ------------------------------------------------------------
 export function BadgeIcon({size=16, color="currentColor"}) {
-    return <svg width={size} height={size} viewBox="0 0 16 16" fill="none">
+    return <svg width={size} height={size} viewBox="0 0 14 14" fill="none">
         <path d="M8 1.5l1.5 3 3.5.5-2.5 2.5.5 3.5L8 9.5l-3 1.5.5-3.5L3 5l3.5-.5L8 1.5z" stroke={color} strokeWidth="1.3" strokeLinejoin="round"/></svg>;
     }
 

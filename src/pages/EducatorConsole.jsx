@@ -6,6 +6,8 @@ import {ink, inkSoft, gold, goldBg, goldBdr,
 import {GridIcon, BookIcon, GradeIcon, ChartIcon, PeopleIcon, LogoutIcon, CheckIcon, XIcon, 
         PlusIcon, AlertIcon, EditIcon, CalendarIcon, UploadIcon } from "../components/icons/icons"
 
+import Sidebar from "../components/layout/Sidebar"
+
 // ════════════════════════════════════════════════
 // EDUCATOR DATA (mock — طبق data model سند ۰۶)
 // ════════════════════════════════════════════════
@@ -77,7 +79,7 @@ const TIMELINE_EVENTS = [
 // ════════════════════════════════════════════════
 // SIDEBAR
 // ════════════════════════════════════════════════
-const NAV = [
+const NAV_ITEMS = [
   { id:"dashboard", label:"Dashboard",   Icon:GridIcon  },
   { id:"courses",   label:"My Courses",  Icon:BookIcon  },
   { id:"grading",   label:"Grading",     Icon:GradeIcon },
@@ -85,60 +87,6 @@ const NAV = [
   { id:"advisees",  label:"Advisees",    Icon:PeopleIcon },
 ];
 
-function Sidebar({active, onNav, collapsed, onToggle, onLogout}) {
-  const appeals = GRADES.filter(g=>g.status==="appealed").length;
-  return (
-    <aside className="flex flex-col h-full select-none transition-all duration-200"
-      style={{width:collapsed?56:224,backgroundColor:ink,borderRight:`1px solid ${inkSoft}`,minHeight:"100vh"}}>
-      <div className="flex items-center gap-2.5 px-4 py-5 cursor-pointer shrink-0" onClick={onToggle}>
-        <div className="w-7 h-7 rounded-full flex items-center justify-center shrink-0"
-          style={{border:`1.5px solid ${gold}`}}>
-          <div className="w-2 h-2 rounded-full" style={{backgroundColor:gold}}/>
-        </div>
-        {!collapsed && <div className="overflow-hidden">
-          <p className="text-white font-serif text-sm tracking-wide truncate">Eduxcert</p>
-          <p className="text-[10px] truncate" style={{color:"#64748B"}}>Educator Console</p>
-        </div>}
-      </div>
-
-      <nav className="flex-1 px-2 pt-2 space-y-0.5">
-        {NAV.map(({id,label,Icon})=>{
-          const on=active===id;
-          const badge = id==="grading" && appeals>0 ? appeals : null;
-          return <button key={id} onClick={()=>onNav(id)}
-            className="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-left transition-colors"
-            style={{backgroundColor:on?"rgba(176,141,87,0.18)":"transparent",color:on?"#FBF7F0":"#94A3B8"}}>
-            <span className="shrink-0 relative">
-              <Icon size={16} color={on?gold:"#64748B"}/>
-              {badge && <span className="absolute -top-1 -right-1 w-3.5 h-3.5 rounded-full text-[9px] font-bold flex items-center justify-center"
-                style={{backgroundColor:red,color:white}}>{badge}</span>}
-            </span>
-            {!collapsed && <span className="text-sm font-medium truncate flex-1">{label}</span>}
-            {!collapsed && badge && <span className="text-[10px] font-bold px-1.5 py-0.5 rounded-full shrink-0"
-              style={{backgroundColor:redBg,color:red}}>{badge}</span>}
-          </button>;
-        })}
-      </nav>
-
-      <div className="px-2 mb-2">
-        <button onClick={onLogout} className="w-full flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-white/5"
-          style={{color:"#64748B"}}>
-          <LogoutIcon size={16}/>{!collapsed && <span className="text-xs font-medium">Sign out</span>}
-        </button>
-      </div>
-
-      <div className="flex items-center gap-2.5 px-3 py-4 mx-2 mb-3 rounded-lg"
-        style={{backgroundColor:"rgba(255,255,255,0.05)"}}>
-        <div className="w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold text-white shrink-0"
-          style={{backgroundColor:violet}}>{EDUCATOR.initials}</div>
-        {!collapsed && <div className="overflow-hidden">
-          <p className="text-white text-xs font-semibold truncate">{EDUCATOR.name.replace("Prof. ","")}</p>
-          <p className="text-[10px] truncate" style={{color:"#64748B"}}>{EDUCATOR.title}</p>
-        </div>}
-      </div>
-    </aside>
-  );
-}
 
 // ════════════════════════════════════════════════
 // SHARED UI
@@ -1119,9 +1067,23 @@ export default function EducatorConsole() {
 
   return (
     <div className="flex h-screen" style={{backgroundColor:page}}>
-      <Sidebar active={nav} onNav={setNav} collapsed={collapsed}
-        onToggle={()=>setCollapsed(v=>!v)}
-        onLogout={()=>setLoggedIn(false)}/>
+
+      <Sidebar
+        subtitle="Educator Console"
+        navItems={NAV_ITEMS}
+        active={nav}
+        onNav={setNav}
+        collapsed={collapsed}
+        onToggle={() => setCollapsed((b) => !b)}
+        onLogout={() => setLoggedIn(false)}
+        user={{
+          initials: EDUCATOR.initials,
+          name: EDUCATOR.name.replace("Prof. ", ""),
+          sub: EDUCATOR.title,
+          color: "#7C3AED",
+        }}
+      />
+
       <main className="flex-1 overflow-auto p-6 lg:p-8" style={{minWidth:0}}>
         {views[nav]}
       </main>

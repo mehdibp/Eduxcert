@@ -6,6 +6,8 @@ import {ink, inkSoft, gold, goldBg, goldBdr,
 import {GridIcon, SearchPeopleIcon, BriefcaseIcon, BadgeIcon, ChartIcon, PathIcon, LogoutIcon, 
         CheckIcon, XIcon, PlusIcon, AlertIcon, ShieldIcon, SendIcon, } from "../components/icons/icons"
 
+import Sidebar from "../components/layout/Sidebar"
+
 // ════════════════════════════════════════════════
 // MOCK DATA
 // ════════════════════════════════════════════════
@@ -100,7 +102,7 @@ const PATHWAYS = [
 // ════════════════════════════════════════════════
 // SIDEBAR
 // ════════════════════════════════════════════════
-const NAV = [
+const NAV_ITEMS = [
   { id:"dashboard",  label:"Dashboard",         Icon:GridIcon       },
   { id:"candidates", label:"Candidates",        Icon:SearchPeopleIcon},
   { id:"jobs",       label:"Job Posts",         Icon:BriefcaseIcon  },
@@ -109,47 +111,6 @@ const NAV = [
   { id:"pathways",   label:"Upskilling",        Icon:PathIcon       },
 ];
 
-function Sidebar({active,onNav,collapsed,onToggle,onLogout}){
-  return (
-    <aside className="flex flex-col select-none transition-all duration-200"
-      style={{width:collapsed?56:236,backgroundColor:ink,borderRight:`1px solid ${inkSoft}`,minHeight:"100vh"}}>
-      <div className="flex items-center gap-2.5 px-4 py-5 cursor-pointer shrink-0" onClick={onToggle}>
-        <div className="w-7 h-7 rounded-full flex items-center justify-center shrink-0"
-          style={{border:`1.5px solid ${gold}`}}>
-          <div className="w-2 h-2 rounded-full" style={{backgroundColor:gold}}/>
-        </div>
-        {!collapsed && <div className="overflow-hidden">
-          <p className="text-white font-serif text-sm tracking-wide truncate">Eduxcert</p>
-          <p className="text-[10px] truncate" style={{color:"#64748B"}}>Employer Portal</p>
-        </div>}
-      </div>
-      <nav className="flex-1 px-2 pt-2 space-y-0.5">
-        {NAV.map(({id,label,Icon})=>{
-          const on=active===id;
-          return <button key={id} onClick={()=>onNav(id)}
-            className="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-left transition-colors"
-            style={{backgroundColor:on?"rgba(176,141,87,0.18)":"transparent",color:on?"#FBF7F0":"#94A3B8"}}>
-            <span className="shrink-0"><Icon size={16} color={on?gold:"#64748B"}/></span>
-            {!collapsed&&<span className="text-sm font-medium truncate">{label}</span>}
-          </button>;
-        })}
-      </nav>
-      <div className="px-2 mb-2">
-        <button onClick={onLogout} className="w-full flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-white/5" style={{color:"#64748B"}}>
-          <LogoutIcon size={16}/>{!collapsed&&<span className="text-xs font-medium">Sign out</span>}
-        </button>
-      </div>
-      <div className="flex items-center gap-2.5 px-3 py-4 mx-2 mb-3 rounded-lg" style={{backgroundColor:"rgba(255,255,255,0.05)"}}>
-        <div className="w-8 h-8 rounded-full flex items-center justify-center text-[10px] font-bold text-white shrink-0"
-          style={{backgroundColor:teal}}>CT</div>
-        {!collapsed&&<div className="overflow-hidden">
-          <p className="text-white text-xs font-semibold truncate">Celtra Tech</p>
-          <p className="text-[10px] truncate" style={{color:"#64748B"}}>{COMPANY.tier} plan</p>
-        </div>}
-      </div>
-    </aside>
-  );
-}
 
 // ════════════════════════════════════════════════
 // SHARED UI
@@ -1186,9 +1147,18 @@ export default function EmployerPortal(){
 
   return(
     <div className="flex h-screen" style={{backgroundColor:page}}>
-      <Sidebar active={nav} onNav={setNav} collapsed={collapsed}
-        onToggle={()=>setCollapsed(v=>!v)}
-        onLogout={()=>{setLoggedIn(false);setRegistered(false);}}/>
+
+      <Sidebar
+        subtitle="Employer Portal"
+        navItems={NAV_ITEMS}
+        active={nav}
+        onNav={setNav}
+        collapsed={collapsed}
+        onToggle={() => setCollapsed((b) => !b)}
+        onLogout={() => { setLoggedIn(false); setRegistered(false); }}
+        user={{ initials: "CT", name: "Celtra Tech", sub: `${COMPANY.tier} plan`, color: "#0D9488" }}
+      />
+
       <main className="flex-1 overflow-auto p-6 lg:p-8" style={{minWidth:0}}>
         {views[nav]}
       </main>
