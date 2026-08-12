@@ -8,6 +8,8 @@ import {GridIcon, BookOpenIcon, DiplomaIcon, ShieldIcon, PeopleIcon, SettingsIco
 
 import Sidebar from "../components/layout/Sidebar"
 
+import Badge from "../components/commen/Badge"
+
 
 function QIBadge() { 
   return <span className="inline-flex items-center gap-1.5 text-[10px] font-bold px-2.5 py-1 rounded-full" style={{backgroundColor:goldBg,color:gold,border:`1px solid ${goldBdr}`}}>
@@ -127,10 +129,6 @@ function Stat({label,value,sub,color=ink,onClick}){
       {sub&&<p className="text-[11px] mt-1" style={{color:muted}}>{sub}</p>}
     </div>
   );
-}
-
-function Badge({label,bg,color}){
-  return <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full" style={{backgroundColor:bg,color}}>{label}</span>;
 }
 
 function Toast({msg,ok}){

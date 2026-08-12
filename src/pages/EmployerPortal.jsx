@@ -8,6 +8,8 @@ import {GridIcon, SearchPeopleIcon, BriefcaseIcon, BadgeIcon, ChartIcon, PathIco
 
 import Sidebar from "../components/layout/Sidebar"
 
+import Badge from "../components/commen/Badge"
+
 // ════════════════════════════════════════════════
 // MOCK DATA
 // ════════════════════════════════════════════════
@@ -138,7 +140,7 @@ function Stat({label,value,sub,color=ink}){return(
     {sub&&<p className="text-[11px] mt-1" style={{color:muted}}>{sub}</p>}
   </div>
 );}
-function Badge({label,bg,color}){return <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full" style={{backgroundColor:bg,color}}>{label}</span>;}
+
 function Toast({msg,ok}){return(
   <div className="fixed bottom-6 left-1/2 -translate-x-1/2 px-5 py-3 rounded-xl shadow-xl text-sm font-medium text-white flex items-center gap-2 z-50"
     style={{backgroundColor:ok?ink:"#475569"}}>

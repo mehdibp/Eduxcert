@@ -8,6 +8,8 @@ import {GridIcon, BookIcon, GradeIcon, ChartIcon, PeopleIcon, LogoutIcon, CheckI
 
 import Sidebar from "../components/layout/Sidebar"
 
+import Badge from "../components/commen/Badge"
+
 // ════════════════════════════════════════════════
 // EDUCATOR DATA (mock — طبق data model سند ۰۶)
 // ════════════════════════════════════════════════
@@ -116,11 +118,6 @@ function StatCard({label, value, sub, color=ink}) {
       {sub && <p className="text-[11px] mt-1" style={{color:muted}}>{sub}</p>}
     </div>
   );
-}
-
-function Badge({label, bg, color}) {
-  return <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full"
-    style={{backgroundColor:bg,color}}>{label}</span>;
 }
 
 function GradeStatusBadge({status}) {
