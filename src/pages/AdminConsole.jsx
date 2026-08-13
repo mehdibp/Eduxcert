@@ -9,6 +9,7 @@ import {GridIcon, BookOpenIcon, DiplomaIcon, ShieldIcon, PeopleIcon, SettingsIco
 import Sidebar from "../components/layout/Sidebar"
 
 import Badge from "../components/commen/Badge"
+import PageHeader from "../components/commen/PageHeader"
 
 import { TENANT, PROGRAMMES, DEGREE_PIPELINE, USERS, ACCRED_STEPS, AUDIT_LOG, QI_BENCHMARKS } from "../data/admin"
 
@@ -34,24 +35,6 @@ const NAV_ITEMS = [
   { id:"config",      label:"Tenant Config",  Icon:SettingsIcon},
   { id:"audit",       label:"Audit Log",      Icon:LogIcon     },
 ];
-
-
-function PageHeader({crumb,title,subtitle,action}){
-  return (
-    <div className="pt-8 pb-6" style={{backgroundColor:white,borderBottom:`1px solid ${border}`}}>
-      <p className="text-xs mb-3" style={{color:muted}}>
-        <span style={{color:ink}}>Admin Zupan</span> / {crumb}
-      </p>
-      <div className="flex items-end justify-between flex-wrap gap-4">
-        <div>
-          <h1 className="font-serif text-2xl" style={{color:ink}}>{title}</h1>
-          {subtitle&&<p className="text-sm mt-0.5" style={{color:muted}}>{subtitle}</p>}
-        </div>
-        {action}
-      </div>
-    </div>
-  );
-}
 
 function Stat({label,value,sub,color=ink,onClick}){
   return (
@@ -213,7 +196,7 @@ function ProgrammesView(){
 
   return (
     <div className="space-y-5">
-      <PageHeader crumb="Programmes" title="Programmes & Curricula"
+      <PageHeader rootLabel={"Admin Zupan"} crumb="Programmes" title="Programmes & Curricula"
         subtitle={`${TENANT.name} · ${programmes.filter(p=>p.status==="active").length} active`}
         action={
           <button onClick={()=>showToast("New programme form coming soon.")}
@@ -329,7 +312,7 @@ function DegreesView(){
 
   return (
     <div className="space-y-6">
-      <PageHeader crumb="Degree Award" title="Degree Award Pipeline"
+      <PageHeader rootLabel={"Admin Zupan"} crumb="Degree Award" title="Degree Award Pipeline"
         subtitle="approved → award → credential issued automatically"/>
 
       {/* Pipeline stats */}
@@ -441,7 +424,7 @@ function AccreditationView(){
 
   return (
     <div className="space-y-6">
-      <PageHeader crumb="Accreditation" title="Accreditation Dossier"
+      <PageHeader rootLabel={"Admin Zupan"} crumb="Accreditation" title="Accreditation Dossier"
         subtitle="MSc Computer Science · ABET 2027 cycle"
         action={<QIBadge/>}/>
 
@@ -645,7 +628,7 @@ function UsersView(){
 
   return (
     <div className="space-y-5">
-      <PageHeader crumb="Users & Roles" title="Users & Roles"
+      <PageHeader rootLabel={"Admin Zupan"} crumb="Users & Roles" title="Users & Roles"
         subtitle={`${users.filter(u=>u.status==="active").length} active · ${users.length} total`}
         action={
           <button onClick={()=>showToast("User invite sent.")}
@@ -760,7 +743,7 @@ function ConfigView(){
 
   return (
     <div className="space-y-6">
-      <PageHeader crumb="Tenant Config" title="Tenant Configuration"
+      <PageHeader rootLabel={"Admin Zupan"} crumb="Tenant Config" title="Tenant Configuration"
         subtitle="Branding · integrations · credential templates"/>
 
       <div className="grid lg:grid-cols-2 gap-6">
@@ -878,7 +861,7 @@ function AuditView(){
 
   return (
     <div className="space-y-5">
-      <PageHeader crumb="Audit Log" title="Audit Log"
+      <PageHeader rootLabel={"Admin Zupan"} crumb="Audit Log" title="Audit Log"
         subtitle="Immutable log · Merkle root anchored externally · 7-year retention"/>
 
       {AUDIT_LOG.filter(a=>a.risk==="high").length>0&&(

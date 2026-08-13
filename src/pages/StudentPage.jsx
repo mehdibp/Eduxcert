@@ -13,6 +13,7 @@ import {STUDENT, DASH_COURSES, DASH_CREDS, TIMELINE, ALL_COURSES, CRED_DATA, LEC
 import Sidebar from "../components/layout/Sidebar"
 
 import ProgressRing from "../components/commen/ProgressRing"
+import PageHeader from "../components/commen/PageHeader"
 
 
 // ════════════════════════════════════════════════
@@ -352,19 +353,13 @@ function CoursesPage() {
 
   return (
     <div className="min-h-screen" style={{backgroundColor:page}}>
-      <div className="pt-8 pb-6 px-1" style={{backgroundColor:white,borderBottom:`1px solid ${border}`}}>
-        <p className="text-xs mb-3" style={{color:muted}}><span style={{color:ink}}>Andreja Novak</span> / Courses</p>
-        <div className="flex items-center justify-between flex-wrap gap-4">
-          <div>
-            <h1 className="font-serif text-2xl" style={{color:ink}}>Course Catalogue</h1>
-            <p className="text-sm mt-0.5" style={{color:muted}}>Spring 2025 · University of Ljubljana</p>
-          </div>
-          <div className="flex items-center gap-2 text-xs" style={{color:muted}}>
-            <span className="font-semibold" style={{color:green}}>{enrolled.size}</span> enrolled ·{" "}
-            <span className="font-semibold" style={{color:ink}}>{ALL_COURSES.filter(c=>c.status==="open").length}</span> open
-          </div>
-        </div>
-        <div className="flex gap-1 mt-6">
+      <PageHeader rootLabel={"Andreja Novak"} crumb="Courses" title="Course Catalogue"
+        subtitle="Spring 2025 · University of Ljubljana" 
+        action={<div className="flex items-center gap-2 text-xs" style={{color:muted}}>
+                  <span className="font-semibold" style={{color:green}}>{enrolled.size}</span> enrolled ·{" "}
+                  <span className="font-semibold" style={{color:ink}}>{ALL_COURSES.filter(c=>c.status==="open").length}</span> open
+                </div>}>
+                
           {["Catalogue","My Courses"].map(t=>(
             <button key={t} onClick={()=>setTab(t)}
               className="px-4 py-2 text-sm font-medium rounded-t-lg"
@@ -373,8 +368,7 @@ function CoursesPage() {
               {t}{t==="My Courses"&&<span className="ml-2 text-[10px] font-bold px-1.5 py-0.5 rounded-full" style={{backgroundColor:goldBg,color:amber}}>{enrolled.size}</span>}
             </button>
           ))}
-        </div>
-      </div>
+      </PageHeader>
 
       <div className="px-1 py-6">
         <div className="flex gap-3 mb-4 flex-wrap">
@@ -690,19 +684,13 @@ function CredentialsPage(){
   const pending=CRED_DATA.filter(c=>c.status==="pending");
   return (
     <div className="min-h-screen" style={{backgroundColor:page}}>
-      <div className="pt-8 pb-6 px-1" style={{backgroundColor:white,borderBottom:`1px solid ${border}`}}>
-        <p className="text-xs mb-3" style={{color:muted}}><span style={{color:ink}}>Andreja Novak</span> / Credentials</p>
-        <div className="flex items-end justify-between flex-wrap gap-4">
-          <div>
-            <h1 className="font-serif text-2xl" style={{color:ink}}>My Credentials</h1>
-            <p className="text-sm mt-0.5" style={{color:muted}}>Digitally signed · verifiable by anyone</p>
-          </div>
-          <div className="flex gap-4 text-xs" style={{color:muted}}>
-            <span><span className="font-bold" style={{color:ink}}>{active.length}</span> active</span>
-            <span><span className="font-bold" style={{color:amber}}>{pending.length}</span> pending</span>
-          </div>
-        </div>
-      </div>
+      <PageHeader rootLabel={"Andreja Novak"} crumb="Credentials" title="My Credentials"
+        subtitle="Digitally signed · verifiable by anyone" 
+        action={<div className="flex gap-4 text-xs" style={{color:muted}}>
+                  <span><span className="font-bold" style={{color:ink}}>{active.length}</span> active </span>
+                  <span><span className="font-bold" style={{color:amber}}>{pending.length}</span> pending </span>
+                </div>}/>
+
       <div className="px-1 py-7 space-y-8">
         <section>
           <p className="text-[10px] font-semibold uppercase tracking-widest mb-4" style={{color:muted}}>Issued credentials</p>
@@ -780,21 +768,14 @@ function TimetablePage(){
 
   return (
     <div className="min-h-screen" style={{backgroundColor:page}}>
-      <div className="pt-8 pb-6 px-1" style={{backgroundColor:white,borderBottom:`1px solid ${border}`}}>
-        <p className="text-xs mb-3" style={{color:muted}}><span style={{color:ink}}>Andreja Novak</span> / Timetable</p>
-        <div className="flex items-end justify-between flex-wrap gap-4">
-          <div>
-            <h1 className="font-serif text-2xl" style={{color:ink}}>Timetable</h1>
-            <p className="text-sm mt-0.5" style={{color:muted}}>Week of 9 Jun 2025 · Spring Term</p>
-          </div>
-          <div className="flex rounded-xl overflow-hidden border" style={{borderColor:border}}>
-            {[["week","Weekly"],["exams","Exams"]].map(([v,l])=>(
-              <button key={v} onClick={()=>setView(v)} className="px-4 py-2 text-xs font-semibold transition-colors"
-                style={{backgroundColor:view===v?ink:white,color:view===v?white:muted}}>{l}</button>
-            ))}
-          </div>
-        </div>
-      </div>
+      <PageHeader rootLabel={"Andreja Novak"} crumb="Timetable" title="Timetable"
+        subtitle="Week of 9 Jun 2025 · Spring Term" 
+        action={<div className="flex rounded-xl overflow-hidden border" style={{borderColor:border}}>
+                  {[["week","Weekly"],["exams","Exams"]].map(([v,l])=>(
+                    <button key={v} onClick={()=>setView(v)} className="px-4 py-2 text-xs font-semibold transition-colors"
+                      style={{backgroundColor:view===v?ink:white,color:view===v?white:muted}}>{l}</button>
+                  ))}
+                </div>}/>
 
       <div className="px-1 py-6 space-y-5">
         {view==="week"&&<>
@@ -942,18 +923,9 @@ function RoadmapPage({onNav}){
 
   return (
     <div className="min-h-screen" style={{backgroundColor:page}}>
-      <div className="pt-8 pb-6 px-1" style={{backgroundColor:white,borderBottom:`1px solid ${border}`}}>
-        <p className="text-xs mb-3" style={{color:muted}}><span style={{color:ink}}>Andreja Novak</span> / Roadmap</p>
-        <div className="flex items-start justify-between flex-wrap gap-4">
-          <div>
-            <div className="flex items-center gap-3 mb-2 flex-wrap">
-              <h1 className="font-serif text-2xl" style={{color:ink}}>Personal Roadmap</h1>
-              <QIBadge/>
-            </div>
-            <p className="text-sm" style={{color:muted}}>AI-generated from your ESCO skill profile · Updated 9 Jun 2025</p>
-          </div>
-        </div>
-      </div>
+      <PageHeader rootLabel={"Andreja Novak"} crumb="Roadmap" title="Personal Roadmap"
+        subtitle="AI-generated from your ESCO skill profile · Updated 9 Jun 2025" 
+        action={<QIBadge/>}/>
 
       <div className="px-1 py-7 space-y-7">
         <section>

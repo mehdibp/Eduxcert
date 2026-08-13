@@ -9,6 +9,7 @@ import {GridIcon, SearchPeopleIcon, BriefcaseIcon, BadgeIcon, ChartIcon, PathIco
 import Sidebar from "../components/layout/Sidebar"
 
 import Badge from "../components/commen/Badge"
+import PageHeader from "../components/commen/PageHeader"
 
 import { COMPANY, CANDIDATES, JOB_POSTS, EMPLOYEES, WORKFORCE_SKILLS, PATHWAYS } from "../data/employer"
 
@@ -29,22 +30,6 @@ const NAV_ITEMS = [
 // ════════════════════════════════════════════════
 // SHARED UI
 // ════════════════════════════════════════════════
-function PageHeader({crumb,title,subtitle,action}){
-  return (
-    <div className="pt-8 pb-6" style={{backgroundColor:white,borderBottom:`1px solid ${border}`}}>
-      <p className="text-xs mb-3" style={{color:muted}}>
-        <span style={{color:ink}}>{COMPANY.name}</span> / {crumb}
-      </p>
-      <div className="flex items-end justify-between flex-wrap gap-4">
-        <div>
-          <h1 className="font-serif text-2xl" style={{color:ink}}>{title}</h1>
-          {subtitle&&<p className="text-sm mt-0.5" style={{color:muted}}>{subtitle}</p>}
-        </div>
-        {action}
-      </div>
-    </div>
-  );
-}
 function Stat({label,value,sub,color=ink}){return(
   <div className="rounded-xl p-4" style={{backgroundColor:white,border:`1px solid ${border}`}}>
     <p className="text-xs" style={{color:muted}}>{label}</p>
@@ -234,7 +219,7 @@ function CandidatesView(){
 
   return(
     <div className="space-y-5">
-      <PageHeader crumb="Candidates" title="Candidate Pipeline"
+      <PageHeader rootLabel={COMPANY.name} crumb="Candidates" title="Candidate Pipeline"
         subtitle="Credential verification + skill-match score"/>
 
       <div className="flex gap-2 flex-wrap">
@@ -398,7 +383,7 @@ function JobsView(){
 
   return(
     <div className="space-y-5">
-      <PageHeader crumb="Job Posts" title="Job Posts"
+      <PageHeader rootLabel={COMPANY.name} crumb="Job Posts" title="Job Posts"
         subtitle={`${jobs.filter(j=>j.status==="active").length} active · ${jobs.reduce((s,j)=>s+j.applicants,0)} total applicants`}
         action={
           <button onClick={()=>setShowNew(true)}
@@ -536,7 +521,7 @@ function IssueVCView(){
 
   return(
     <div className="space-y-5">
-      <PageHeader crumb="Issue Work-History" title="Issue Work-History Credentials"
+      <PageHeader rootLabel={COMPANY.name} crumb="Issue Work-History" title="Issue Work-History Credentials"
         subtitle={`Celtra Technologies as trusted issuer · DID: ${COMPANY.did.slice(0,28)}…`}/>
 
       <div className="rounded-xl p-4 flex items-start gap-3"
@@ -671,7 +656,7 @@ function WorkforceView(){
   const [view,setView]=useState("heatmap");
   return(
     <div className="space-y-6">
-      <PageHeader crumb="Workforce Skills" title="Workforce Skills Heatmap"
+      <PageHeader rootLabel={COMPANY.name} crumb="Workforce Skills" title="Workforce Skills Heatmap"
         subtitle={`${COMPANY.employees} employees · skills vs. market demand`}
         action={
           <div className="flex rounded-xl overflow-hidden border" style={{borderColor:border}}>
@@ -793,7 +778,7 @@ function PathwaysView(){
 
   return(
     <div className="space-y-5">
-      <PageHeader crumb="Upskilling" title="Upskilling Pathways"
+      <PageHeader rootLabel={COMPANY.name} crumb="Upskilling" title="Upskilling Pathways"
         subtitle="Subscribe your team to structured learning tracks from partner institutions"/>
 
       <div className="rounded-xl p-4 flex items-start gap-3"

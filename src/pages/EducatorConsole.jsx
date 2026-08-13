@@ -9,6 +9,7 @@ import {GridIcon, BookIcon, GradeIcon, ChartIcon, PeopleIcon, LogoutIcon, CheckI
 import Sidebar from "../components/layout/Sidebar"
 
 import Badge from "../components/commen/Badge"
+import PageHeader from "../components/commen/PageHeader"
 
 import { EDUCATOR, MY_COURSES, GRADES, ADVISEES, TIMELINE_EVENTS } from "../data/educator"
 
@@ -28,23 +29,6 @@ const NAV_ITEMS = [
 // ════════════════════════════════════════════════
 // SHARED UI
 // ════════════════════════════════════════════════
-function PageHeader({breadcrumb, title, subtitle, action}) {
-  return (
-    <div className="pt-8 pb-6" style={{backgroundColor:white,borderBottom:`1px solid ${border}`}}>
-      <p className="text-xs mb-3" style={{color:muted}}>
-        <span style={{color:ink}}>{EDUCATOR.name}</span> / {breadcrumb}
-      </p>
-      <div className="flex items-end justify-between flex-wrap gap-4">
-        <div>
-          <h1 className="font-serif text-2xl" style={{color:ink}}>{title}</h1>
-          {subtitle && <p className="text-sm mt-0.5" style={{color:muted}}>{subtitle}</p>}
-        </div>
-        {action}
-      </div>
-    </div>
-  );
-}
-
 function StatCard({label, value, sub, color=ink}) {
   return (
     <div className="rounded-xl p-4" style={{backgroundColor:white,border:`1px solid ${border}`}}>
@@ -333,7 +317,7 @@ function CoursesView({onNav}) {
 
   return (
     <div className="space-y-5">
-      <PageHeader breadcrumb="My Courses" title="My Courses"
+      <PageHeader rootLabel={EDUCATOR.name} crumb="My Courses" title="My Courses"
         subtitle={`${EDUCATOR.institution} · ${courses.filter(c=>c.status==="active").length} active`}
         action={
           <button onClick={()=>setShowNew(true)}
@@ -471,7 +455,7 @@ function GradingView() {
 
   return (
     <div className="space-y-6">
-      <PageHeader breadcrumb="Grading" title="Grading"
+      <PageHeader rootLabel={EDUCATOR.name} crumb="Grading" title="Grading"
         subtitle="draft → reviewed → published · appeals window: 14 days"
         action={
           counts.reviewed > 0 &&
@@ -726,7 +710,7 @@ function AnalyticsView() {
 
   return (
     <div className="space-y-6">
-      <PageHeader breadcrumb="Analytics" title="Cohort Analytics"
+      <PageHeader rootLabel={EDUCATOR.name} crumb="Analytics" title="Cohort Analytics"
         subtitle="Grade distribution · skills heat-map · cohort trends"/>
 
       {/* Course tabs */}
@@ -843,7 +827,7 @@ function AdviseesView() {
 
   return (
     <div className="space-y-6">
-      <PageHeader breadcrumb="Advisees" title="Advisee Roadmaps"
+      <PageHeader rootLabel={EDUCATOR.name} crumb="Advisees" title="Advisee Roadmaps"
         subtitle={`${ADVISEES.length} students under your academic guidance`}/>
 
       <div className="grid lg:grid-cols-3 gap-5">
