@@ -12,6 +12,8 @@ import {STUDENT, DASH_COURSES, DASH_CREDS, TIMELINE, ALL_COURSES, CRED_DATA, LEC
 
 import Sidebar from "../components/layout/Sidebar"
 
+import ProgressRing from "../components/commen/ProgressRing"
+
 
 // ════════════════════════════════════════════════
 // SHARED ICONS
@@ -31,30 +33,6 @@ const ic = (d, vb="0 0 16 16") => ({ size=16, color="currentColor", strokeWidth=
 // ════════════════════════════════════════════════
 // SHARED UI COMPONENTS
 // ════════════════════════════════════════════════
-function ProgressRing({pct,size=48,stroke=4}) {
-  const r=( size-stroke)/2, circ=2*Math.PI*r, offset=circ*(1-pct/100);
-  return <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`}>
-    <circle cx={size/2} cy={size/2} r={r} fill="none" stroke={border} strokeWidth={stroke}/>
-    <circle cx={size/2} cy={size/2} r={r} fill="none" stroke={pct===100?green:gold}
-      strokeWidth={stroke} strokeDasharray={circ} strokeDashoffset={offset}
-      strokeLinecap="round" transform={`rotate(-90 ${size/2} ${size/2})`}/>
-    <text x="50%" y="50%" dominantBaseline="middle" textAnchor="middle" fontSize="11" fontWeight="600" fill={ink}>{pct}%</text>
-  </svg>;
-}
-
-function EctsArc({earned,required}) {
-  const pct=earned/required,w=180,h=100,cx=w/2,cy=h-10,r=82;
-  const sa=Math.PI, ea=Math.PI+pct*Math.PI;
-  const x1=cx+r*Math.cos(sa),y1=cy+r*Math.sin(sa);
-  const x2=cx+r*Math.cos(ea),y2=cy+r*Math.sin(ea);
-  return <svg viewBox={`0 0 ${w} ${h}`} className="w-full max-w-[180px]">
-    <path d={`M ${cx-r} ${cy} A ${r} ${r} 0 1 1 ${cx+r} ${cy}`} fill="none" stroke={border} strokeWidth="10" strokeLinecap="round"/>
-    <path d={`M ${x1} ${y1} A ${r} ${r} 0 ${pct>.5?1:0} 1 ${x2} ${y2}`} fill="none" stroke={gold} strokeWidth="10" strokeLinecap="round"/>
-    <text x={cx} y={cy-10} textAnchor="middle" fontWeight="700" fontSize="22" fill={ink}>{earned}</text>
-    <text x={cx} y={cy+8}  textAnchor="middle" fontSize="11" fill={muted}>of {required} ECTS</text>
-  </svg>;
-}
-
 function QIBadge() {
   return <span className="inline-flex items-center gap-1.5 text-[10px] font-bold px-2.5 py-1 rounded-full"
     style={{backgroundColor:goldBg,color:gold,border:`1px solid ${goldBdr}`}}>
@@ -234,7 +212,7 @@ function DashboardView({onNav}) {
         <div className="rounded-xl p-5 flex flex-col items-center"
           style={{backgroundColor:white,border:`1px solid ${border}`}}>
           <p className="text-xs font-semibold tracking-wide uppercase self-start mb-4" style={{color:muted}}>ECTS Progress</p>
-          <EctsArc earned={68} required={120}/>
+          <ProgressRing earned={68} required={120} isArc/>
           <div className="mt-4 w-full">
             <div className="flex justify-between text-xs mb-1">
               <span style={{color:muted}}>Earned</span>
@@ -278,7 +256,7 @@ function DashboardView({onNav}) {
                   <p className="text-[10px] font-mono tracking-wider" style={{color:muted}}>{c.code}</p>
                   <h3 className="text-sm font-semibold mt-0.5 leading-snug" style={{color:ink}}>{c.title}</h3>
                 </div>
-                <ProgressRing pct={c.progress} size={44}/>
+                <ProgressRing earned={c.progress} required={100} pct={c.progress} size={44}/>
               </div>
               <span className="text-[11px] font-medium px-2.5 py-0.5 rounded-full self-start"
                 style={{backgroundColor:done?greenBg:goldBg,color:done?green:amber}}>
