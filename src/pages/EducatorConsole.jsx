@@ -10,6 +10,7 @@ import Sidebar from "../components/layout/Sidebar"
 
 import Badge from "../components/commen/Badge"
 import PageHeader from "../components/commen/PageHeader"
+import StatCard from "../components/commen/StatCard"
 
 import { EDUCATOR, MY_COURSES, GRADES, ADVISEES, TIMELINE_EVENTS } from "../data/educator"
 
@@ -29,16 +30,6 @@ const NAV_ITEMS = [
 // ════════════════════════════════════════════════
 // SHARED UI
 // ════════════════════════════════════════════════
-function StatCard({label, value, sub, color=ink}) {
-  return (
-    <div className="rounded-xl p-4" style={{backgroundColor:white,border:`1px solid ${border}`}}>
-      <p className="text-xs" style={{color:muted}}>{label}</p>
-      <p className="text-2xl font-serif mt-1" style={{color}}>{value}</p>
-      {sub && <p className="text-[11px] mt-1" style={{color:muted}}>{sub}</p>}
-    </div>
-  );
-}
-
 function GradeStatusBadge({status}) {
   const m = {
     draft:     {bg:"#F1F5F9", color:muted,   label:"Draft"},
@@ -98,12 +89,10 @@ function DashboardView({onNav}) {
       )}
 
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-        <StatCard label="Active Courses"    value={activeCourses.length} sub="Spring 2025" />
+        <StatCard label="Active Courses"    value={activeCourses.length} sub="Spring 2025" onClick={()=>onNav("courses")}/>
         <StatCard label="Students enrolled" value={activeCourses.reduce((s,c)=>s+c.enrolled,0)} />
-        <StatCard label="Pending grades"    value={pendingGrades} color={pendingGrades>0?amber:green}
-          sub={pendingGrades>0?"Needs action":""} />
-        <StatCard label="Open appeals"      value={appeals} color={appeals>0?red:green}
-          sub={appeals>0?"Respond within 14 days":""} />
+        <StatCard label="Pending grades"    value={pendingGrades} color={pendingGrades>0?amber:green} sub={pendingGrades>0?"Needs action":""} onClick={()=>onNav("grading")}/>
+        <StatCard label="Open appeals"      value={appeals} color={appeals>0?red:green} sub={appeals>0?"Respond within 14 days":""} onClick={()=>onNav("grading")}/>
       </div>
 
       {/* Active courses quick view */}

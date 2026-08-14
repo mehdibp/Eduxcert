@@ -15,6 +15,7 @@ import Sidebar from "../components/layout/Sidebar"
 import ProgressRing from "../components/commen/ProgressRing"
 import PageHeader from "../components/commen/PageHeader"
 import QualityBadge from "../components/commen/QualityBadge"
+import StatCard from "../components/commen/StatCard"
 
 
 
@@ -150,20 +151,10 @@ function DashboardView({onNav}) {
       </div>
 
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-        {[
-          {label:"Active Courses",value:"2",nav:"courses"},
-          {label:"Upcoming Exams",value:"2",nav:"timetable"},
-          {label:"Credentials",value:"2",nav:"credentials"},
-          {label:"ECTS Completion",value:`${Math.round(68/120*100)}%`,nav:null},
-        ].map(({label,value,nav})=>(
-          <div key={label} onClick={nav?()=>onNav(nav):undefined}
-            className={`rounded-xl p-4 ${nav?"cursor-pointer hover:shadow-md transition-shadow":""}`}
-            style={{backgroundColor:white,border:`1px solid ${border}`}}>
-            <p className="text-xs" style={{color:muted}}>{label}</p>
-            <p className="text-2xl font-serif mt-1" style={{color:ink}}>{value}</p>
-            {nav && <p className="text-[10px] mt-2" style={{color:gold}}>View →</p>}
-          </div>
-        ))}
+        <StatCard label="Active Courses"  value={2} sub="View →" onClick={()=>onNav("courses")}     />
+        <StatCard label="Credentials"     value={2} sub="View →" onClick={()=>onNav("credentials")} />
+        <StatCard label="Upcoming Exams"  value={2} sub="View →" onClick={()=>onNav("timetable")}   />
+        <StatCard label="ECTS Completion" value={`${Math.round(68/120*100)}%`} />
       </div>
 
       <div className="grid lg:grid-cols-3 gap-5">

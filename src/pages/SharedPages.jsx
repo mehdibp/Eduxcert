@@ -9,6 +9,7 @@ import {UserIcon, BellIcon, GiftIcon, ShieldIcon, WalletIcon, DownloadIcon,
 import { USER, CONSENTS, NOTIFICATIONS, NOTIF_PREFS, BENEFITS } from "../data/shared"
 
 import ToggleSwitch from "../components/commen/ToggleSwitch"
+import StatCard from "../components/commen/StatCard"
 
 // ════════════════════════════════════════════════
 // SHARED UI
@@ -674,16 +675,9 @@ function BenefitsPage(){
 
         {/* Stats */}
         <div className="grid grid-cols-3 gap-4">
-          {[
-            {label:"Active benefits", value:BENEFITS.filter(b=>b.status==="active").length, color:green},
-            {label:"Used this month",  value:redeemed.size, color:gold},
-            {label:"Saved (est.)",     value:"€48", color:teal},
-          ].map(({label,value,color})=>(
-            <div key={label} className="rounded-xl p-4" style={{backgroundColor:white,border:`1px solid ${border}`}}>
-              <p className="text-xs" style={{color:muted}}>{label}</p>
-              <p className="text-2xl font-serif mt-1" style={{color}}>{value}</p>
-            </div>
-          ))}
+          <StatCard label="Active benefitst" value={BENEFITS.filter(b=>b.status==="active").length} color={green} />
+          <StatCard label="Used this month"  value={redeemed.size} color={gold} />
+          <StatCard label="Saved (est.)"     value={"€48"} color={teal} />
         </div>
 
         {/* Filter */}

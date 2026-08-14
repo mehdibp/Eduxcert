@@ -10,6 +10,7 @@ import Sidebar from "../components/layout/Sidebar"
 
 import Badge from "../components/commen/Badge"
 import PageHeader from "../components/commen/PageHeader"
+import StatCard from "../components/commen/StatCard"
 
 import { COMPANY, CANDIDATES, JOB_POSTS, EMPLOYEES, WORKFORCE_SKILLS, PATHWAYS } from "../data/employer"
 
@@ -30,14 +31,6 @@ const NAV_ITEMS = [
 // ════════════════════════════════════════════════
 // SHARED UI
 // ════════════════════════════════════════════════
-function Stat({label,value,sub,color=ink}){return(
-  <div className="rounded-xl p-4" style={{backgroundColor:white,border:`1px solid ${border}`}}>
-    <p className="text-xs" style={{color:muted}}>{label}</p>
-    <p className="text-2xl font-serif mt-1" style={{color}}>{value}</p>
-    {sub&&<p className="text-[11px] mt-1" style={{color:muted}}>{sub}</p>}
-  </div>
-);}
-
 function Toast({msg,ok}){return(
   <div className="fixed bottom-6 left-1/2 -translate-x-1/2 px-5 py-3 rounded-xl shadow-xl text-sm font-medium text-white flex items-center gap-2 z-50"
     style={{backgroundColor:ok?ink:"#475569"}}>
@@ -114,10 +107,10 @@ function DashboardView({onNav}){
       )}
 
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-        <Stat label="Candidates"    value={CANDIDATES.length} sub="active pipeline" onClick={()=>onNav("candidates")}/>
-        <Stat label="Open roles"    value={COMPANY.openRoles} sub="3 active postings"/>
-        <Stat label="Employees"     value={COMPANY.employees} sub="148 total"/>
-        <Stat label="VCs issued"    value={EMPLOYEES.filter(e=>e.vcIssued).length} sub="work-history credentials" color={teal}/>
+        <StatCard label="Candidates" value={CANDIDATES.length} sub="active pipeline" onClick={()=>onNav("candidates")}/>
+        <StatCard label="Open roles" value={COMPANY.openRoles} sub="3 active postings"/>
+        <StatCard label="Employees"  value={COMPANY.employees} sub="148 total"/>
+        <StatCard label="VCs issued" value={EMPLOYEES.filter(e=>e.vcIssued).length} sub="work-history credentials" color={teal}/>
       </div>
 
       {/* Skill gap alert */}
@@ -670,18 +663,12 @@ function WorkforceView(){
 
       {view==="heatmap"&&(
         <div className="space-y-5">
+
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-            {[
-              {label:"Skills above market",value:WORKFORCE_SKILLS.filter(s=>s.have>=s.market).length,color:green},
-              {label:"Skills at risk",     value:WORKFORCE_SKILLS.filter(s=>s.market-s.have>15).length,color:red},
-              {label:"Avg coverage",       value:`${Math.round(WORKFORCE_SKILLS.reduce((a,s)=>a+s.have,0)/WORKFORCE_SKILLS.length)}%`,color:ink},
-              {label:"Market avg",         value:`${Math.round(WORKFORCE_SKILLS.reduce((a,s)=>a+s.market,0)/WORKFORCE_SKILLS.length)}%`,color:muted},
-            ].map(({label,value,color})=>(
-              <div key={label} className="rounded-xl p-4" style={{backgroundColor:white,border:`1px solid ${border}`}}>
-                <p className="text-xs" style={{color:muted}}>{label}</p>
-                <p className="text-2xl font-serif mt-1" style={{color}}>{value}</p>
-              </div>
-            ))}
+            <StatCard label="Skills above market" value={WORKFORCE_SKILLS.filter(s=>s.have>=s.market).length}   color={green} />
+            <StatCard label="Skills at risk"      value={WORKFORCE_SKILLS.filter(s=>s.market-s.have>15).length} color={red} />
+            <StatCard label="Avg coverage"        value={`${Math.round(WORKFORCE_SKILLS.reduce((a,s)=>a+s.have,0)/WORKFORCE_SKILLS.length)}%`}   color={ink} />
+            <StatCard label="Market avg"          value={`${Math.round(WORKFORCE_SKILLS.reduce((a,s)=>a+s.market,0)/WORKFORCE_SKILLS.length)}%`} color={muted} />
           </div>
 
           <div className="rounded-xl p-6" style={{backgroundColor:white,border:`1px solid ${border}`}}>

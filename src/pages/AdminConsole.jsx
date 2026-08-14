@@ -11,6 +11,7 @@ import Sidebar from "../components/layout/Sidebar"
 import Badge from "../components/commen/Badge"
 import PageHeader from "../components/commen/PageHeader"
 import QualityBadge from "../components/commen/QualityBadge"
+import StatCard from "../components/commen/StatCard"
 
 import { TENANT, PROGRAMMES, DEGREE_PIPELINE, USERS, ACCRED_STEPS, AUDIT_LOG, QI_BENCHMARKS } from "../data/admin"
 
@@ -28,18 +29,6 @@ const NAV_ITEMS = [
   { id:"config",      label:"Tenant Config",  Icon:SettingsIcon},
   { id:"audit",       label:"Audit Log",      Icon:LogIcon     },
 ];
-
-function Stat({label,value,sub,color=ink,onClick}){
-  return (
-    <div onClick={onClick}
-      className={`rounded-xl p-4 ${onClick?"cursor-pointer hover:shadow-md transition-shadow":""}`}
-      style={{backgroundColor:white,border:`1px solid ${border}`}}>
-      <p className="text-xs" style={{color:muted}}>{label}</p>
-      <p className="text-2xl font-serif mt-1" style={{color}}>{value}</p>
-      {sub&&<p className="text-[11px] mt-1" style={{color:muted}}>{sub}</p>}
-    </div>
-  );
-}
 
 function Toast({msg,ok}){
   return (
@@ -84,10 +73,10 @@ function DashboardView({onNav}){
       )}
 
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-        <Stat label="Students"         value={TENANT.students.toLocaleString()} sub="enrolled" onClick={()=>onNav("users")}/>
-        <Stat label="Educators"        value={TENANT.educators}  sub="active staff" onClick={()=>onNav("users")}/>
-        <Stat label="Credentials issued" value={TENANT.credentials.toLocaleString()} sub="all-time" color={green}/>
-        <Stat label="Institution pass rate" value={`${TENANT.passRate}%`} sub="Spring 2025" color={green}/>
+        <StatCard label="Students" value={TENANT.students.toLocaleString()} sub="enrolled" onClick={()=>onNav("users")}/>
+        <StatCard label="Educators" value={TENANT.educators} sub="active staff" onClick={()=>onNav("users")}/>
+        <StatCard label="Credentials issued" value={TENANT.credentials.toLocaleString()} sub="all-time" color={green}/>
+        <StatCard label="Institution pass rate" value={`${TENANT.passRate}%`} sub="Spring 2025" color={green}/>
       </div>
 
       {/* QI benchmarks */}
