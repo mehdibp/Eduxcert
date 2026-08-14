@@ -498,27 +498,6 @@ function CoursesPage() {
   );
 }
 
-// ════════════════════════════════════════════════
-// CREDENTIALS PAGE
-// ════════════════════════════════════════════════
-function QRCode({value,size=140}) {
-  const cells=21,cell=size/cells;
-  function hash(s){let h=0x811c9dc5;for(let i=0;i<s.length;i++){h^=s.charCodeAt(i);h=(h*0x01000193)>>>0;}return h;}
-  const seed=hash(value),bits=[];
-  for(let i=0;i<cells*cells;i++)bits.push(((seed>>(i%32))&1)===1);
-  const isCorner=(r,c)=>(r<7&&c<7)||(r<7&&c>=cells-7)||(r>=cells-7&&c<7);
-  return <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`}>
-    <rect width={size} height={size} fill={white} rx="4"/>
-    {Array.from({length:cells}).map((_,r)=>Array.from({length:cells}).map((_,c)=>{
-      const on=isCorner(r,c)?true:bits[r*cells+c];
-      return on?<rect key={`${r}-${c}`} x={c*cell+0.5} y={r*cell+0.5} width={cell-1} height={cell-1} rx="0.5" fill={ink}/>:null;
-    }))}
-    {[[0,0],[0,cells-7],[cells-7,0]].map(([tr,tc],i)=><g key={i}>
-      <rect x={tc*cell} y={tr*cell} width={7*cell} height={7*cell} fill="none" stroke={ink} strokeWidth={cell*0.8}/>
-      <rect x={(tc+2)*cell} y={(tr+2)*cell} width={3*cell} height={3*cell} fill={ink}/>
-    </g>)}
-  </svg>;
-}
 
 function CredTypeStyle(type){
   if(type==="degree") return{Icon:DiplomaIcon,bg:violetBg,color:violet};
@@ -586,7 +565,7 @@ function CredentialModal({cred,onClose}){
           {tab==="share"&&<div className="space-y-6">
             <div className="flex flex-col items-center gap-3">
               <div className="p-4 rounded-2xl" style={{backgroundColor:pageColor,border:`1px solid ${border}`}}>
-                <QRCode value={cred.verifyUrl} size={148}/>
+                <img src="src/assets/QR code.webp"/>
               </div>
               <p className="text-xs text-center" style={{color:muted}}>Anyone can scan this QR to verify without an account.</p>
               <button onClick={()=>{setCopied(true);setTimeout(()=>setCopied(false),2000);}}
