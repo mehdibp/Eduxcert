@@ -342,3 +342,18 @@ export function SealCredIcon({size=20, color=gold}) {
         <path d="M6.5 10.5l2.5 2.5 5-5" stroke={color} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/> </svg>;
     }
 
+// Brand Gold Seal (Approval Logo) ----------------------------------
+export function SealMark({ size=88, color=gold }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 100 100" fill="none">
+      <circle cx="50" cy="50" r="46" stroke={color} strokeWidth="1.5" opacity="0.55" />
+      <circle cx="50" cy="50" r="38" stroke={color} strokeWidth="1.5" />
+      {Array.from({ length: 24 }).map((_, i) => {
+        const a = (i / 24) * Math.PI * 2, x1 = 50 + Math.cos(a) * 41, y1 = 50 + Math.sin(a) * 41;
+        const x2 = 50 + Math.cos(a) * 44.5, y2 = 50 + Math.sin(a) * 44.5;
+        return <line key={i} x1={x1} y1={y1} x2={x2} y2={y2} stroke={color} strokeWidth="1.2" />;
+      })}
+      <path d="M35 51 L45 61 L66 38" stroke={color} strokeWidth="4" strokeLinecap="round" strokeLinejoin="round" fill="none" />
+    </svg>
+  );
+}

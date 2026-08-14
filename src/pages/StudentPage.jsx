@@ -5,7 +5,7 @@ import {ink, inkSoft, gold, goldLight, goldBg, goldBdr,
 
 import {GridIcon, BookIcon, SealNavIcon, CalendarIcon, MapIcon, CheckIcon, XIcon, ChevronIcon, SearchIcon,
         FilterIcon, ShareIcon, DownloadIcon, WalletIcon, SpinIcon, SealCredIcon, DiplomaIcon, RoomIcon, 
-        ClockIcon, PeopleIcon, LogoutIcon, LightningIcon } from "../components/icons/icons"
+        ClockIcon, PeopleIcon, LogoutIcon, LightningIcon, SealMark } from "../components/icons/icons"
 
 import {STUDENT, DASH_COURSES, DASH_CREDS, TIMELINE, ALL_COURSES, CRED_DATA, LECTURES, EXAMS,
         CAREER_TARGETS, SKILLS, RECS, MILESTONES } from "../data/student"
@@ -16,20 +16,6 @@ import ProgressRing from "../components/commen/ProgressRing"
 import PageHeader from "../components/commen/PageHeader"
 import QualityBadge from "../components/commen/QualityBadge"
 
-
-// ════════════════════════════════════════════════
-// SHARED ICONS
-// ════════════════════════════════════════════════
-const ic = (d, vb="0 0 16 16") => ({ size=16, color="currentColor", strokeWidth="1.3" }) => (
-  <svg width={size} height={size} viewBox={vb} fill="none">
-    {d.map((p,i)=>p.t==="path"
-      ? <path key={i} d={p.d} stroke={color} strokeWidth={strokeWidth} strokeLinecap="round" strokeLinejoin="round"/>
-      : p.t==="circle"
-      ? <circle key={i} cx={p.cx} cy={p.cy} r={p.r} stroke={color} strokeWidth={strokeWidth}/>
-      : <rect key={i} x={p.x} y={p.y} width={p.w} height={p.h} rx={p.rx||0} stroke={color} strokeWidth={strokeWidth}/>
-    )}
-  </svg>
-);
 
 
 // ════════════════════════════════════════════════
@@ -43,22 +29,6 @@ const NAV_ITEMS = [
   {id:"roadmap",    label:"Roadmap",     Icon:MapIcon},
 ];
 
-
-// ════════════════════════════════════════════════
-// LOGIN PAGE
-// ════════════════════════════════════════════════
-function SealMark({size=88}) {
-  return <svg width={size} height={size} viewBox="0 0 100 100" fill="none">
-    <circle cx="50" cy="50" r="46" stroke={goldLight} strokeWidth="1.5" opacity="0.55"/>
-    <circle cx="50" cy="50" r="38" stroke={gold} strokeWidth="1.5"/>
-    {Array.from({length:24}).map((_,i)=>{
-      const a=(i/24)*Math.PI*2,x1=50+Math.cos(a)*41,y1=50+Math.sin(a)*41;
-      const x2=50+Math.cos(a)*44.5,y2=50+Math.sin(a)*44.5;
-      return <line key={i} x1={x1} y1={y1} x2={x2} y2={y2} stroke={goldLight} strokeWidth="1.2"/>;
-    })}
-    <path d="M35 51 L45 61 L66 38" stroke={gold} strokeWidth="4" strokeLinecap="round" strokeLinejoin="round" fill="none"/>
-  </svg>;
-}
 
 function LoginPage({onLogin}) {
   const [email,setEmail]=useState(""),  [pw,setPw]=useState(""), [show,setShow]=useState(false);

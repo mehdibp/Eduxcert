@@ -1,31 +1,6 @@
 import { useState } from "react";
 import { ink, inkSoft, gold, goldLight, paper, pageColor} from "../styles/colors";
-
-
-function SealMark({ size = 88 }) {
-  return (
-    <svg width={size} height={size} viewBox="0 0 100 100" fill="none">
-      <circle cx="50" cy="50" r="46" stroke={goldLight} strokeWidth="1.5" opacity="0.55" />
-      <circle cx="50" cy="50" r="38" stroke={gold} strokeWidth="1.5" />
-      {Array.from({ length: 24 }).map((_, i) => {
-        const a = (i / 24) * Math.PI * 2;
-        const x1 = 50 + Math.cos(a) * 41;
-        const y1 = 50 + Math.sin(a) * 41;
-        const x2 = 50 + Math.cos(a) * 44.5;
-        const y2 = 50 + Math.sin(a) * 44.5;
-        return <line key={i} x1={x1} y1={y1} x2={x2} y2={y2} stroke={goldLight} strokeWidth="1.2" />;
-      })}
-      <path
-        d="M35 51 L45 61 L66 38"
-        stroke={gold}
-        strokeWidth="4"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        fill="none"
-      />
-    </svg>
-  );
-}
+import { SealMark } from "../components/icons/icons"
 
 function CredentialCard({ rotate, offsetY, title, name, idCode }) {
   return (
