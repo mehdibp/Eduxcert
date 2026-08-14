@@ -1,6 +1,6 @@
 import { useState, useMemo } from "react";
 import {ink, inkSoft, gold, goldBg, goldBdr, 
-  page, white, muted, border, 
+  pageColor, white, muted, border, 
   green, greenBg, amber, amberBg, violet, violetBg, blue, blueBg, red, redBg, rose, roseBg, teal, tealBg} from "../styles/colors";
 
 import {GridIcon, SearchPeopleIcon, BriefcaseIcon, BadgeIcon, ChartIcon, PathIcon, LogoutIcon, 
@@ -725,7 +725,7 @@ function WorkforceView(){
       {view==="table"&&(
         <div className="rounded-xl overflow-hidden" style={{backgroundColor:white,border:`1px solid ${border}`}}>
           <table className="w-full">
-            <thead style={{backgroundColor:page}}>
+            <thead style={{backgroundColor:pageColor}}>
               <tr>{["Employee","Dept","Confirmed skills","Gaps","VC"].map(h=>(
                 <th key={h} className="text-left text-[10px] font-semibold uppercase tracking-wider px-4 py-3"
                   style={{color:muted}}>{h}</th>
@@ -892,7 +892,7 @@ function KYCPage({onComplete}){
   const steps=["Company details","Identity verification","EUDI Org Wallet","Confirm"];
 
   return(
-    <div className="min-h-screen flex items-center justify-center" style={{backgroundColor:page}}>
+    <div className="min-h-screen flex items-center justify-center" style={{backgroundColor:pageColor}}>
       <div className="w-full max-w-lg">
         {/* Header */}
         <div className="text-center mb-8">
@@ -944,7 +944,7 @@ function KYCPage({onComplete}){
             <p className="text-sm" style={{color:muted}}>Upload company registration certificate and VAT number for KYC.</p>
             {[["Company registration certificate","PDF / image"],["VAT certificate","PDF / image"],["Authorised signatory ID","Passport or ID card"]].map(([l,f])=>(
               <div key={l} className="flex items-center justify-between p-4 rounded-xl"
-                style={{backgroundColor:page,border:`1px solid ${border}`}}>
+                style={{backgroundColor:pageColor,border:`1px solid ${border}`}}>
                 <div>
                   <p className="text-xs font-semibold" style={{color:ink}}>{l}</p>
                   <p className="text-[11px]" style={{color:muted}}>{f}</p>
@@ -1009,7 +1009,7 @@ export default function EmployerPortal(){
 
   if(!loggedIn){
     return(
-      <div className="min-h-screen flex items-center justify-center" style={{backgroundColor:page}}>
+      <div className="min-h-screen flex items-center justify-center" style={{backgroundColor:pageColor}}>
         <div className="rounded-2xl p-10 text-center w-full max-w-sm"
           style={{backgroundColor:white,border:`1px solid ${border}`}}>
           <div className="w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-4"
@@ -1045,7 +1045,7 @@ export default function EmployerPortal(){
   };
 
   return(
-    <div className="flex h-screen" style={{backgroundColor:page}}>
+    <div className="flex h-screen" style={{backgroundColor:pageColor}}>
 
       <Sidebar
         subtitle="Employer Portal"

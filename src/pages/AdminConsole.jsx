@@ -1,6 +1,6 @@
 import { useState, useMemo } from "react";
 import {ink, inkSoft, gold, goldBg, goldBdr, 
-        page, white, muted, border, 
+        pageColor, white, muted, border, 
         green, greenBg, amber, amberBg, violet, violetBg, blue, blueBg, red, redBg, rose} from "../styles/colors";
 
 import {GridIcon, BookOpenIcon, DiplomaIcon, ShieldIcon, PeopleIcon, SettingsIcon, LogIcon, 
@@ -10,17 +10,10 @@ import Sidebar from "../components/layout/Sidebar"
 
 import Badge from "../components/commen/Badge"
 import PageHeader from "../components/commen/PageHeader"
+import QualityBadge from "../components/commen/QualityBadge"
 
 import { TENANT, PROGRAMMES, DEGREE_PIPELINE, USERS, ACCRED_STEPS, AUDIT_LOG, QI_BENCHMARKS } from "../data/admin"
 
-
-function QIBadge() { 
-  return <span className="inline-flex items-center gap-1.5 text-[10px] font-bold px-2.5 py-1 rounded-full" style={{backgroundColor:goldBg,color:gold,border:`1px solid ${goldBdr}`}}>
-    
-    <SealNavIcon color={gold}/>
-      QI · Quality Intelligence
-    </span>;
-}
 
 
 // ════════════════════════════════════════════════
@@ -70,7 +63,7 @@ function DashboardView({onNav}){
           <p className="text-sm mt-0.5" style={{color:muted}}>{TENANT.name} · Academic Year 2024/25</p>
         </div>
         <div className="flex items-center gap-2">
-          <QIBadge/>
+          <QualityBadge> QI · Quality Intelligence  </QualityBadge>
           <span className="text-xs font-medium px-3 py-1.5 rounded-full"
             style={{backgroundColor:violetBg,color:violet,border:`1px solid #C4B5FD`}}>
             {TENANT.tier} plan
@@ -101,7 +94,7 @@ function DashboardView({onNav}){
       <div className="rounded-xl p-5" style={{backgroundColor:white,border:`1px solid ${border}`}}>
         <div className="flex items-center gap-3 mb-5">
           <p className="text-xs font-semibold" style={{color:ink}}>QI Benchmarks — vs. peer institutions</p>
-          <QIBadge/>
+          <QualityBadge> QI · Quality Intelligence  </QualityBadge>
         </div>
         <div className="space-y-4">
           {QI_BENCHMARKS.map(b=>{
@@ -166,7 +159,7 @@ function DashboardView({onNav}){
             {ACCRED_STEPS.map(s=>(
               <div key={s.id} className="flex items-center gap-3">
                 <div className="w-5 h-5 rounded-full flex items-center justify-center shrink-0"
-                  style={{backgroundColor:s.status==="done"?greenBg:s.status==="active"?goldBg:page,
+                  style={{backgroundColor:s.status==="done"?greenBg:s.status==="active"?goldBg:pageColor,
                     border:`1.5px solid ${s.status==="done"?green:s.status==="active"?gold:border}`}}>
                   {s.status==="done"
                     ? <CheckIcon size={10} color={green}/>
@@ -246,7 +239,7 @@ function ProgrammesView(){
                 <div className="flex flex-wrap gap-2 mb-4">
                   {p.curricula.map(c=>(
                     <div key={c} className="flex items-center gap-2 text-xs px-3 py-1.5 rounded-lg"
-                      style={{backgroundColor:page,border:`1px solid ${border}`,color:ink}}>
+                      style={{backgroundColor:pageColor,border:`1px solid ${border}`,color:ink}}>
                       {c}
                       <button className="opacity-40 hover:opacity-100"><XIcon size={11}/></button>
                     </div>
@@ -263,7 +256,7 @@ function ProgrammesView(){
                     {label:"Term calendar",    value:"2 terms / year"},
                     {label:"Credit system",    value:"ECTS"},
                   ].map(({label,value})=>(
-                    <div key={label} className="rounded-lg p-3" style={{backgroundColor:page}}>
+                    <div key={label} className="rounded-lg p-3" style={{backgroundColor:pageColor}}>
                       <p className="text-[10px] uppercase tracking-wider font-semibold mb-0.5" style={{color:muted}}>{label}</p>
                       <p className="text-xs font-medium" style={{color:ink}}>{value}</p>
                     </div>
@@ -338,7 +331,7 @@ function DegreesView(){
           </div>
         </div>
         <table className="w-full">
-          <thead style={{backgroundColor:page}}>
+          <thead style={{backgroundColor:pageColor}}>
             <tr>{["Student","Programme","ECTS","GPA","Status","Action"].map(h=>(
               <th key={h} className="text-left text-[10px] font-semibold uppercase tracking-wider px-4 py-2.5"
                 style={{color:muted}}>{h}</th>
@@ -426,7 +419,7 @@ function AccreditationView(){
     <div className="space-y-6">
       <PageHeader rootLabel={"Admin Zupan"} crumb="Accreditation" title="Accreditation Dossier"
         subtitle="MSc Computer Science · ABET 2027 cycle"
-        action={<QIBadge/>}/>
+        action={ <QualityBadge> QI · Quality Intelligence  </QualityBadge> }/>
 
       {/* Overall */}
       <div className="rounded-xl p-5 flex items-center gap-6"
@@ -478,7 +471,7 @@ function AccreditationView(){
                 boxShadow:activeStep===s.id?"0 4px 16px -4px rgba(15,23,41,0.3)":"none"}}>
               <div className="flex items-center gap-3">
                 <div className="w-6 h-6 rounded-full flex items-center justify-center shrink-0"
-                  style={{backgroundColor:s.status==="done"?greenBg:s.status==="active"?goldBg:page,
+                  style={{backgroundColor:s.status==="done"?greenBg:s.status==="active"?goldBg:pageColor,
                     border:`1.5px solid ${s.status==="done"?green:s.status==="active"?gold:border}`}}>
                   {s.status==="done"&&<CheckIcon size={10} color={green}/>}
                   {s.status==="active"&&<div className="w-1.5 h-1.5 rounded-full" style={{backgroundColor:gold}}/>}
@@ -530,7 +523,7 @@ function AccreditationView(){
                       {GAP_DOCS.map(d=>(
                         <div key={d.name}
                           className="flex items-center gap-3 px-3 py-2.5 rounded-lg"
-                          style={{backgroundColor:d.uploaded?greenBg:page,border:`1px solid ${d.uploaded?"#BBF7D0":border}`}}>
+                          style={{backgroundColor:d.uploaded?greenBg:pageColor,border:`1px solid ${d.uploaded?"#BBF7D0":border}`}}>
                           {d.uploaded
                             ? <CheckIcon size={13} color={green}/>
                             : <div className="w-3 h-3 rounded-sm" style={{border:`1.5px solid ${border}`}}/>}
@@ -571,7 +564,7 @@ function AccreditationView(){
                 )}
 
                 {s.status==="pending"&&(
-                  <div className="mt-4 p-4 rounded-xl" style={{backgroundColor:page}}>
+                  <div className="mt-4 p-4 rounded-xl" style={{backgroundColor:pageColor}}>
                     <p className="text-xs" style={{color:muted}}>Complete previous steps to unlock this phase.</p>
                   </div>
                 )}
@@ -661,7 +654,7 @@ function UsersView(){
 
       <div className="rounded-xl overflow-hidden" style={{backgroundColor:white,border:`1px solid ${border}`}}>
         <table className="w-full">
-          <thead style={{backgroundColor:page}}>
+          <thead style={{backgroundColor:pageColor}}>
             <tr>{["Name","Role","Department","Status","MFA","Actions"].map(h=>(
               <th key={h} className="text-left text-[10px] font-semibold uppercase tracking-wider px-4 py-3"
                 style={{color:muted}}>{h}</th>
@@ -685,7 +678,7 @@ function UsersView(){
                 </td>
                 <td className="px-4 py-3">
                   <Badge label={u.role.charAt(0).toUpperCase()+u.role.slice(1)}
-                    bg={roleBg[u.role]||page} color={roleColor[u.role]||muted}/>
+                    bg={roleBg[u.role]||pageColor} color={roleColor[u.role]||muted}/>
                 </td>
                 <td className="px-4 py-3 text-xs" style={{color:muted}}>{u.dept}</td>
                 <td className="px-4 py-3">
@@ -764,7 +757,7 @@ function ConfigView(){
               </div>
               <span className="text-white font-serif text-sm">{brand.name}</span>
             </div>
-            <div className="px-4 py-3" style={{backgroundColor:page}}>
+            <div className="px-4 py-3" style={{backgroundColor:pageColor}}>
               <p className="text-[11px]" style={{color:muted}}>Student portal preview</p>
             </div>
           </div>
@@ -810,7 +803,7 @@ function ConfigView(){
           </div>
           {integrations.map(ig=>(
             <div key={ig.id} className="flex items-center gap-4 p-4 rounded-xl"
-              style={{backgroundColor:page,border:`1px solid ${border}`}}>
+              style={{backgroundColor:pageColor,border:`1px solid ${border}`}}>
               <div className="w-10 h-10 rounded-xl flex items-center justify-center text-sm font-bold shrink-0"
                 style={{backgroundColor:ig.enabled?violetBg:"#F1F5F9",color:ig.enabled?violet:muted}}>
                 {ig.name.slice(0,2)}
@@ -892,7 +885,7 @@ function AuditView(){
 
       <div className="rounded-xl overflow-hidden" style={{backgroundColor:white,border:`1px solid ${border}`}}>
         <table className="w-full">
-          <thead style={{backgroundColor:page}}>
+          <thead style={{backgroundColor:pageColor}}>
             <tr>{["Timestamp","Actor","Action","Resource","Risk"].map(h=>(
               <th key={h} className="text-left text-[10px] font-semibold uppercase tracking-wider px-4 py-3"
                 style={{color:muted}}>{h}</th>
@@ -941,7 +934,7 @@ export default function AdminConsole() {
 
   if(!loggedIn){
     return (
-      <div className="min-h-screen flex items-center justify-center" style={{backgroundColor:page}}>
+      <div className="min-h-screen flex items-center justify-center" style={{backgroundColor:pageColor}}>
         <div className="rounded-2xl p-10 text-center" style={{backgroundColor:white,border:`1px solid ${border}`}}>
           <div className="w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-4"
             style={{border:`1.5px solid ${gold}`}}>
@@ -970,7 +963,7 @@ export default function AdminConsole() {
   };
 
   return (
-    <div className="flex h-screen" style={{backgroundColor:page}}>
+    <div className="flex h-screen" style={{backgroundColor:pageColor}}>
       
       <Sidebar
         subtitle="Admin Console"

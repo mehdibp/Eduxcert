@@ -1,6 +1,6 @@
 import { useState } from "react";
 import {ink, inkSoft, gold, goldBg, goldBdr, 
-        page, white, muted, border, 
+        pageColor, white, muted, border, 
         green, greenBg, amber, amberBg, violet, violetBg, blue, blueBg, red, redBg, teal, tealBg} from "../styles/colors";
 
 import {UserIcon, BellIcon, GiftIcon, ShieldIcon, WalletIcon, DownloadIcon, 
@@ -107,7 +107,7 @@ function ProfilePage(){
   ];
 
   return(
-    <div className="min-h-screen" style={{backgroundColor:page}}>
+    <div className="min-h-screen" style={{backgroundColor:pageColor}}>
       {/* Header */}
       <div className="pt-8 pb-6 px-6 lg:px-10" style={{backgroundColor:white,borderBottom:`1px solid ${border}`}}>
         <div className="max-w-3xl mx-auto">
@@ -139,7 +139,7 @@ function ProfilePage(){
             {TABS.map(t=>(
               <button key={t.id} onClick={()=>setTab(t.id)}
                 className="px-4 py-2 text-xs font-semibold rounded-t-lg transition-colors"
-                style={{backgroundColor:tab===t.id?page:"transparent",color:tab===t.id?ink:muted,
+                style={{backgroundColor:tab===t.id?pageColor:"transparent",color:tab===t.id?ink:muted,
                   borderBottom:tab===t.id?`2px solid ${gold}`:"2px solid transparent"}}>
                 {t.label}
               </button>
@@ -256,7 +256,7 @@ function ProfilePage(){
                         <p className="text-xs font-semibold" style={{color:ink}}>{c.label}</p>
                         {c.required&&(
                           <span className="text-[9px] font-bold px-1.5 py-0.5 rounded"
-                            style={{backgroundColor:page,color:muted,border:`1px solid ${border}`}}>REQUIRED</span>
+                            style={{backgroundColor:pageColor,color:muted,border:`1px solid ${border}`}}>REQUIRED</span>
                         )}
                       </div>
                       <p className="text-[11px] leading-relaxed" style={{color:muted}}>{c.desc}</p>
@@ -298,7 +298,7 @@ function ProfilePage(){
                 <div className="flex items-center justify-between py-3 border-b" style={{borderColor:border}}>
                   <div className="flex items-center gap-3">
                     <div className="w-9 h-9 rounded-xl flex items-center justify-center"
-                      style={{backgroundColor:page}}>
+                      style={{backgroundColor:pageColor}}>
                       <KeyIcon size={16} color={muted}/>
                     </div>
                     <div>
@@ -417,7 +417,7 @@ function ProfilePage(){
             <SectionCard title="EUDI Wallet connection">
               <div className="flex items-center gap-4 mb-5">
                 <div className="w-12 h-12 rounded-xl flex items-center justify-center"
-                  style={{backgroundColor:user.walletConnected?violetBg:page}}>
+                  style={{backgroundColor:user.walletConnected?violetBg:pageColor}}>
                   <WalletIcon size={22} color={user.walletConnected?violet:muted}/>
                 </div>
                 <div>
@@ -513,7 +513,7 @@ function NotificationsPage(){
   };
 
   return(
-    <div className="min-h-screen" style={{backgroundColor:page}}>
+    <div className="min-h-screen" style={{backgroundColor:pageColor}}>
       {/* Header */}
       <div className="pt-8 pb-6 px-6 lg:px-10" style={{backgroundColor:white,borderBottom:`1px solid ${border}`}}>
         <div className="max-w-3xl mx-auto">
@@ -537,7 +537,7 @@ function NotificationsPage(){
             {[["inbox","Inbox"],["preferences","Preferences"]].map(t=>(
               <button key={t[0]} onClick={()=>setTab(t[0])}
                 className="px-4 py-2 text-xs font-semibold rounded-t-lg"
-                style={{backgroundColor:tab===t[0]?page:"transparent",color:tab===t[0]?ink:muted,
+                style={{backgroundColor:tab===t[0]?pageColor:"transparent",color:tab===t[0]?ink:muted,
                   borderBottom:tab===t[0]?`2px solid ${gold}`:"2px solid transparent"}}>
                 {t[1]}
                 {t[0]==="inbox"&&unread>0&&(
@@ -592,7 +592,7 @@ function NotificationsPage(){
                         <div className="flex items-center gap-2 mb-0.5 flex-wrap">
                           <p className="text-xs font-semibold" style={{color:n.read?muted:ink}}>{n.title}</p>
                           <span className="text-[10px] font-semibold px-1.5 py-0.5 rounded"
-                            style={{backgroundColor:page,color:muted}}>{t.label}</span>
+                            style={{backgroundColor:pageColor,color:muted}}>{t.label}</span>
                         </div>
                         <p className="text-[11px] leading-relaxed" style={{color:muted}}>{n.body}</p>
                         <p className="text-[10px] mt-1.5" style={{color:border}}>{n.ts}</p>
@@ -674,7 +674,7 @@ function BenefitsPage(){
   };
 
   return(
-    <div className="min-h-screen" style={{backgroundColor:page}}>
+    <div className="min-h-screen" style={{backgroundColor:pageColor}}>
       {/* Header */}
       <div className="pt-8 pb-6 px-6 lg:px-10" style={{backgroundColor:white,borderBottom:`1px solid ${border}`}}>
         <div className="max-w-3xl mx-auto">
@@ -781,7 +781,7 @@ function BenefitsPage(){
                 <div className="border-t px-5 pb-6 pt-5" style={{borderColor:border}}>
                   <div className="flex flex-col sm:flex-row items-center gap-6">
                     {/* QR */}
-                    <div className="p-4 rounded-2xl shrink-0" style={{backgroundColor:page,border:`1px solid ${border}`}}>
+                    <div className="p-4 rounded-2xl shrink-0" style={{backgroundColor:pageColor,border:`1px solid ${border}`}}>
                       <QRCode value={`eduxcert://benefit/${b.id}/${USER.did}`} size={140}/>
                     </div>
 
@@ -886,7 +886,7 @@ export default function SharedPages(){
   };
 
   return(
-    <div className="min-h-screen" style={{backgroundColor:page}}>
+    <div className="min-h-screen" style={{backgroundColor:pageColor}}>
       {/* Top nav for demo */}
       <div className="sticky top-0 z-20" style={{backgroundColor:ink,borderBottom:`1px solid ${inkSoft}`}}>
         <div className="flex items-center gap-2 px-6 py-3">

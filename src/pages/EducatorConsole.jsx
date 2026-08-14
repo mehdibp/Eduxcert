@@ -1,6 +1,6 @@
 import { useState, useMemo } from "react";
 import {ink, inkSoft, gold, goldBg, goldBdr, 
-        page, white, muted, border, 
+        pageColor, white, muted, border, 
         green, greenBg, amber, amberBg, violet, violetBg, blue, blueBg, red, redBg, rose} from "../styles/colors";
 
 import {GridIcon, BookIcon, GradeIcon, ChartIcon, PeopleIcon, LogoutIcon, CheckIcon, XIcon, 
@@ -238,7 +238,7 @@ function CourseModal({course, onClose, onSave}) {
             ))}
           </div>
 
-          <div className="rounded-xl p-4 space-y-3" style={{backgroundColor:page}}>
+          <div className="rounded-xl p-4 space-y-3" style={{backgroundColor:pageColor}}>
             <p className="text-xs font-semibold" style={{color:ink}}>Exam details</p>
             <div className="grid grid-cols-3 gap-3">
               {[
@@ -392,7 +392,7 @@ function CoursesView({onNav}) {
               </div>
               <div className="flex flex-wrap gap-1 mt-1">
                 {c.tags.map(t=><span key={t} className="text-[10px] px-2 py-0.5 rounded-md"
-                  style={{backgroundColor:page,color:muted,border:`1px solid ${border}`}}>{t}</span>)}
+                  style={{backgroundColor:pageColor,color:muted,border:`1px solid ${border}`}}>{t}</span>)}
               </div>
             </div>
           </div>
@@ -540,7 +540,7 @@ function GradingView() {
 
           <table className="w-full">
             <thead>
-              <tr style={{backgroundColor:page}}>
+              <tr style={{backgroundColor:pageColor}}>
                 {["Student","ID","Score","Status",""].map(h=>(
                   <th key={h} className="text-left text-[10px] font-semibold uppercase tracking-wider px-4 py-2.5"
                     style={{color:muted}}>{h}</th>
@@ -639,7 +639,7 @@ function GradingView() {
               </button>
             </div>
             <div className="p-6 space-y-4">
-              <div className="rounded-xl p-4" style={{backgroundColor:page}}>
+              <div className="rounded-xl p-4" style={{backgroundColor:pageColor}}>
                 <p className="text-[10px] uppercase tracking-wider font-semibold mb-1" style={{color:muted}}>Student's appeal reason</p>
                 <p className="text-xs leading-relaxed italic" style={{color:ink}}>"{appealModal.appeal}"</p>
               </div>
@@ -792,7 +792,7 @@ function AnalyticsView() {
           </button>
         </div>
         <table className="w-full">
-          <thead style={{backgroundColor:page}}>
+          <thead style={{backgroundColor:pageColor}}>
             <tr>{["Student","Score","Status","Percentile"].map(h=>(
               <th key={h} className="text-left text-[10px] font-semibold uppercase tracking-wider px-4 py-2.5" style={{color:muted}}>{h}</th>
             ))}</tr>
@@ -890,7 +890,7 @@ function AdviseesView() {
                   {label:"Career match",  value:`${selected.match}%`,color:selected.match>=80?green:selected.match>=60?gold:amber},
                   {label:"Target role",   value:selected.target,color:ink},
                 ].map(({label,value,color})=>(
-                  <div key={label} className="rounded-xl p-3" style={{backgroundColor:page}}>
+                  <div key={label} className="rounded-xl p-3" style={{backgroundColor:pageColor}}>
                     <p className="text-[10px] uppercase tracking-wider font-semibold mb-1" style={{color:muted}}>{label}</p>
                     <p className="text-sm font-semibold leading-snug" style={{color}}>{value}</p>
                   </div>
@@ -903,7 +903,7 @@ function AdviseesView() {
                 <div className="space-y-2">
                   {selected.gap.map((g,i)=>(
                     <div key={g} className="flex items-center gap-3 p-3 rounded-lg"
-                      style={{backgroundColor:i===0?redBg:i===1?amberBg:page,
+                      style={{backgroundColor:i===0?redBg:i===1?amberBg:pageColor,
                         border:`1px solid ${i===0?"#FECACA":i===1?"#FDE68A":border}`}}>
                       <span className="text-xs font-semibold shrink-0"
                         style={{color:i===0?red:i===1?amber:muted}}>
@@ -955,7 +955,7 @@ export default function EducatorConsole() {
 
   if (!loggedIn) {
     return (
-      <div className="min-h-screen flex items-center justify-center" style={{backgroundColor:page}}>
+      <div className="min-h-screen flex items-center justify-center" style={{backgroundColor:pageColor}}>
         <div className="rounded-2xl p-10 text-center" style={{backgroundColor:white,border:`1px solid ${border}`}}>
           <div className="w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-4"
             style={{border:`1.5px solid ${gold}`}}>
@@ -982,7 +982,7 @@ export default function EducatorConsole() {
   };
 
   return (
-    <div className="flex h-screen" style={{backgroundColor:page}}>
+    <div className="flex h-screen" style={{backgroundColor:pageColor}}>
 
       <Sidebar
         subtitle="Educator Console"

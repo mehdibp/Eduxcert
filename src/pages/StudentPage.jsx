@@ -1,6 +1,6 @@
 import { useState, useMemo } from "react";
 import {ink, inkSoft, gold, goldLight, goldBg, goldBdr, 
-        page, white, muted, border, 
+        pageColor, white, muted, border, 
         green, greenBg, amber, amberBg, violet, violetBg, blue, blueBg, red, redBg, rose, roseBg} from "../styles/colors";
 
 import {GridIcon, BookIcon, SealNavIcon, CalendarIcon, MapIcon, CheckIcon, XIcon, ChevronIcon, SearchIcon,
@@ -14,6 +14,7 @@ import Sidebar from "../components/layout/Sidebar"
 
 import ProgressRing from "../components/commen/ProgressRing"
 import PageHeader from "../components/commen/PageHeader"
+import QualityBadge from "../components/commen/QualityBadge"
 
 
 // ════════════════════════════════════════════════
@@ -30,20 +31,6 @@ const ic = (d, vb="0 0 16 16") => ({ size=16, color="currentColor", strokeWidth=
   </svg>
 );
 
-
-// ════════════════════════════════════════════════
-// SHARED UI COMPONENTS
-// ════════════════════════════════════════════════
-function QIBadge() {
-  return <span className="inline-flex items-center gap-1.5 text-[10px] font-bold px-2.5 py-1 rounded-full"
-    style={{backgroundColor:goldBg,color:gold,border:`1px solid ${goldBdr}`}}>
-    <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
-      <circle cx="5" cy="5" r="4" stroke={gold} strokeWidth="1.2"/>
-      <path d="M3 5l1.5 1.5L7 3.5" stroke={gold} strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round"/>
-    </svg>
-    QI · Quality Intelligence
-  </span>;
-}
 
 // ════════════════════════════════════════════════
 // SIDEBAR
@@ -76,7 +63,7 @@ function SealMark({size=88}) {
 function LoginPage({onLogin}) {
   const [email,setEmail]=useState(""),  [pw,setPw]=useState(""), [show,setShow]=useState(false);
   return (
-    <div className="min-h-screen w-full flex items-stretch" style={{backgroundColor:page}}>
+    <div className="min-h-screen w-full flex items-stretch" style={{backgroundColor:pageColor}}>
       <div className="w-full grid lg:grid-cols-2">
         <div className="relative hidden lg:flex flex-col justify-between overflow-hidden px-14 py-12"
           style={{background:`linear-gradient(160deg,${ink} 0%,${inkSoft} 100%)`}}>
@@ -352,7 +339,7 @@ function CoursesPage() {
   );
 
   return (
-    <div className="min-h-screen" style={{backgroundColor:page}}>
+    <div className="min-h-screen" style={{backgroundColor:pageColor}}>
       <PageHeader rootLabel={"Andreja Novak"} crumb="Courses" title="Course Catalogue"
         subtitle="Spring 2025 · University of Ljubljana" 
         action={<div className="flex items-center gap-2 text-xs" style={{color:muted}}>
@@ -363,7 +350,7 @@ function CoursesPage() {
           {["Catalogue","My Courses"].map(t=>(
             <button key={t} onClick={()=>setTab(t)}
               className="px-4 py-2 text-sm font-medium rounded-t-lg"
-              style={{backgroundColor:tab===t?page:"transparent",color:tab===t?ink:muted,
+              style={{backgroundColor:tab===t?pageColor:"transparent",color:tab===t?ink:muted,
                 borderBottom:tab===t?`2px solid ${gold}`:"2px solid transparent"}}>
               {t}{t==="My Courses"&&<span className="ml-2 text-[10px] font-bold px-1.5 py-0.5 rounded-full" style={{backgroundColor:goldBg,color:amber}}>{enrolled.size}</span>}
             </button>
@@ -466,7 +453,7 @@ function CoursesPage() {
                       ))}
                     </div>
                     <div className="flex flex-wrap gap-1.5 mt-4">
-                      {c.tags.map(t=><span key={t} className="text-[10px] px-2 py-0.5 rounded-md" style={{backgroundColor:page,color:muted,border:`1px solid ${border}`}}>{t}</span>)}
+                      {c.tags.map(t=><span key={t} className="text-[10px] px-2 py-0.5 rounded-md" style={{backgroundColor:pageColor,color:muted,border:`1px solid ${border}`}}>{t}</span>)}
                     </div>
                     <div className="mt-4">
                       <div className="flex justify-between text-[10px] mb-1" style={{color:muted}}>
@@ -490,7 +477,7 @@ function CoursesPage() {
             <CheckIcon size={18} color={gold}/>
           </div>
           <h3 className="font-serif text-lg mb-1" style={{color:ink}}>Confirm enrolment</h3>
-          <div className="rounded-xl p-4 my-5" style={{backgroundColor:page,border:`1px solid ${border}`}}>
+          <div className="rounded-xl p-4 my-5" style={{backgroundColor:pageColor,border:`1px solid ${border}`}}>
             <p className="text-[10px] font-mono" style={{color:muted}}>{pending.code}</p>
             <p className="text-sm font-semibold mt-0.5" style={{color:ink}}>{pending.title}</p>
             <p className="text-xs mt-2" style={{color:muted}}>{pending.ects} ECTS · {pending.language} · {pending.term}</p>
@@ -577,7 +564,7 @@ function CredentialModal({cred,onClose}){
             <div className="grid grid-cols-2 gap-4">
               {[["Issued on",new Date(cred.issuedOn).toLocaleDateString("en-GB",{day:"numeric",month:"long",year:"numeric"})],
                 ["ECTS",`${cred.ects} credits`],["Grade",cred.grade||"—"],["Programme",cred.programme]].map(([k,v])=>(
-                <div key={k} className="rounded-xl p-3.5" style={{backgroundColor:page}}>
+                <div key={k} className="rounded-xl p-3.5" style={{backgroundColor:pageColor}}>
                   <p className="text-[10px] uppercase tracking-wider font-semibold mb-1" style={{color:muted}}>{k}</p>
                   <p className="text-sm font-medium" style={{color:ink}}>{v}</p>
                 </div>
@@ -598,7 +585,7 @@ function CredentialModal({cred,onClose}){
 
           {tab==="share"&&<div className="space-y-6">
             <div className="flex flex-col items-center gap-3">
-              <div className="p-4 rounded-2xl" style={{backgroundColor:page,border:`1px solid ${border}`}}>
+              <div className="p-4 rounded-2xl" style={{backgroundColor:pageColor,border:`1px solid ${border}`}}>
                 <QRCode value={cred.verifyUrl} size={148}/>
               </div>
               <p className="text-xs text-center" style={{color:muted}}>Anyone can scan this QR to verify without an account.</p>
@@ -633,7 +620,7 @@ function CredentialModal({cred,onClose}){
           {tab==="verify"&&<div className="space-y-4">
             {!showV
               ? <>
-                  <div className="rounded-xl p-4" style={{backgroundColor:page}}>
+                  <div className="rounded-xl p-4" style={{backgroundColor:pageColor}}>
                     <p className="text-xs font-semibold mb-2" style={{color:ink}}>Public verify link</p>
                     <p className="text-[11px] font-mono break-all" style={{color:muted}}>{cred.verifyUrl}</p>
                   </div>
@@ -683,7 +670,7 @@ function CredentialsPage(){
   const active=CRED_DATA.filter(c=>c.status==="active");
   const pending=CRED_DATA.filter(c=>c.status==="pending");
   return (
-    <div className="min-h-screen" style={{backgroundColor:page}}>
+    <div className="min-h-screen" style={{backgroundColor:pageColor}}>
       <PageHeader rootLabel={"Andreja Novak"} crumb="Credentials" title="My Credentials"
         subtitle="Digitally signed · verifiable by anyone" 
         action={<div className="flex gap-4 text-xs" style={{color:muted}}>
@@ -767,7 +754,7 @@ function TimetablePage(){
   const TypeBadge=({type})=>{const m={written:{l:"Written",bg:"#F1F5F9",c:muted},oral:{l:"Oral",bg:violetBg,c:violet},project:{l:"Project",bg:blueBg,c:blue}};const s=m[type]||m.written;return <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full uppercase tracking-wide" style={{backgroundColor:s.bg,color:s.c}}>{s.l}</span>;};
 
   return (
-    <div className="min-h-screen" style={{backgroundColor:page}}>
+    <div className="min-h-screen" style={{backgroundColor:pageColor}}>
       <PageHeader rootLabel={"Andreja Novak"} crumb="Timetable" title="Timetable"
         subtitle="Week of 9 Jun 2025 · Spring Term" 
         action={<div className="flex rounded-xl overflow-hidden border" style={{borderColor:border}}>
@@ -866,7 +853,7 @@ function TimetablePage(){
             <p className="text-[10px] font-semibold uppercase tracking-widest" style={{color:muted}}>Upcoming exams — Summer 2025</p>
             {EXAMS.map(e=>{
               const days=daysUntil(e.date),pct=Math.round(e.registered/e.capacity*100);
-              const Cd=()=>{let bg=page,c=muted;if(days<=3){bg=redBg;c=red;}else if(days<=7){bg=amberBg;c=amber;}return <span className="text-[11px] font-bold px-2.5 py-1 rounded-full" style={{backgroundColor:bg,color:c}}>{days}d</span>;};
+              const Cd=()=>{let bg=pageColor,c=muted;if(days<=3){bg=redBg;c=red;}else if(days<=7){bg=amberBg;c=amber;}return <span className="text-[11px] font-bold px-2.5 py-1 rounded-full" style={{backgroundColor:bg,color:c}}>{days}d</span>;};
               return <div key={e.id} className="rounded-2xl p-5 flex gap-4" style={{backgroundColor:white,border:`1px solid ${border}`}}>
                 <div className="shrink-0 w-14 flex flex-col items-center justify-center rounded-xl py-2" style={{backgroundColor:e.bg,border:`1px solid ${e.color}20`}}>
                   <p className="text-[10px] font-semibold uppercase tracking-wide" style={{color:e.color}}>{e.date.toLocaleDateString("en-GB",{month:"short"})}</p>
@@ -922,10 +909,10 @@ function RoadmapPage({onNav}){
   };
 
   return (
-    <div className="min-h-screen" style={{backgroundColor:page}}>
+    <div className="min-h-screen" style={{backgroundColor:pageColor}}>
       <PageHeader rootLabel={"Andreja Novak"} crumb="Roadmap" title="Personal Roadmap"
         subtitle="AI-generated from your ESCO skill profile · Updated 9 Jun 2025" 
-        action={<QIBadge/>}/>
+        action={ <QualityBadge> QI · Quality Intelligence  </QualityBadge> }/>
 
       <div className="px-1 py-7 space-y-7">
         <section>
@@ -1016,7 +1003,7 @@ function RoadmapPage({onNav}){
             {RECS.length} recommendations to close your gap for <span style={{color:ink,fontWeight:600}}>{t?.title}</span>. Completing all would raise your match to an estimated <span style={{color:green,fontWeight:600}}>91%</span>.
           </p>
           {RECS.map(r=>{
-            const pri={high:{l:"High priority",bg:roseBg,c:rose},medium:{l:"Recommended",bg:amberBg,c:amber},low:{l:"Optional",bg:page,c:muted}}[r.priority];
+            const pri={high:{l:"High priority",bg:roseBg,c:rose},medium:{l:"Recommended",bg:amberBg,c:amber},low:{l:"Optional",bg:pageColor,c:muted}}[r.priority];
             return <div key={r.id} className="rounded-xl p-4 flex gap-4" style={{backgroundColor:white,border:`1px solid ${border}`}}>
               <div className="w-10 h-10 rounded-xl shrink-0 flex items-center justify-center" style={{backgroundColor:r.bg}}>
                 <span className="text-[10px] font-bold font-mono" style={{color:r.color}}>{r.ects}</span>
@@ -1122,7 +1109,7 @@ export default function EduxcertApp() {
   };
 
   return (
-    <div className="flex h-screen" style={{backgroundColor:page}}>
+    <div className="flex h-screen" style={{backgroundColor:pageColor}}>
       <Sidebar
         subtitle="Student Portal"
         navItems={NAV_ITEMS}

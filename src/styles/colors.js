@@ -6,7 +6,7 @@ export const goldLight  = "#D9BD8C";
 export const goldBg     = "#FBF7F0";
 export const goldBdr    = "#EFD8B0";
 
-export const page       = "#F3F5F8";    // General background of the pages
+export const pageColor  = "#F3F5F8";    // General background of the pages
 export const paper      = "#FFFFFF";
 export const white      = "#FFFFFF";
 export const muted      = "#64748B";
@@ -28,12 +28,12 @@ export const teal       = "#0D9488";
 export const tealBg     = "#CCFBF1";
 
 // A compact object for when bulk imports are easier
-const tokens = {
+const allColors = {
   ink, inkSoft, gold, goldLight, goldBg, goldBdr,
-  page, paper, white, muted, border,
+  pageColor, paper, white, muted, border,
   green, greenBg, amber, amberBg, violet, violetBg, blue, blueBg, red, redBg, rose, roseBg, teal, tealBg,
 };
 
-export default tokens;
+export default allColors;
 
 

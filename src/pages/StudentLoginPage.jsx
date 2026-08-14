@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { ink, inkSoft, gold, goldLight, paper, page} from "../styles/colors";
+import { ink, inkSoft, gold, goldLight, paper, pageColor} from "../styles/colors";
 
 
 function SealMark({ size = 88 }) {
@@ -66,7 +66,7 @@ export default function StudentLoginPage() {
   const [showPassword, setShowPassword] = useState(false);
 
   return (
-    <div className="min-h-screen w-full flex items-stretch" style={{ backgroundColor: page }}>
+    <div className="min-h-screen w-full flex items-stretch" style={{ backgroundColor: pageColor }}>
       <div className="w-full grid lg:grid-cols-2">
         {/* Left — brand / trust panel */}
         <div

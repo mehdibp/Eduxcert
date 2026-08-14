@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import {ink, inkSoft, gold, goldBg, goldBdr, 
-  page, white, muted, border, 
+  pageColor, white, muted, border, 
   green, greenBg, amber, amberBg, violet, violetBg, blue, blueBg, red, redBg} from "../styles/colors";
 
 import {CheckIcon, XCircleIcon, QuestionIcon, SpinIcon, ScanIcon, ShieldIcon, ExternalIcon, 
@@ -143,7 +143,7 @@ function ResultPanel({cred, steps}) {
             ))}
           </div>
           <div className="mt-3 p-3 rounded-lg text-[11px] leading-relaxed"
-            style={{backgroundColor:page,color:muted}}>
+            style={{backgroundColor:pageColor,color:muted}}>
             🔒 <strong>Privacy:</strong> The verifier never sees personal data beyond these disclosed attributes.
             The holder chose what to share using SD-JWT selective disclosure.
           </div>
@@ -217,7 +217,7 @@ export default function PublicVerifierPage() {
   const styleTag = `@keyframes spin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}`;
 
   return (
-    <div className="min-h-screen" style={{backgroundColor:page}}>
+    <div className="min-h-screen" style={{backgroundColor:pageColor}}>
       <style>{styleTag}</style>
 
       {/* ── Top bar ── */}
@@ -392,7 +392,7 @@ export default function PublicVerifierPage() {
                 ].map(({sc,label,code,col})=>(
                   <button key={sc} onClick={()=>{setScenario(sc);handleVerify(sc);}}
                     className="rounded-xl p-4 flex flex-col items-center gap-3 hover:shadow-md transition-shadow"
-                    style={{backgroundColor:page,border:`1.5px solid ${border}`}}>
+                    style={{backgroundColor:pageColor,border:`1.5px solid ${border}`}}>
                     <div className="rounded-lg overflow-hidden p-2" style={{backgroundColor:white}}>
                       <QRCode value={`https://verify.eduxcert.eu/c/${code}`} size={96}/>
                     </div>
@@ -483,7 +483,7 @@ export default function PublicVerifierPage() {
                   return (
                     <li key={s.id} className="flex items-start gap-4">
                       <div className="w-9 h-9 rounded-xl flex items-center justify-center shrink-0"
-                        style={{backgroundColor:done?(done.ok?greenBg:redBg):active?goldBg:page}}>
+                        style={{backgroundColor:done?(done.ok?greenBg:redBg):active?goldBg:pageColor}}>
                         {done
                           ? (done.ok
                               ? <CheckIcon size={16} color={green}/>
