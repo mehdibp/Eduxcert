@@ -12,6 +12,7 @@ import Badge from "../components/commen/Badge"
 import PageHeader from "../components/commen/PageHeader"
 import QualityBadge from "../components/commen/QualityBadge"
 import StatCard from "../components/commen/StatCard"
+import Toast from "../components/commen/Toast"
 
 import { TENANT, PROGRAMMES, DEGREE_PIPELINE, USERS, ACCRED_STEPS, AUDIT_LOG, QI_BENCHMARKS } from "../data/admin"
 
@@ -29,15 +30,6 @@ const NAV_ITEMS = [
   { id:"config",      label:"Tenant Config",  Icon:SettingsIcon},
   { id:"audit",       label:"Audit Log",      Icon:LogIcon     },
 ];
-
-function Toast({msg,ok}){
-  return (
-    <div className="fixed bottom-6 left-1/2 -translate-x-1/2 px-5 py-3 rounded-xl shadow-xl text-sm font-medium text-white flex items-center gap-2 z-50"
-      style={{backgroundColor:ok?ink:"#475569"}}>
-      {ok?<CheckIcon size={14} color={gold}/>:<XIcon size={14} color={white}/>} {msg}
-    </div>
-  );
-}
 
 // ════════════════════════════════════════════════
 // DASHBOARD
@@ -268,7 +260,7 @@ function ProgrammesView(){
           </div>
         ))}
       </div>
-      {toast&&<Toast msg={toast.msg} ok={toast.ok}/>}
+      {toast&&<Toast message={toast.msg} type={toast.ok}/>}
     </div>
   );
 }
@@ -364,7 +356,7 @@ function DegreesView(){
           </tbody>
         </table>
       </div>
-      {toast&&<Toast msg={toast.msg} ok={toast.ok}/>}
+      {toast&&<Toast message={toast.msg} type={toast.ok}/>}
     </div>
   );
 }
@@ -583,7 +575,7 @@ function AccreditationView(){
           </div>
         </div>
       </div>
-      {toast&&<Toast msg={toast.msg} ok={toast.ok}/>}
+      {toast&&<Toast message={toast.msg} type={toast.ok}/>}
     </div>
   );
 }
@@ -704,7 +696,7 @@ function UsersView(){
           </tbody>
         </table>
       </div>
-      {toast&&<Toast msg={toast.msg} ok={toast.ok}/>}
+      {toast&&<Toast message={toast.msg} type={toast.ok}/>}
     </div>
   );
 }
@@ -813,7 +805,7 @@ function ConfigView(){
                   className="relative w-10 h-5 rounded-full transition-colors"
                   style={{backgroundColor:ig.enabled?green:border}}>
                   <span className="absolute top-0.5 w-4 h-4 rounded-full bg-white shadow transition-transform"
-                    style={{transform:ig.enabled?"translateX(21px)":"translateX(2px)"}}/>
+                    style={{transform:ig.enabled?"translateX(2px)":"translateX(-18px)"}}/>
                 </button>
               </div>
             </div>
@@ -827,7 +819,7 @@ function ConfigView(){
           </div>
         </div>
       </div>
-      {toast&&<Toast msg={toast.msg} ok={toast.ok}/>}
+      {toast&&<Toast message={toast.msg} type={toast.ok}/>}
     </div>
   );
 }

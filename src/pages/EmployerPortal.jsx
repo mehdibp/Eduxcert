@@ -11,6 +11,7 @@ import Sidebar from "../components/layout/Sidebar"
 import Badge from "../components/commen/Badge"
 import PageHeader from "../components/commen/PageHeader"
 import StatCard from "../components/commen/StatCard"
+import Toast from "../components/commen/Toast"
 
 import { COMPANY, CANDIDATES, JOB_POSTS, EMPLOYEES, WORKFORCE_SKILLS, PATHWAYS } from "../data/employer"
 
@@ -31,13 +32,6 @@ const NAV_ITEMS = [
 // ════════════════════════════════════════════════
 // SHARED UI
 // ════════════════════════════════════════════════
-function Toast({msg,ok}){return(
-  <div className="fixed bottom-6 left-1/2 -translate-x-1/2 px-5 py-3 rounded-xl shadow-xl text-sm font-medium text-white flex items-center gap-2 z-50"
-    style={{backgroundColor:ok?ink:"#475569"}}>
-    {ok?<CheckIcon size={14} color={gold}/>:<XIcon size={14} color={white}/>} {msg}
-  </div>
-);}
-
 // Candidate stage badge
 const STAGE_CFG = {
   new:       {label:"New",       bg:"#F1F5F9", color:muted},
@@ -351,7 +345,7 @@ function CandidatesView(){
           </div>
         )}
       </div>
-      {toast&&<Toast msg={toast.msg} ok={toast.ok}/>}
+      {toast&&<Toast message={toast.msg} type={toast.ok}/>}
     </div>
   );
 }
@@ -491,7 +485,7 @@ function JobsView(){
           </div>
         </div>
       )}
-      {toast&&<Toast msg={toast.msg} ok={toast.ok}/>}
+      {toast&&<Toast message={toast.msg} type={toast.ok}/>}
     </div>
   );
 }
@@ -637,7 +631,7 @@ function IssueVCView(){
           </div>
         )}
       </div>
-      {toast&&<Toast msg={toast.msg} ok={toast.ok}/>}
+      {toast&&<Toast message={toast.msg} type={toast.ok}/>}
     </div>
   );
 }
@@ -864,7 +858,7 @@ function PathwaysView(){
           </div>
         ))}
       </div>
-      {toast&&<Toast msg={toast.msg} ok={toast.ok}/>}
+      {toast&&<Toast message={toast.msg} type={toast.ok}/>}
     </div>
   );
 }

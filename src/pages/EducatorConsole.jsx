@@ -11,6 +11,7 @@ import Sidebar from "../components/layout/Sidebar"
 import Badge from "../components/commen/Badge"
 import PageHeader from "../components/commen/PageHeader"
 import StatCard from "../components/commen/StatCard"
+import Toast from "../components/commen/Toast"
 
 import { EDUCATOR, MY_COURSES, GRADES, ADVISEES, TIMELINE_EVENTS } from "../data/educator"
 
@@ -40,16 +41,6 @@ function GradeStatusBadge({status}) {
   };
   const s = m[status] || m.draft;
   return <Badge label={s.label} bg={s.bg} color={s.color}/>;
-}
-
-function Toast({msg, ok, onDone}) {
-  return (
-    <div className="fixed bottom-6 left-1/2 -translate-x-1/2 px-5 py-3 rounded-xl shadow-xl text-sm font-medium text-white flex items-center gap-2 z-50"
-      style={{backgroundColor:ok?ink:"#475569"}}>
-      {ok ? <CheckIcon size={14} color={gold}/> : <XIcon size={14} color={white}/>}
-      {msg}
-    </div>
-  );
 }
 
 // ════════════════════════════════════════════════
@@ -390,7 +381,7 @@ function CoursesView({onNav}) {
 
       {(editing||showNew) &&
         <CourseModal course={editing} onClose={()=>{setEditing(null);setShowNew(false);}} onSave={handleSave}/>}
-      {toast && <Toast msg={toast.msg} ok={toast.ok}/>}
+      {toast && <Toast message={toast.msg} type={toast.ok}/>}
     </div>
   );
 }
@@ -668,7 +659,7 @@ function GradingView() {
         </div>
       )}
 
-      {toast && <Toast msg={toast.msg} ok={toast.ok}/>}
+      {toast && <Toast message={toast.msg} type={toast.ok}/>}
     </div>
   );
 }

@@ -16,6 +16,7 @@ import ProgressRing from "../components/commen/ProgressRing"
 import PageHeader from "../components/commen/PageHeader"
 import QualityBadge from "../components/commen/QualityBadge"
 import StatCard from "../components/commen/StatCard"
+import Toast from "../components/commen/Toast"
 
 
 
@@ -450,11 +451,8 @@ function CoursesPage() {
           </div>
         </div>
       </div>}
-
-      {toast&&<div className="fixed bottom-6 left-1/2 -translate-x-1/2 px-5 py-3 rounded-xl shadow-xl text-sm font-medium text-white flex items-center gap-2 z-50"
-        style={{backgroundColor:toast.ok?ink:"#475569"}}>
-        {toast.ok?<CheckIcon color={gold}/>:<XIcon/>} {toast.msg}
-      </div>}
+      
+      {toast&&<Toast message={toast.msg} type={toast.ok}/>}
     </div>
   );
 }

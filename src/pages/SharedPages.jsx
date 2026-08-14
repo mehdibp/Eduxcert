@@ -10,6 +10,7 @@ import { USER, CONSENTS, NOTIFICATIONS, NOTIF_PREFS, BENEFITS } from "../data/sh
 
 import ToggleSwitch from "../components/commen/ToggleSwitch"
 import StatCard from "../components/commen/StatCard"
+import Toast from "../components/commen/Toast"
 
 // ════════════════════════════════════════════════
 // SHARED UI
@@ -22,14 +23,6 @@ function SectionCard({title, children, action}){
         {action}
       </div>
       <div className="p-6">{children}</div>
-    </div>
-  );
-}
-function Toast({msg,ok}){
-  return(
-    <div className="fixed bottom-6 left-1/2 -translate-x-1/2 px-5 py-3 rounded-xl shadow-xl text-sm font-medium text-white flex items-center gap-2 z-50"
-      style={{backgroundColor:ok?ink:"#475569"}}>
-      {ok?<CheckIcon size={14} color={gold}/>:<XIcon size={14} color={white}/>}{msg}
     </div>
   );
 }
@@ -456,7 +449,7 @@ function ProfilePage(){
         </div>
       )}
 
-      {toast&&<Toast msg={toast.msg} ok={toast.ok}/>}
+      {toast&&<Toast message={toast.msg} type={toast.ok}/>}
     </div>
   );
 }
@@ -622,7 +615,7 @@ function NotificationsPage(){
         )}
       </div>
 
-      {toast&&<Toast msg={toast.msg} ok={toast.ok}/>}
+      {toast&&<Toast message={toast.msg} type={toast.ok}/>}
     </div>
   );
 }
@@ -826,7 +819,7 @@ function BenefitsPage(){
         </div>
       </div>
 
-      {toast&&<Toast msg={toast.msg} ok={toast.ok}/>}
+      {toast&&<Toast message={toast.msg} type={toast.ok}/>}
     </div>
   );
 }
