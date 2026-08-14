@@ -8,19 +8,11 @@ import {UserIcon, BellIcon, GiftIcon, ShieldIcon, WalletIcon, DownloadIcon,
 
 import { USER, CONSENTS, NOTIFICATIONS, NOTIF_PREFS, BENEFITS } from "../data/shared"
 
+import ToggleSwitch from "../components/commen/ToggleSwitch"
+
 // ════════════════════════════════════════════════
 // SHARED UI
 // ════════════════════════════════════════════════
-function Toggle({on, onChange}){
-  return(
-    <button onClick={()=>onChange(!on)}
-      className="relative w-10 h-5 rounded-full transition-colors shrink-0"
-      style={{backgroundColor:on?green:border}}>
-      <span className="absolute top-0.5 w-4 h-4 rounded-full bg-white shadow transition-transform"
-        style={{transform:on?"translateX(21px)":"translateX(2px)"}}/>
-    </button>
-  );
-}
 function SectionCard({title, children, action}){
   return(
     <div className="rounded-2xl overflow-hidden" style={{backgroundColor:white,border:`1px solid ${border}`}}>
@@ -240,7 +232,7 @@ function ProfilePage(){
                       </div>
                       <p className="text-[11px] leading-relaxed" style={{color:muted}}>{c.desc}</p>
                     </div>
-                    <Toggle on={c.granted} onChange={()=>!c.required&&toggleConsent(c.id)}/>
+                    <ToggleSwitch on={c.granted} onChange={()=>!c.required&&toggleConsent(c.id)}/>
                   </div>
                 ))}
               </div>
@@ -613,7 +605,7 @@ function NotificationsPage(){
                       {["email","push","sms"].map(ch=>(
                         <td key={ch} className="py-3.5 text-center">
                           <div className="flex justify-center">
-                            <Toggle on={p[ch]} onChange={()=>togglePref(p.id,ch)}/>
+                            <ToggleSwitch on={p[ch]} onChange={()=>togglePref(p.id,ch)}/>
                           </div>
                         </td>
                       ))}
