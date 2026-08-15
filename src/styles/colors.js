@@ -10,6 +10,7 @@ export const pageColor  = "#F3F5F8";    // General background of the pages
 export const paper      = "#FFFFFF";
 export const white      = "#FFFFFF";
 export const muted      = "#64748B";
+export const mutedBg    = "#F1F5F9";
 export const border     = "#E2E8F0";
 
 export const green      = "#16A34A";
@@ -30,7 +31,7 @@ export const tealBg     = "#CCFBF1";
 // A compact object for when bulk imports are easier
 const allColors = {
   ink, inkSoft, gold, goldLight, goldBg, goldBdr,
-  pageColor, paper, white, muted, border,
+  pageColor, paper, white, muted, mutedBg, border,
   green, greenBg, amber, amberBg, violet, violetBg, blue, blueBg, red, redBg, rose, roseBg, teal, tealBg,
 };
 

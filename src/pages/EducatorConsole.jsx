@@ -1,6 +1,6 @@
 import { useState, useMemo } from "react";
 import {ink, inkSoft, gold, goldBg, goldBdr, 
-        pageColor, white, muted, border, 
+        pageColor, white, muted, mutedBg, border, 
         green, greenBg, amber, amberBg, violet, violetBg, blue, blueBg, red, redBg, rose} from "../styles/colors";
 
 import {GridIcon, BookIcon, GradeIcon, ChartIcon, PeopleIcon, LogoutIcon, CheckIcon, XIcon, 
@@ -8,7 +8,7 @@ import {GridIcon, BookIcon, GradeIcon, ChartIcon, PeopleIcon, LogoutIcon, CheckI
 
 import Sidebar from "../components/layout/Sidebar"
 
-import Badge from "../components/commen/Badge"
+import {Badge, StatusBadge} from "../components/commen/Badge"
 import PageHeader from "../components/commen/PageHeader"
 import StatCard from "../components/commen/StatCard"
 import Toast from "../components/commen/Toast"
@@ -27,21 +27,13 @@ const NAV_ITEMS = [
   { id:"advisees",  label:"Advisees",    Icon:PeopleIcon },
 ];
 
-
-// ════════════════════════════════════════════════
-// SHARED UI
-// ════════════════════════════════════════════════
-function GradeStatusBadge({status}) {
-  const m = {
-    draft:     {bg:"#F1F5F9", color:muted,   label:"Draft"},
-    reviewed:  {bg:amberBg,   color:amber,   label:"Reviewed"},
-    published: {bg:greenBg,   color:green,   label:"Published"},
-    appealed:  {bg:redBg,     color:red,     label:"Appeal"},
-    final:     {bg:violetBg,  color:violet,  label:"Final"},
-  };
-  const s = m[status] || m.draft;
-  return <Badge label={s.label} bg={s.bg} color={s.color}/>;
-}
+const STATUS_CFG = {
+  draft:     {label:"Draft",     color:muted,  bg:mutedBg },
+  reviewed:  {label:"Reviewed",  color:amber,  bg:amberBg },
+  published: {label:"Published", color:green,  bg:greenBg },
+  appealed:  {label:"Appeal",    color:red,    bg:redBg   },
+  final:     {label:"Final",     color:violet, bg:violetBg},
+};
 
 // ════════════════════════════════════════════════
 // DASHBOARD VIEW
@@ -103,7 +95,7 @@ function DashboardView({onNav}) {
                   <h3 className="text-sm font-semibold mt-0.5" style={{color:ink}}>{c.title}</h3>
                   <p className="text-[11px] mt-0.5" style={{color:muted}}>{c.ects} ECTS · {c.language}</p>
                 </div>
-                <GradeStatusBadge status={c.gradingStatus}/>
+                <StatusBadge config={STATUS_CFG} status={c.gradingStatus} fallbackKey="draft"/>
               </div>
               <div className="space-y-2">
                 <div>
@@ -320,11 +312,9 @@ function CoursesView({onNav}) {
               <div className="flex-1 min-w-0">
                 <div className="flex flex-wrap items-center gap-2 mb-1">
                   <p className="text-[10px] font-mono" style={{color:muted}}>{c.code}</p>
-                  <Badge label={c.level} bg={c.level==="MA"?violetBg:c.level==="PhD"?greenBg:goldBg}
-                    color={c.level==="MA"?violet:c.level==="PhD"?green:amber}/>
-                  <Badge label={c.status==="active"?"Active":"Archived"}
-                    bg={c.status==="active"?greenBg:"#F1F5F9"} color={c.status==="active"?green:muted}/>
-                  <GradeStatusBadge status={c.gradingStatus}/>
+                  <Badge label={c.level} bg={c.level==="MA"?violetBg:c.level==="PhD"?greenBg:goldBg} color={c.level==="MA"?violet:c.level==="PhD"?green:amber}/>
+                  <Badge label={c.status==="active"?"Active":"Archived"} bg={c.status==="active"?greenBg:"#F1F5F9"} color={c.status==="active"?green:muted}/>
+                  <StatusBadge config={STATUS_CFG} status={c.gradingStatus} fallbackKey="draft"/>
                 </div>
                 <h3 className="text-sm font-semibold" style={{color:ink}}>{c.title}</h3>
                 <p className="text-[11px] mt-0.5" style={{color:muted}}>
@@ -552,7 +542,7 @@ function GradingView() {
                         </span>
                     }
                   </td>
-                  <td className="px-4 py-3"><GradeStatusBadge status={g.status}/></td>
+                  <td className="px-4 py-3"> <StatusBadge config={STATUS_CFG} status={g.status} fallbackKey="draft"/> </td>
                   <td className="px-4 py-3">
                     <div className="flex items-center gap-2">
                       {g.status!=="published" && g.status!=="final" && (
@@ -784,7 +774,7 @@ function AnalyticsView() {
                 <td className="px-4 py-3">
                   <span className="text-sm font-bold" style={{color:g.score>=5?ink:red}}>{g.score}/10</span>
                 </td>
-                <td className="px-4 py-3"><GradeStatusBadge status={g.status}/></td>
+                <td className="px-4 py-3"> <StatusBadge config={STATUS_CFG} status={g.status} fallbackKey="draft"/> </td>
                 <td className="px-4 py-3">
                   <span className="text-xs font-medium" style={{color:muted}}>
                     Top {Math.round((1-(i/GRADES.length))*100)}%

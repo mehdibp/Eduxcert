@@ -1,8 +1,8 @@
-import { ink, muted, border, gold, green } from "../../styles/colors";
+import { ink, muted, border, gold, green, amber } from "../../styles/colors";
 
 
 // Circle or semicircle indicating progress (in percentage or in number) --------------------
-export default function ProgressRing({earned, required, isArc=false, size = isArc?180:50}) {
+export default function ProgressRing({earned, required, isArc=false, size=isArc?180:50}) {
   const pct = earned/required * 100;
   
   // Canvas dimensions and circle center
@@ -19,7 +19,8 @@ export default function ProgressRing({earned, required, isArc=false, size = isAr
 
   // Starting angle: semicircle from 9 o'clock (-180°) and ring from 12 o'clock (-90°)
   const startAngle = isArc ? -180 : -90;
-  const strokeColor = pct === 100 ? green : gold;
+  // const strokeColor = pct === 100 ? green : gold;
+  const strokeColor = pct == 100 ? green : pct >= 80 ? `${green}${99}` : pct >=60 ? gold : amber;
 
   const fontSize_ = size>80 ? size/8 : size/5
   const text = !isArc 

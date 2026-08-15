@@ -1,6 +1,6 @@
 import { useState, useMemo } from "react";
 import {ink, inkSoft, gold, goldBg, goldBdr, 
-  pageColor, white, muted, border, 
+  pageColor, white, muted, mutedBg, border, 
   green, greenBg, amber, amberBg, violet, violetBg, blue, blueBg, red, redBg, rose, roseBg, teal, tealBg} from "../styles/colors";
 
 import {GridIcon, SearchPeopleIcon, BriefcaseIcon, BadgeIcon, ChartIcon, PathIcon, LogoutIcon, 
@@ -8,8 +8,9 @@ import {GridIcon, SearchPeopleIcon, BriefcaseIcon, BadgeIcon, ChartIcon, PathIco
 
 import Sidebar from "../components/layout/Sidebar"
 
-import Badge from "../components/commen/Badge"
+import {Badge, StatusBadge} from "../components/commen/Badge"
 import PageHeader from "../components/commen/PageHeader"
+import ProgressRing from "../components/commen/ProgressRing"
 import StatCard from "../components/commen/StatCard"
 import Toast from "../components/commen/Toast"
 
@@ -28,34 +29,19 @@ const NAV_ITEMS = [
   { id:"pathways",   label:"Upskilling",        Icon:PathIcon       },
 ];
 
+// Candidate status badge
+const STATUS_CFG = {
+  new:       {label:"New",       color:muted,  bg:mutedBg  },
+  screening: {label:"Screening", color:blue,   bg:blueBg   },
+  interview: {label:"Interview", color:violet, bg:violetBg },
+  offer:     {label:"Offer",     color:green,  bg:greenBg  },
+  hired:     {label:"Hired",     color:white,  bg:green    },
+  rejected:  {label:"Rejected",  color:muted,  bg:mutedBg  },
+};
 
 // ════════════════════════════════════════════════
 // SHARED UI
 // ════════════════════════════════════════════════
-// Candidate stage badge
-const STAGE_CFG = {
-  new:       {label:"New",       bg:"#F1F5F9", color:muted},
-  screening: {label:"Screening", bg:blueBg,    color:blue},
-  interview: {label:"Interview", bg:violetBg,  color:violet},
-  offer:     {label:"Offer",     bg:greenBg,   color:green},
-  hired:     {label:"Hired",     color:white,  bg:green},
-  rejected:  {label:"Rejected",  bg:"#F1F5F9", color:muted},
-};
-function StageBadge({stage}){const c=STAGE_CFG[stage]||STAGE_CFG.new;return <Badge label={c.label} bg={c.bg} color={c.color}/>;}
-
-// Match ring
-function MatchRing({pct,size=52}){
-  const r=(size-5)/2,circ=2*Math.PI*r,off=circ*(1-pct/100);
-  const col=pct>=80?green:pct>=60?gold:amber;
-  return <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`}>
-    <circle cx={size/2} cy={size/2} r={r} fill="none" stroke={border} strokeWidth="4"/>
-    <circle cx={size/2} cy={size/2} r={r} fill="none" stroke={col} strokeWidth="4"
-      strokeDasharray={circ} strokeDashoffset={off} strokeLinecap="round"
-      transform={`rotate(-90 ${size/2} ${size/2})`}/>
-    <text x="50%" y="50%" dominantBaseline="middle" textAnchor="middle" fontSize="11" fontWeight="700" fill={col}>{pct}%</text>
-  </svg>;
-}
-
 // Credential validity chip
 function CredChip({cred}){
   return(
@@ -157,7 +143,7 @@ function DashboardView({onNav}){
                 <p className="text-xs font-semibold truncate" style={{color:ink}}>{c.name}</p>
                 <p className="text-[11px]" style={{color:muted}}>{c.role}</p>
               </div>
-              <StageBadge stage={c.stage}/>
+              <StatusBadge config={STATUS_CFG} status={c.stage} fallbackKey="new"/>
             </div>
           ))}
         </div>
@@ -236,10 +222,10 @@ function CandidatesView(){
                   <p className="text-sm font-semibold truncate" style={{color:selected?.id===c.id?white:ink}}>{c.name}</p>
                   <p className="text-[11px] truncate" style={{color:selected?.id===c.id?"#94A3B8":muted}}>{c.role}</p>
                 </div>
-                <MatchRing pct={c.match} size={40}/>
+                <ProgressRing earned={c.match} required={100} size={45} />
               </div>
               <div className="flex items-center justify-between">
-                <StageBadge stage={c.stage}/>
+                <StatusBadge config={STATUS_CFG} status={c.stage} fallbackKey="new"/>
                 <span className="text-[10px]" style={{color:selected?.id===c.id?"#94A3B8":muted}}>
                   {c.status==="verified"
                     ? <span className="flex items-center gap-1" style={{color:green}}><CheckIcon size={11} color={green}/>Verified</span>
@@ -265,7 +251,7 @@ function CandidatesView(){
                   <p className="text-[11px] mt-1" style={{color:muted}}>Applied: {selected.applied}</p>
                 </div>
                 <div className="text-center">
-                  <MatchRing pct={selected.match} size={64}/>
+                  <ProgressRing earned={selected.match} required={100} size={60} />
                   <p className="text-[10px] mt-1 font-semibold" style={{color:muted}}>skill match</p>
                 </div>
               </div>
@@ -309,7 +295,7 @@ function CandidatesView(){
 
               {/* Actions */}
               <div className="flex flex-wrap gap-3 pt-4 border-t" style={{borderColor:border}}>
-                <StageBadge stage={selected.stage}/>
+                <StatusBadge config={STATUS_CFG} status={selected.stage} fallbackKey="new"/>
                 <div className="flex gap-2 ml-auto flex-wrap">
                   {selected.stage!=="hired"&&selected.stage!=="rejected"&&(
                     <button onClick={()=>{advance(selected.id);setSelected(s=>({...s,stage:{new:"screening",screening:"interview",interview:"offer",offer:"hired"}[s.stage]||s.stage}));}}

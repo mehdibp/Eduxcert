@@ -8,7 +8,7 @@ import {GridIcon, BookOpenIcon, DiplomaIcon, ShieldIcon, PeopleIcon, SettingsIco
 
 import Sidebar from "../components/layout/Sidebar"
 
-import Badge from "../components/commen/Badge"
+import {Badge} from "../components/commen/Badge"
 import PageHeader from "../components/commen/PageHeader"
 import QualityBadge from "../components/commen/QualityBadge"
 import StatCard from "../components/commen/StatCard"
