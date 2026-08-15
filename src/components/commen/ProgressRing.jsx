@@ -1,8 +1,8 @@
-import { ink, muted, border, gold, green, amber } from "../../styles/colors";
+import { ink, white, muted, border, gold, green, amber } from "../../styles/colors";
 
 
 // Circle or semicircle indicating progress (in percentage or in number) --------------------
-export default function ProgressRing({earned, required, isArc=false, size=isArc?180:50}) {
+export default function ProgressRing({earned, required, isArc=false, size=isArc?180:50, dark=false}) {
   const pct = earned/required * 100;
   
   // Canvas dimensions and circle center
@@ -22,11 +22,12 @@ export default function ProgressRing({earned, required, isArc=false, size=isArc?
   // const strokeColor = pct === 100 ? green : gold;
   const strokeColor = pct == 100 ? green : pct >= 80 ? `${green}${99}` : pct >=60 ? gold : amber;
 
-  const fontSize_ = size>80 ? size/8 : size/5
+  const fontSize_  = size>80 ? size/8 : size/5
+  const fontColor_ = dark ? white : ink
   const text = !isArc 
-               ? <text x="50%" y="50%" dominantBaseline="middle" textAnchor="middle" fontSize={fontSize_} fontWeight="600" fill={ink} > {Math.round(pct)}% </text>
+               ? <text x="50%" y="50%" dominantBaseline="middle" textAnchor="middle" fontSize={fontSize_} fontWeight="600" fill={fontColor_} > {Math.round(pct)}% </text>
                : <>
-                   <text x="50%" y="70%" textAnchor="middle" fontWeight="700" fontSize={fontSize_} fill={ink}> {earned} </text>
+                   <text x="50%" y="70%" textAnchor="middle" fontWeight="700" fontSize={fontSize_} fill={fontColor_}> {earned} </text>
                    <text x="50%" y="90%" textAnchor="middle" fontSize={fontSize_/2} fill={muted}> of {required} ECTS    </text>
                  </>
 

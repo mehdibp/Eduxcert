@@ -1,5 +1,5 @@
 import { useState } from "react";
-import {ink, inkSoft, gold, goldBg, goldBdr, 
+import {ink, inkSoft, gold, goldBg, goldBdr, goldTra,
         pageColor, white, muted, border, 
         green, greenBg, amber, amberBg, violet, violetBg, blue, blueBg, red, redBg, teal, tealBg} from "../styles/colors";
 
@@ -7,7 +7,9 @@ import {UserIcon, BellIcon, GiftIcon, ShieldIcon, WalletIcon, DownloadIcon,
         KeyIcon, TrashIcon, CheckIcon, XIcon, ExternalIcon } from "../components/icons/icons"
 
 import { USER, CONSENTS, NOTIFICATIONS, NOTIF_PREFS, BENEFITS } from "../data/shared"
+import Logo from '../assets/react.svg'
 
+import {Badge} from "../components/commen/Badge"
 import ToggleSwitch from "../components/commen/ToggleSwitch"
 import StatCard from "../components/commen/StatCard"
 import Toast from "../components/commen/Toast"
@@ -90,12 +92,9 @@ function ProfilePage(){
                 {user.programme} · {user.institution}
               </p>
               <div className="flex items-center gap-2 mt-1.5">
-                <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full"
-                  style={{backgroundColor:greenBg,color:green}}>Active</span>
-                {user.mfa&&<span className="text-[10px] font-semibold px-2 py-0.5 rounded-full"
-                  style={{backgroundColor:tealBg,color:teal}}>MFA enabled</span>}
-                {user.walletConnected&&<span className="text-[10px] font-semibold px-2 py-0.5 rounded-full"
-                  style={{backgroundColor:violetBg,color:violet}}>EUDI Wallet linked</span>}
+                <Badge color={green} backgroundColor={greenBg}> Active </Badge>
+                {user.mfa && <Badge color={teal} backgroundColor={tealBg}> MFA enabled </Badge> }
+                {user.walletConnected && <Badge color={violet} backgroundColor={violetBg}> EUDI Wallet linked </Badge> }
               </div>
             </div>
           </div>
@@ -506,6 +505,8 @@ function NotificationsPage(){
                   borderBottom:tab===t[0]?`2px solid ${gold}`:"2px solid transparent"}}>
                 {t[1]}
                 {t[0]==="inbox"&&unread>0&&(
+                  // <Badge color={white} backgroundColor={amber}
+                  //        className="ml-2 text-[10px] font-bold px-1.5 py-0.5 rounded-full"> {unread} </Badge>
                   <span className="ml-2 text-[10px] font-bold px-1.5 py-0.5 rounded-full"
                     style={{backgroundColor:amber,color:white}}>{unread}</span>
                 )}
@@ -556,8 +557,7 @@ function NotificationsPage(){
                       <div className="flex-1 min-w-0">
                         <div className="flex items-center gap-2 mb-0.5 flex-wrap">
                           <p className="text-xs font-semibold" style={{color:n.read?muted:ink}}>{n.title}</p>
-                          <span className="text-[10px] font-semibold px-1.5 py-0.5 rounded"
-                            style={{backgroundColor:pageColor,color:muted}}>{t.label}</span>
+                          <Badge color={muted} backgroundColor={pageColor}> {t.label} </Badge>
                         </div>
                         <p className="text-[11px] leading-relaxed" style={{color:muted}}>{n.body}</p>
                         <p className="text-[10px] mt-1.5" style={{color:border}}>{n.ts}</p>
@@ -699,10 +699,8 @@ function BenefitsPage(){
                 {/* Info */}
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-2 flex-wrap mb-1">
-                    <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full"
-                      style={{backgroundColor:b.bg,color:b.color}}>{b.category}</span>
-                    <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full"
-                      style={{backgroundColor:greenBg,color:green}}>Active</span>
+                    <Badge color={b.color} backgroundColor={b.bg}   > {b.category} </Badge>
+                    <Badge color={green}   backgroundColor={greenBg}> Active       </Badge>
                   </div>
                   <h3 className="text-sm font-semibold" style={{color:ink}}>{b.partner}</h3>
                   <p className="text-[11px] mt-0.5" style={{color:muted}}>{b.desc}</p>
@@ -849,21 +847,16 @@ export default function SharedPages(){
       <div className="sticky top-0 z-20" style={{backgroundColor:ink,borderBottom:`1px solid ${inkSoft}`}}>
         <div className="flex items-center gap-2 px-6 py-3">
           <div className="flex items-center gap-2.5 mr-6">
-            <div className="w-6 h-6 rounded-full flex items-center justify-center"
-              style={{border:`1.5px solid ${gold}`}}>
-              <div className="w-1.5 h-1.5 rounded-full" style={{backgroundColor:gold}}/>
-            </div>
+            <img className="w-7 h-7 shrink-0" src={Logo}/>
             <span className="text-white font-serif text-sm tracking-wide">Eduxcert</span>
-            <span className="text-[10px] px-2 py-0.5 rounded-full" style={{backgroundColor:"rgba(176,141,87,0.2)",color:gold}}>
-              Shared Pages
-            </span>
+            <Badge color={gold} backgroundColor={goldTra}> Shared Pages </Badge>
           </div>
           {PAGES.map(({id,label,Icon})=>{
             const on=activePage===id;
             return(
               <button key={id} onClick={()=>setActivePage(id)}
                 className="flex items-center gap-2 px-3 py-2 rounded-lg text-xs font-semibold transition-colors relative"
-                style={{backgroundColor:on?"rgba(176,141,87,0.18)":"transparent",
+                style={{backgroundColor:on?{goldTra}:"transparent",
                   color:on?"#FBF7F0":"#94A3B8"}}>
                 <Icon size={14} color={on?gold:"#64748B"}/>
                 {label}

@@ -1,7 +1,7 @@
 import { useState, useMemo } from "react";
 import {ink, inkSoft, gold, goldBg, goldBdr, 
         pageColor, white, muted, mutedBg, border, 
-        green, greenBg, amber, amberBg, violet, violetBg, blue, blueBg, red, redBg, rose} from "../styles/colors";
+        green, greenBg, amber, amberBg, violet, violetBg, violetBdr, blue, blueBg, red, redBg, rose} from "../styles/colors";
 
 import {GridIcon, BookIcon, GradeIcon, ChartIcon, PeopleIcon, LogoutIcon, CheckIcon, XIcon, 
         PlusIcon, AlertIcon, EditIcon, CalendarIcon, UploadIcon } from "../components/icons/icons"
@@ -52,10 +52,8 @@ function DashboardView({onNav}) {
             {EDUCATOR.title} · {EDUCATOR.department} · {EDUCATOR.institution}
           </p>
         </div>
-        <span className="text-xs font-medium px-3 py-1.5 rounded-full"
-          style={{backgroundColor:violetBg,color:violet,border:`1px solid #C4B5FD`}}>
-          Spring 2025 Term
-        </span>
+        <Badge color={violet} backgroundColor={violetBg} border={`1px solid ${violetBdr}`}
+               className="text-xs font-medium px-3 py-1.5 rounded-full"> Spring 2025 Term </Badge>
       </div>
 
       {/* Alert banner for appeals */}
@@ -245,11 +243,10 @@ function CourseModal({course, onClose, onSave}) {
             </div>
             <div className="flex flex-wrap gap-1.5">
               {form.tags.map(t=>(
-                <span key={t} className="flex items-center gap-1 text-[11px] px-2.5 py-1 rounded-full"
-                  style={{backgroundColor:violetBg,color:violet}}>
-                  {t}
-                  <button onClick={()=>setForm(f=>({...f,tags:f.tags.filter(x=>x!==t)}))}><XIcon size={10} color={violet}/></button>
-                </span>
+                <Badge key={t} color={violet} backgroundColor={violetBg} className="flex items-center gap-1 text-[11px] px-2.5 py-1 rounded-full">
+                    {t}
+                    <button onClick={()=>setForm(f=>({...f,tags:f.tags.filter(x=>x!==t)}))}> <XIcon size={10} color={violet}/> </button>
+                </Badge>
               ))}
             </div>
           </div>
@@ -312,8 +309,8 @@ function CoursesView({onNav}) {
               <div className="flex-1 min-w-0">
                 <div className="flex flex-wrap items-center gap-2 mb-1">
                   <p className="text-[10px] font-mono" style={{color:muted}}>{c.code}</p>
-                  <Badge label={c.level} bg={c.level==="MA"?violetBg:c.level==="PhD"?greenBg:goldBg} color={c.level==="MA"?violet:c.level==="PhD"?green:amber}/>
-                  <Badge label={c.status==="active"?"Active":"Archived"} bg={c.status==="active"?greenBg:"#F1F5F9"} color={c.status==="active"?green:muted}/>
+                  <Badge backgroundColor={c.level==="MA"?violetBg:c.level==="PhD"?greenBg:goldBg} color={c.level==="MA"?violet:c.level==="PhD"?green:amber}> {c.level} </Badge>
+                  <Badge backgroundColor={c.status==="active"?greenBg:"#F1F5F9"} color={c.status==="active"?green:muted}> {c.status==="active"?"Active":"Archived"} </Badge>
                   <StatusBadge config={STATUS_CFG} status={c.gradingStatus} fallbackKey="draft"/>
                 </div>
                 <h3 className="text-sm font-semibold" style={{color:ink}}>{c.title}</h3>
@@ -360,9 +357,11 @@ function CoursesView({onNav}) {
                   {new Date(c.examDate).toLocaleDateString("en-GB",{day:"numeric",month:"short",year:"numeric"})} · {c.examRoom}
                 </span>
               </div>
-              <div className="flex flex-wrap gap-1 mt-1">
-                {c.tags.map(t=><span key={t} className="text-[10px] px-2 py-0.5 rounded-md"
-                  style={{backgroundColor:pageColor,color:muted,border:`1px solid ${border}`}}>{t}</span>)}
+              <div className="flex flex-wrap gap-1 mt-1 items-end">
+                {c.tags.map(t=>
+                  <Badge key={t} color={muted} backgroundColor={pageColor} border={`1px solid ${border}`}
+                         className="text-[10px] px-2 py-0.5 rounded-md"> {t} </Badge>
+                  )}
               </div>
             </div>
           </div>

@@ -1,4 +1,4 @@
-import { gold, green, red, amber, muted, border } from "../../styles/colors";
+import { gold, green, red, amber, muted, border, violet } from "../../styles/colors";
 
 
 
@@ -235,6 +235,15 @@ export function ScanIcon({size=40, color=muted}){
         <path d="M8 20h24" stroke={color} strokeWidth="1.5" strokeLinecap="round" strokeDasharray="3 2"/> </svg>;
     }
 
+// A hamburger menu with a plus sign at the bottom ------------------
+export function ListPlusIcon({size=36, color=violet}) {
+    return <svg width={size} height={size} viewBox="0 0 36 36" fill="none">
+            <path d="M6 8h24M6 14h24M6 20h16" stroke={color} strokeWidth="2.5" strokeLinecap="round"/>
+            <circle cx="27" cy="26" r="7" stroke={color} strokeWidth="2"/>
+            <path d="M25 26h4M27 24v4" stroke={color} strokeWidth="1.8" strokeLinecap="round"/>
+          </svg>;
+    }
+
 // Circle with a check mark inside it -------------------------------
 export function SealNavIcon({size=16, color="currentColor"}) {
     return <svg width={size} height={size} viewBox="0 0 16 16" fill="none">
@@ -357,3 +366,4 @@ export function SealMark({ size=88, color=gold }) {
     </svg>
   );
 }
+

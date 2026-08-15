@@ -1,6 +1,6 @@
 import { useState, useMemo } from "react";
 import {ink, inkSoft, gold, goldLight, goldBg, goldBdr, 
-        pageColor, white, muted, border, 
+        pageColor, white, muted, mutedBg, border, 
         green, greenBg, amber, amberBg, violet, violetBg, blue, blueBg, red, redBg, rose, roseBg} from "../styles/colors";
 
 import {GridIcon, BookIcon, SealNavIcon, CalendarIcon, MapIcon, CheckIcon, XIcon, ChevronIcon, SearchIcon,
@@ -11,7 +11,9 @@ import {STUDENT, DASH_COURSES, DASH_CREDS, TIMELINE, ALL_COURSES, CRED_DATA, LEC
         CAREER_TARGETS, SKILLS, RECS, MILESTONES } from "../data/student"
 
 import Sidebar from "../components/layout/Sidebar"
+import Logo from '../assets/react.svg'
 
+import {Badge, StatusBadge} from "../components/commen/Badge"
 import ProgressRing from "../components/commen/ProgressRing"
 import PageHeader from "../components/commen/PageHeader"
 import QualityBadge from "../components/commen/QualityBadge"
@@ -30,6 +32,11 @@ const NAV_ITEMS = [
   {id:"timetable",  label:"Timetable",   Icon:CalendarIcon},
   {id:"roadmap",    label:"Roadmap",     Icon:MapIcon},
 ];
+const STATUS_CFG = {
+  written: {label:"Written", color:muted,  bg:mutedBg},
+  oral:    {label:"Oral"   , color:violet, bg:violetBg},
+  project: {label:"Project", color:blue,   bg:blueBg},
+};
 
 
 function LoginPage({onLogin}) {
@@ -40,9 +47,7 @@ function LoginPage({onLogin}) {
         <div className="relative hidden lg:flex flex-col justify-between overflow-hidden px-14 py-12"
           style={{background:`linear-gradient(160deg,${ink} 0%,${inkSoft} 100%)`}}>
           <div className="flex items-center gap-3">
-            <div className="w-8 h-8 rounded-full flex items-center justify-center" style={{border:`1.5px solid ${gold}`}}>
-              <div className="w-2.5 h-2.5 rounded-full" style={{backgroundColor:gold}}/>
-            </div>
+            <img className="w-7 h-7 shrink-0" src={Logo}/>
             <span className="text-white font-serif text-lg tracking-wide">Eduxcert</span>
           </div>
           <div className="relative flex-1 flex items-center">
@@ -76,9 +81,7 @@ function LoginPage({onLogin}) {
         <div className="flex flex-col justify-center px-6 sm:px-16 py-12" style={{backgroundColor:white}}>
           <div className="w-full max-w-sm mx-auto">
             <div className="lg:hidden flex items-center gap-3 mb-10">
-              <div className="w-8 h-8 rounded-full flex items-center justify-center" style={{border:`1.5px solid ${gold}`}}>
-                <div className="w-2.5 h-2.5 rounded-full" style={{backgroundColor:gold}}/>
-              </div>
+              <img className="w-7 h-7 shrink-0" src={Logo}/>
               <span className="font-serif text-lg tracking-wide" style={{color:ink}}>Eduxcert</span>
             </div>
             <p className="text-[11px] font-semibold tracking-[0.16em] uppercase mb-2" style={{color:gold}}>
@@ -206,12 +209,11 @@ function DashboardView({onNav}) {
                   <p className="text-[10px] font-mono tracking-wider" style={{color:muted}}>{c.code}</p>
                   <h3 className="text-sm font-semibold mt-0.5 leading-snug" style={{color:ink}}>{c.title}</h3>
                 </div>
-                <ProgressRing earned={c.progress} required={100} pct={c.progress} size={44}/>
+                <ProgressRing earned={c.progress} required={100} size={44}/>
               </div>
-              <span className="text-[11px] font-medium px-2.5 py-0.5 rounded-full self-start"
-                style={{backgroundColor:done?greenBg:goldBg,color:done?green:amber}}>
-                {done?"Completed":"In progress"}
-              </span>
+              <Badge color={done?green:amber} backgroundColor={done?greenBg:goldBg}
+                     className="text-[11px] font-medium px-2.5 py-0.5 rounded-full self-start"> {done?"Completed":"In progress"} 
+              </Badge>
               {done&&c.grade&&<p className="text-xs font-semibold" style={{color:green}}>Grade: {c.grade}</p>}
               {!done&&c.exam&&<p className="text-xs" style={{color:muted}}>Exam: <span style={{color:ink,fontWeight:600}}>{c.exam}</span></p>}
             </div>;
@@ -381,10 +383,11 @@ function CoursesPage() {
                         <p className="text-[10px] font-mono" style={{color:muted}}>{c.code}</p>
                         {[{st:"open",bg:greenBg,col:green,lb:"Open"},{st:"full",bg:amberBg,col:amber,lb:"Full"},{st:"completed",bg:violetBg,col:violet,lb:"Completed"}].find(s=>s.st===c.status)&&
                           (()=>{const s=[{st:"open",bg:greenBg,col:green,lb:"Open"},{st:"full",bg:amberBg,col:amber,lb:"Full"},{st:"completed",bg:violetBg,col:violet,lb:"Completed"}].find(x=>x.st===c.status);
-                          return <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full" style={{backgroundColor:s.bg,color:s.col}}>{s.lb}</span>;})()}
-                        <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full"
-                          style={{backgroundColor:{BA:goldBg,MA:violetBg,PhD:greenBg}[c.level],color:{BA:amber,MA:violet,PhD:green}[c.level]}}>{c.level}</span>
-                      </div>
+                          return  <Badge color={s.col} backgroundColor={s.bg}> {s.lb} </Badge>; })()}
+                          <Badge color={{ BA: amber, MA: violet, PhD: green }[c.level]} 
+                                 backgroundColor={{ BA: goldBg, MA: violetBg, PhD: greenBg }[c.level]}> {c.level} 
+                          </Badge>
+                        </div>
                       <h3 className="text-sm font-semibold" style={{color:ink}}>{c.title}</h3>
                       <p className="text-[11px] mt-1" style={{color:muted}}>{c.educator} · {c.language} · {c.programme}</p>
                     </div>
@@ -457,7 +460,9 @@ function CoursesPage() {
   );
 }
 
-
+// ════════════════════════════════════════════════
+// CREDENTIAL PAGE
+// ════════════════════════════════════════════════
 function CredTypeStyle(type){
   if(type==="degree") return{Icon:DiplomaIcon,bg:violetBg,color:violet};
   return{Icon:SealCredIcon,bg:goldBg,color:gold};
@@ -629,8 +634,9 @@ function CredentialsPage(){
                   <div className="w-11 h-11 rounded-xl flex items-center justify-center shrink-0" style={{backgroundColor:bg,border:`1px solid ${goldBdr}`}}>
                     <Icon size={22} color={color}/>
                   </div>
-                  <span className="text-[10px] font-bold tracking-wide px-2 py-0.5 rounded-full uppercase" style={{backgroundColor:greenBg,color:green}}>Active</span>
-                </div>
+                  <Badge color={green} backgroundColor={greenBg}
+                         className="text-[10px] font-bold tracking-wide px-2 py-0.5 rounded-full uppercase"> Active </Badge>
+                  </div>
                 <div className="flex-1">
                   <p className="text-[10px] font-semibold uppercase tracking-widest mb-1" style={{color}}>{c.type}</p>
                   <h3 className="text-base font-serif" style={{color:ink}}>{c.title}</h3>
@@ -653,7 +659,8 @@ function CredentialsPage(){
                 style={{backgroundColor:white,border:`1px solid ${border}`}}>
                 <div className="flex items-start justify-between gap-3">
                   <div className="w-11 h-11 rounded-xl flex items-center justify-center shrink-0" style={{backgroundColor:bg}}><Icon size={22} color={color}/></div>
-                  <span className="text-[10px] font-bold px-2 py-0.5 rounded-full uppercase" style={{backgroundColor:amberBg,color:amber}}>Pending</span>
+                  <Badge color={amber} backgroundColor={amberBg}
+                         className="text-[10px] font-bold tracking-wide px-2 py-0.5 rounded-full uppercase"> Pending </Badge>
                 </div>
                 <div>
                   <p className="text-[10px] font-semibold uppercase tracking-widest mb-1" style={{color}}>{c.type}</p>
@@ -714,9 +721,9 @@ function TimetablePage(){
           ))}
           <div className="flex flex-wrap gap-3">
             {[{t:"lecture",l:"Lecture",c:muted,bg:"#F1F5F9"},{t:"lab",l:"Lab",c:green,bg:greenBg},{t:"seminar",l:"Seminar",c:amber,bg:amberBg}].map(({t,l,c,bg})=>(
-              <span key={t} className="flex items-center gap-1.5 text-[11px] px-3 py-1 rounded-full" style={{backgroundColor:bg,color:c}}>
-                <span className="w-1.5 h-1.5 rounded-full" style={{backgroundColor:c}}/>{l}
-              </span>
+              <Badge key={t} color={c} backgroundColor={bg}
+                      className="flex items-center gap-1.5 text-[11px] px-3 py-1 rounded-full"> 
+                      <span className="w-1.5 h-1.5 rounded-full" style={{backgroundColor:c}}/>{l} </Badge>
             ))}
           </div>
           <div className="overflow-x-auto rounded-2xl" style={{backgroundColor:white,border:`1px solid ${border}`}}>
@@ -790,8 +797,13 @@ function TimetablePage(){
           <div className="lg:col-span-2 space-y-4">
             <p className="text-[10px] font-semibold uppercase tracking-widest" style={{color:muted}}>Upcoming exams — Summer 2025</p>
             {EXAMS.map(e=>{
-              const days=daysUntil(e.date),pct=Math.round(e.registered/e.capacity*100);
-              const Cd=()=>{let bg=pageColor,c=muted;if(days<=3){bg=redBg;c=red;}else if(days<=7){bg=amberBg;c=amber;}return <span className="text-[11px] font-bold px-2.5 py-1 rounded-full" style={{backgroundColor:bg,color:c}}>{days}d</span>;};
+              const days=daysUntil(e.date), pct=Math.round(e.registered/e.capacity*100);
+              const Cd=()=>{
+                let bg=pageColor, c=muted;
+                if(days<=3){bg=redBg; c=red;}
+                else if(days<=7){bg=amberBg; c=amber;}
+                return <Badge color={c} backgroundColor={bg} className="text-[11px] font-bold px-2.5 py-1 rounded-full"> {days}d </Badge>;
+              };
               return <div key={e.id} className="rounded-2xl p-5 flex gap-4" style={{backgroundColor:white,border:`1px solid ${border}`}}>
                 <div className="shrink-0 w-14 flex flex-col items-center justify-center rounded-xl py-2" style={{backgroundColor:e.bg,border:`1px solid ${e.color}20`}}>
                   <p className="text-[10px] font-semibold uppercase tracking-wide" style={{color:e.color}}>{e.date.toLocaleDateString("en-GB",{month:"short"})}</p>
@@ -801,7 +813,7 @@ function TimetablePage(){
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-2 flex-wrap mb-1">
                     <p className="text-[10px] font-mono" style={{color:muted}}>{e.course}</p>
-                    <TypeBadge type={e.type}/><Cd/>
+                    <StatusBadge config={STATUS_CFG} status={e.type} fallbackKey="written"/> <Cd/>
                   </div>
                   <h3 className="text-sm font-semibold" style={{color:ink}}>{e.title}</h3>
                   <div className="flex flex-wrap gap-x-4 mt-2">
@@ -834,18 +846,6 @@ function RoadmapPage({onNav}){
   const [tab,setTab]=useState("skills");
   const t=CAREER_TARGETS.find(x=>x.id===target);
 
-  const Ring=({pct,size=56,sel})=>{
-    const r=(size-5)/2,circ=2*Math.PI*r,off=circ*(1-pct/100);
-    const col=pct>=70?green:pct>=50?gold:muted;
-    return <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`}>
-      <circle cx={size/2} cy={size/2} r={r} fill="none" stroke={sel?inkSoft:border} strokeWidth="4.5"/>
-      <circle cx={size/2} cy={size/2} r={r} fill="none" stroke={col} strokeWidth="4.5"
-        strokeDasharray={circ} strokeDashoffset={off} strokeLinecap="round"
-        transform={`rotate(-90 ${size/2} ${size/2})`}/>
-      <text x="50%" y="50%" dominantBaseline="middle" textAnchor="middle" fontSize="12" fontWeight="700" fill={sel?white:ink}>{pct}%</text>
-    </svg>;
-  };
-
   return (
     <div className="min-h-screen" style={{backgroundColor:pageColor}}>
       <PageHeader rootLabel={"Andreja Novak"} crumb="Roadmap" title="Personal Roadmap"
@@ -863,7 +863,7 @@ function RoadmapPage({onNav}){
                 style={{backgroundColor:on?inkSoft:white,border:`2px solid ${on?ink:border}`,
                   boxShadow:on?"0 8px 24px -6px rgba(15,23,41,0.35)":"none"}}>
                 <span className="text-2xl">{ct.icon}</span>
-                <Ring pct={ct.match} sel={on}/>
+                <ProgressRing earned={ct.match} required={100} size={56} dark={on}/>
                 <p className="text-xs font-semibold text-center leading-tight" style={{color:on?white:ink}}>{ct.title}</p>
               </button>;
             })}
@@ -949,7 +949,7 @@ function RoadmapPage({onNav}){
               <div className="flex-1 min-w-0">
                 <div className="flex items-center gap-2 flex-wrap mb-0.5">
                   <span className="text-[10px] font-mono" style={{color:muted}}>{r.code}</span>
-                  <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full" style={{backgroundColor:pri.bg,color:pri.c}}>{pri.l}</span>
+                  <Badge color={pri.c} backgroundColor={pri.bg}> {pri.l} </Badge>
                 </div>
                 <p className="text-sm font-semibold" style={{color:ink}}>{r.title}</p>
                 <p className="text-[11px] mt-0.5" style={{color:muted}}>{r.reason}</p>
@@ -987,7 +987,7 @@ function RoadmapPage({onNav}){
               {MILESTONES.map((m,i)=>{
                 const isCur=!m.done&&MILESTONES[i-1]?.done;
                 return <li key={m.id} className={`relative flex items-start gap-4 ${i<MILESTONES.length-1?"pb-6":""}`}>
-                  <div className="absolute -left-0.5 w-7 flex justify-center" style={{top:2}}>
+                  <div className="absolute top-0.5 -left-[28.5px] w-7 flex justify-center">
                     <div className="w-4 h-4 rounded-full flex items-center justify-center z-10"
                       style={{backgroundColor:m.done?green:isCur?gold:white,border:`2px solid ${m.done?green:isCur?gold:border}`}}>
                       {m.done&&<svg width="8" height="8" viewBox="0 0 8 8" fill="none"><path d="M1.5 4L3 5.5 6.5 2" stroke={white} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>}

@@ -1,12 +1,15 @@
 import { useState, useEffect, useRef } from "react";
-import {ink, inkSoft, gold, goldBg, goldBdr, 
+import {ink, inkSoft, gold, goldBg, goldBdr, goldTra,
   pageColor, white, muted, border, 
-  green, greenBg, amber, amberBg, violet, violetBg, blue, blueBg, red, redBg} from "../styles/colors";
+  green, greenBg, amber, amberBg, violet, violetBg, violetBdr, blue, blueBg, red, redBg} from "../styles/colors";
 
 import {CheckIcon, XCircleIcon, QuestionIcon, SpinIcon, ScanIcon, ShieldIcon, ExternalIcon, 
-        CopyIcon } from "../components/icons/icons"
+        CopyIcon, ListPlusIcon } from "../components/icons/icons"
 
 import { SCENARIOS, VSTEPS } from "../data/verifier"
+import Logo from '../assets/react.svg'
+
+import {Badge} from "../components/commen/Badge"
 
 
 // ════════════════════════════════════════════════
@@ -202,27 +205,18 @@ export default function PublicVerifierPage() {
       <header style={{backgroundColor:ink,borderBottom:`1px solid ${inkSoft}`}}>
         <div className="max-w-3xl mx-auto px-6 py-4 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="w-7 h-7 rounded-full flex items-center justify-center shrink-0"
-              style={{border:`1.5px solid ${gold}`}}>
-              <div className="w-2 h-2 rounded-full" style={{backgroundColor:gold}}/>
-            </div>
+            <img className="w-7 h-7 shrink-0" src={Logo}/>
             <div>
-              <span className="text-white font-serif text-base tracking-wide">Eduxcert</span>
-              <span className="ml-2 text-[11px] px-2 py-0.5 rounded-full"
-                style={{backgroundColor:"rgba(176,141,87,0.2)",color:gold}}>
-                Public Verifier
-              </span>
+              <span className="text-white font-serif text-base tracking-wide"> Eduxcert </span>
+              <Badge color={gold} backgroundColor={goldTra}
+                     className="ml-2 text-[11px] px-2 py-0.5 rounded-full"> Public Verifier </Badge>
             </div>
           </div>
           <div className="flex items-center gap-4 text-[11px]" style={{color:"#94A3B8"}}>
             <span className="flex items-center gap-1.5">
-              <span className="w-1.5 h-1.5 rounded-full" style={{backgroundColor:green}}/>
-              No login required
-            </span>
+              <span className="w-1.5 h-1.5 rounded-full" style={{backgroundColor:green}}/> No login required </span>
             <span className="hidden sm:flex items-center gap-1.5">
-              <span className="w-1.5 h-1.5 rounded-full" style={{backgroundColor:green}}/>
-              Offline-capable
-            </span>
+              <span className="w-1.5 h-1.5 rounded-full" style={{backgroundColor:green}}/> Offline-capable </span>
           </div>
         </div>
       </header>
@@ -260,10 +254,8 @@ export default function PublicVerifierPage() {
                     Point your camera at the QR on a credential card or PDF.
                   </p>
                 </div>
-                <span className="text-xs font-semibold px-3 py-1.5 rounded-full self-start"
-                  style={{backgroundColor:goldBg,color:amber,border:`1px solid ${goldBdr}`}}>
-                  Recommended
-                </span>
+                <Badge color={amber} backgroundColor={goldBg} border={`1px solid ${goldBdr}`}
+                       className="text-xs font-semibold px-3 py-1.5 rounded-full self-start"> Recommended </Badge>
               </button>
 
               <button onClick={()=>setMode("manual")}
@@ -271,11 +263,7 @@ export default function PublicVerifierPage() {
                 style={{backgroundColor:white,border:`2px solid ${border}`}}>
                 <div className="w-16 h-16 rounded-2xl flex items-center justify-center"
                   style={{backgroundColor:violetBg}}>
-                  <svg width="36" height="36" viewBox="0 0 36 36" fill="none">
-                    <path d="M6 8h24M6 14h24M6 20h16" stroke={violet} strokeWidth="2.5" strokeLinecap="round"/>
-                    <circle cx="27" cy="26" r="7" stroke={violet} strokeWidth="2"/>
-                    <path d="M25 26h4M27 24v4" stroke={violet} strokeWidth="1.8" strokeLinecap="round"/>
-                  </svg>
+                  <ListPlusIcon size={36} color={violet}/>
                 </div>
                 <div>
                   <p className="text-sm font-semibold" style={{color:ink}}>Enter verify link</p>
@@ -283,10 +271,8 @@ export default function PublicVerifierPage() {
                     Paste a verification URL or credential code (EDX-XXXX-XXXX).
                   </p>
                 </div>
-                <span className="text-xs font-semibold px-3 py-1.5 rounded-full self-start"
-                  style={{backgroundColor:violetBg,color:violet}}>
-                  Also available
-                </span>
+                <Badge color={violet} backgroundColor={violetBg} border={`1px solid ${violetBdr}`}
+                       className="text-xs font-semibold px-3 py-1.5 rounded-full self-start"> Also available </Badge>
               </button>
             </div>
 
@@ -378,10 +364,9 @@ export default function PublicVerifierPage() {
                       <p className="text-[11px] font-semibold" style={{color:ink}}>{label}</p>
                       <p className="text-[10px] font-mono mt-0.5" style={{color:muted}}>{code}</p>
                     </div>
-                    <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full"
-                      style={{backgroundColor:col+"18",color:col}}>
+                    <Badge color={col} backgroundColor={col+"18"}> 
                       {sc==="valid"?"Valid":sc==="revoked"?"Revoked":"Unknown issuer"}
-                    </span>
+                    </Badge>
                   </button>
                 ))}
               </div>

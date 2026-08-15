@@ -1,7 +1,7 @@
 import { useState, useMemo } from "react";
 import {ink, inkSoft, gold, goldBg, goldBdr, 
   pageColor, white, muted, mutedBg, border, 
-  green, greenBg, amber, amberBg, violet, violetBg, blue, blueBg, red, redBg, rose, roseBg, teal, tealBg} from "../styles/colors";
+  green, greenBg, amber, amberBg, violet, violetBg, blue, blueBg, red, redBg, rose, roseBg, teal, tealBg, tealBdr} from "../styles/colors";
 
 import {GridIcon, SearchPeopleIcon, BriefcaseIcon, BadgeIcon, ChartIcon, PathIcon, LogoutIcon, 
         CheckIcon, XIcon, PlusIcon, AlertIcon, ShieldIcon, SendIcon, } from "../components/icons/icons"
@@ -222,7 +222,7 @@ function CandidatesView(){
                   <p className="text-sm font-semibold truncate" style={{color:selected?.id===c.id?white:ink}}>{c.name}</p>
                   <p className="text-[11px] truncate" style={{color:selected?.id===c.id?"#94A3B8":muted}}>{c.role}</p>
                 </div>
-                <ProgressRing earned={c.match} required={100} size={45} />
+                <ProgressRing earned={c.match} required={100} size={45} dark={selected?.id===c.id}/>
               </div>
               <div className="flex items-center justify-between">
                 <StatusBadge config={STATUS_CFG} status={c.stage} fallbackKey="new"/>
@@ -294,7 +294,7 @@ function CandidatesView(){
               </div>
 
               {/* Actions */}
-              <div className="flex flex-wrap gap-3 pt-4 border-t" style={{borderColor:border}}>
+              <div className="flex flex-wrap gap-3 pt-4 border-t items-center" style={{borderColor:border}}>
                 <StatusBadge config={STATUS_CFG} status={selected.stage} fallbackKey="new"/>
                 <div className="flex gap-2 ml-auto flex-wrap">
                   {selected.stage!=="hired"&&selected.stage!=="rejected"&&(
@@ -374,8 +374,7 @@ function JobsView(){
               <div>
                 <div className="flex items-center gap-2 mb-1 flex-wrap">
                   <h3 className="text-sm font-semibold" style={{color:ink}}>{j.title}</h3>
-                  <Badge label={j.status==="active"?"Active":"Closed"}
-                    bg={j.status==="active"?greenBg:"#F1F5F9"} color={j.status==="active"?green:muted}/>
+                  <Badge backgroundColor={j.status==="active"?greenBg:"#F1F5F9"} color={j.status==="active"?green:muted}> {j.status==="active"?"Active":"Closed"} </Badge>
                 </div>
                 <p className="text-xs" style={{color:muted}}>{j.dept} · Posted {j.posted} · {j.applicants} applicants</p>
               </div>
@@ -391,15 +390,18 @@ function JobsView(){
               <div>
                 <p className="text-[10px] uppercase tracking-wider font-semibold mb-2" style={{color:muted}}>Required ESCO skills</p>
                 <div className="flex flex-wrap gap-1.5">
-                  {j.skills.map(s=><span key={s} className="text-[11px] px-2 py-0.5 rounded-md"
-                    style={{backgroundColor:tealBg,color:teal,border:`1px solid #99F6E4`}}>{s}</span>)}
+                  {j.skills.map(s=>
+                  <Badge key={s} color={teal} backgroundColor={tealBg} border={`1px solid ${tealBdr}`}
+                         className="text-[11px] px-2 py-0.5 rounded-md"> {s} </Badge> )}
                 </div>
               </div>
               <div>
                 <p className="text-[10px] uppercase tracking-wider font-semibold mb-2" style={{color:muted}}>Required credentials</p>
                 <div className="flex flex-wrap gap-1.5">
-                  {j.credentials.map(c=><span key={c} className="text-[11px] px-2 py-0.5 rounded-md"
-                    style={{backgroundColor:goldBg,color:amber,border:`1px solid ${goldBdr}`}}>{c}</span>)}
+                  {j.credentials.map(c=>
+                  <Badge key={c} color={amber} backgroundColor={goldBg} border={`1px solid ${goldBdr}`}
+                         className="text-[11px] px-2 py-0.5 rounded-md"> {c} </Badge>
+                    )}
                 </div>
               </div>
             </div>
@@ -525,10 +527,9 @@ function IssueVCView(){
                   <p className="text-[11px] truncate" style={{color:selected?.id===e.id?"#94A3B8":muted}}>{e.dept} · {e.role}</p>
                 </div>
                 {e.vcIssued
-                  ? <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full shrink-0"
-                      style={{backgroundColor:tealBg,color:teal}}>VC issued</span>
-                  : <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full shrink-0"
-                      style={{backgroundColor:"#F1F5F9",color:muted}}>Pending</span>}
+                  ? <Badge color={teal}  backgroundColor={tealBg}> VC issued </Badge>
+                  : <Badge color={muted} backgroundColor={mutedBg}> Pending  </Badge> }
+                    
               </div>
             </button>
           ))}
@@ -566,8 +567,8 @@ function IssueVCView(){
                 <p className="text-[10px] font-medium mb-2" style={{color:muted}}>Skills attested (ESCO)</p>
                 <div className="flex flex-wrap gap-1.5">
                   {selected.skills.map(s=>(
-                    <span key={s} className="text-[11px] px-2.5 py-1 rounded-full"
-                      style={{backgroundColor:tealBg,color:teal,border:`1px solid #99F6E4`}}>{s}</span>
+                    <Badge key={s} color={teal} backgroundColor={tealBg} border={`1px solid ${tealBdr}`}
+                         className="text-[11px] px-2.5 py-1 rounded-full"> {s} </Badge>
                   ))}
                 </div>
               </div>
@@ -705,14 +706,18 @@ function WorkforceView(){
                   <td className="px-4 py-3 text-xs" style={{color:muted}}>{e.dept}</td>
                   <td className="px-4 py-3">
                     <div className="flex flex-wrap gap-1">
-                      {e.skills.map(s=><span key={s} className="text-[10px] px-1.5 py-0.5 rounded-md"
-                        style={{backgroundColor:tealBg,color:teal}}>{s}</span>)}
+                      {e.skills.map(s=>
+                      <Badge key={s} color={teal} backgroundColor={tealBg}
+                             className="text-[10px] px-1.5 py-0.5 rounded-md"> {s} </Badge> 
+                      )}
                     </div>
                   </td>
                   <td className="px-4 py-3">
                     <div className="flex flex-wrap gap-1">
-                      {e.gaps.map(g=><span key={g} className="text-[10px] px-1.5 py-0.5 rounded-md"
-                        style={{backgroundColor:redBg,color:red}}>{g}</span>)}
+                      {e.gaps.map(g=>
+                      <Badge key={g} color={red} backgroundColor={redBg}
+                             className="text-[10px] px-1.5 py-0.5 rounded-md"> {g} </Badge> 
+                      )}
                     </div>
                   </td>
                   <td className="px-4 py-3">
@@ -766,10 +771,7 @@ function PathwaysView(){
               <div>
                 <div className="flex items-center gap-2 mb-1 flex-wrap">
                   <h3 className="text-sm font-semibold" style={{color:ink}}>{p.title}</h3>
-                  {p.status==="enrolled"&&(
-                    <span className="text-[10px] font-bold px-2 py-0.5 rounded-full"
-                      style={{backgroundColor:tealBg,color:teal}}>Enrolled</span>
-                  )}
+                  {p.status==="enrolled"&&( <Badge color={teal} backgroundColor={tealBg}> Enrolled </Badge> )}
                 </div>
                 <p className="text-xs" style={{color:muted}}>{p.provider} · {p.duration}</p>
               </div>
@@ -806,8 +808,7 @@ function PathwaysView(){
                 {p.status==="enrolled"&&p.employees.length>0?(
                   <div className="flex flex-wrap gap-1.5">
                     {p.employees.map(e=>(
-                      <span key={e} className="text-[11px] px-2.5 py-1 rounded-full"
-                        style={{backgroundColor:violetBg,color:violet}}>{e}</span>
+                      <Badge key={e} color={violet} backgroundColor={violetBg} className="text-[11px] px-2.5 py-1 rounded-full"> {e} </Badge>
                     ))}
                   </div>
                 ):(
@@ -815,8 +816,7 @@ function PathwaysView(){
                     <p className="text-xs" style={{color:muted}}>Employees with skill gaps in this track:</p>
                     <div className="flex flex-wrap gap-1.5 mt-1">
                       {EMPLOYEES.filter(e=>e.gaps.some(g=>p.title.toLowerCase().includes(g.toLowerCase().split(" ")[0]))).map(e=>(
-                        <span key={e.id} className="text-[11px] px-2.5 py-1 rounded-full"
-                          style={{backgroundColor:"#F1F5F9",color:muted}}>{e.name}</span>
+                      <Badge key={e.id} color={muted} backgroundColor={mutedBg} className="text-[11px] px-2.5 py-1 rounded-full"> {e.name} </Badge>
                       ))}
                     </div>
                   </div>
@@ -831,10 +831,13 @@ function PathwaysView(){
                 {WORKFORCE_SKILLS
                   .filter(s=>s.market-s.have>10&&p.title.toLowerCase().split(" ").some(w=>s.skill.toLowerCase().includes(w)))
                   .map(s=>(
-                    <span key={s.skill} className="flex items-center gap-1 text-[11px] px-2.5 py-1 rounded-full"
-                      style={{backgroundColor:redBg,color:red}}>
+                    // <span key={s.skill} className="flex items-center gap-1 text-[11px] px-2.5 py-1 rounded-full"
+                    //   style={{backgroundColor:redBg,color:red}}>
+                    //   {s.skill} <span style={{color:muted}}>−{s.market-s.have}pts</span>
+                    // </span>
+                    <Badge key={s.skill} color={red} backgroundColor={redBg} className="flex items-center gap-1 text-[11px] px-2.5 py-1 rounded-full">
                       {s.skill} <span style={{color:muted}}>−{s.market-s.have}pts</span>
-                    </span>
+                    </Badge>
                   ))
                 }
                 {p.id==="pw1"&&<span className="text-[11px] px-2.5 py-1 rounded-full" style={{backgroundColor:redBg,color:red}}>Cloud Infrastructure −34pts</span>}

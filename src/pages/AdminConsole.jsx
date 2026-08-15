@@ -1,7 +1,7 @@
 import { useState, useMemo } from "react";
 import {ink, inkSoft, gold, goldBg, goldBdr, 
         pageColor, white, muted, border, 
-        green, greenBg, amber, amberBg, violet, violetBg, blue, blueBg, red, redBg, rose} from "../styles/colors";
+        green, greenBg, amber, amberBg, violet, violetBg, violetBdr, blue, blueBg, red, redBg, rose} from "../styles/colors";
 
 import {GridIcon, BookOpenIcon, DiplomaIcon, ShieldIcon, PeopleIcon, SettingsIcon, LogIcon, 
         LogoutIcon, CheckIcon, XIcon, PlusIcon, AlertIcon, UploadIcon, SealNavIcon} from "../components/icons/icons"
@@ -45,10 +45,8 @@ function DashboardView({onNav}){
         </div>
         <div className="flex items-center gap-2">
           <QualityBadge> QI · Quality Intelligence  </QualityBadge>
-          <span className="text-xs font-medium px-3 py-1.5 rounded-full"
-            style={{backgroundColor:violetBg,color:violet,border:`1px solid #C4B5FD`}}>
-            {TENANT.tier} plan
-          </span>
+          <Badge color={violet} backgroundColor={violetBg} border={`1px solid ${violetBdr}`}
+                 className="text-xs font-medium px-3 py-1.5 rounded-full"> {TENANT.tier} plan </Badge>
         </div>
       </div>
 
@@ -123,9 +121,7 @@ function DashboardView({onNav}){
                   <p className="text-xs font-semibold" style={{color:ink}}>{p.title}</p>
                   <p className="text-[11px]" style={{color:muted}}>{p.students} students · {p.ects} ECTS</p>
                 </div>
-                <Badge label={p.accred}
-                  bg={p.accred==="Pending"?amberBg:greenBg}
-                  color={p.accred==="Pending"?amber:green}/>
+                <Badge backgroundColor={p.accred==="Pending"?amberBg:greenBg} color={p.accred==="Pending"?amber:green}> {p.accred} </Badge>
               </div>
             ))}
           </div>
@@ -193,10 +189,8 @@ function ProgrammesView(){
               <div className="flex-1 min-w-0">
                 <div className="flex flex-wrap items-center gap-2 mb-1">
                   <p className="text-[10px] font-mono" style={{color:muted}}>{p.code}</p>
-                  <Badge label={p.status==="active"?"Active":"Draft"}
-                    bg={p.status==="active"?greenBg:amberBg} color={p.status==="active"?green:amber}/>
-                  <Badge label={p.accred}
-                    bg={p.accred==="Pending"?amberBg:greenBg} color={p.accred==="Pending"?amber:green}/>
+                  <Badge backgroundColor={p.status==="active" ?greenBg:amberBg} color={p.status==="active" ?green:amber}> {p.status==="active"?"Active":"Draft"} </Badge>
+                  <Badge backgroundColor={p.accred==="Pending"?amberBg:greenBg} color={p.accred==="Pending"?amber:green}> {p.accred} </Badge>
                 </div>
                 <h3 className="text-sm font-semibold" style={{color:ink}}>{p.title}</h3>
                 <p className="text-[11px] mt-0.5" style={{color:muted}}>
@@ -330,7 +324,7 @@ function DegreesView(){
                 <td className="px-4 py-3">
                   <Badge
                     label={d.status==="pending"?"Pending review":d.status==="approved"?"Approved":"Issued"}
-                    bg={d.status==="pending"?amberBg:d.status==="approved"?blueBg:greenBg}
+                    backgroundColor={d.status==="pending"?amberBg:d.status==="approved"?blueBg:greenBg}
                     color={d.status==="pending"?amber:d.status==="approved"?blue:green}/>
                 </td>
                 <td className="px-4 py-3">
@@ -658,13 +652,11 @@ function UsersView(){
                   </div>
                 </td>
                 <td className="px-4 py-3">
-                  <Badge label={u.role.charAt(0).toUpperCase()+u.role.slice(1)}
-                    bg={roleBg[u.role]||pageColor} color={roleColor[u.role]||muted}/>
+                  <Badge backgroundColor={roleBg[u.role]||pageColor} color={roleColor[u.role]||muted}> {u.role.charAt(0).toUpperCase()+u.role.slice(1)} </Badge>
                 </td>
                 <td className="px-4 py-3 text-xs" style={{color:muted}}>{u.dept}</td>
                 <td className="px-4 py-3">
-                  <Badge label={u.status==="active"?"Active":"Inactive"}
-                    bg={u.status==="active"?greenBg:"#F1F5F9"} color={u.status==="active"?green:muted}/>
+                  <Badge backgroundColor={u.status==="active"?greenBg:"#F1F5F9"} color={u.status==="active"?green:muted}> {u.status==="active"?"Active":"Inactive"} </Badge>
                 </td>
                 <td className="px-4 py-3">
                   {u.mfa
@@ -881,8 +873,7 @@ function AuditView(){
                 <td className="px-4 py-3 text-xs" style={{color:ink}}>{a.action}</td>
                 <td className="px-4 py-3 text-xs" style={{color:muted}}>{a.resource}</td>
                 <td className="px-4 py-3">
-                  <Badge label={a.risk.charAt(0).toUpperCase()+a.risk.slice(1)}
-                    bg={riskBg[a.risk]} color={riskColor[a.risk]}/>
+                  <Badge backgroundColor={riskBg[a.risk]} color={riskColor[a.risk]}> {a.risk.charAt(0).toUpperCase()+a.risk.slice(1)} </Badge>
                 </td>
               </tr>
             ))}
