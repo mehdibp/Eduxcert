@@ -1,15 +1,17 @@
 import { useState, useMemo } from "react";
 import {ink, inkSoft, gold, goldBg, goldBdr, 
         pageColor, white, muted, border, 
-        green, greenBg, amber, amberBg, violet, violetBg, violetBdr, blue, blueBg, red, redBg, rose} from "../styles/colors";
+        green, greenBg, amber, amberBg, violet, violetBg, violetBdr, blue, blueBg, blueBdr, red, redBg, rose} from "../styles/colors";
 
-import {GridIcon, BookOpenIcon, DiplomaIcon, ShieldIcon, PeopleIcon, SettingsIcon, LogIcon, 
+import {GridIcon, BookOpenIcon, DiplomaIcon, ShieldIcon, SearchIcon, PeopleIcon, SettingsIcon, LogIcon, 
         LogoutIcon, CheckIcon, XIcon, PlusIcon, AlertIcon, UploadIcon, SealNavIcon} from "../components/icons/icons"
 
 import Sidebar from "../components/layout/Sidebar"
 
 import {Badge} from "../components/commen/Badge"
+import {Button} from "../components/commen/Button"
 import PageHeader from "../components/commen/PageHeader"
+import ProgressRing from "../components/commen/ProgressRing"
 import QualityBadge from "../components/commen/QualityBadge"
 import StatCard from "../components/commen/StatCard"
 import Toast from "../components/commen/Toast"
@@ -169,11 +171,10 @@ function ProgrammesView(){
       <PageHeader rootLabel={"Admin Zupan"} crumb="Programmes" title="Programmes & Curricula"
         subtitle={`${TENANT.name} · ${programmes.filter(p=>p.status==="active").length} active`}
         action={
-          <button onClick={()=>showToast("New programme form coming soon.")}
-            className="flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-semibold text-white"
-            style={{backgroundColor:ink}}>
+          <Button onClick={()=>showToast("New programme form coming soon.")} color={white} backgroundColor={ink}
+                  className="text-sm font-semibold px-4 py-2 gap-2">
             <PlusIcon size={13}/> New Programme
-          </button>
+          </Button>
         }/>
 
       <div className="space-y-3">
@@ -198,11 +199,11 @@ function ProgrammesView(){
                 </p>
               </div>
               <div className="shrink-0 flex gap-2">
-                <button onClick={()=>setEditing(p.id===editing?null:p.id)}
-                  className="text-xs font-medium px-3 py-1.5 rounded-lg border"
-                  style={{borderColor:border,color:muted}}>
+                <Button onClick={()=>setEditing(p.id===editing?null:p.id)} 
+                        color={muted} backgroundColor={white} border={`1px solid ${border}`}
+                        className="text-xs font-medium px-3 py-1.5">
                   {p.id===editing?"Collapse":"Manage"}
-                </button>
+                </Button>
               </div>
             </div>
 
@@ -216,14 +217,14 @@ function ProgrammesView(){
                     <div key={c} className="flex items-center gap-2 text-xs px-3 py-1.5 rounded-lg"
                       style={{backgroundColor:pageColor,border:`1px solid ${border}`,color:ink}}>
                       {c}
-                      <button className="opacity-40 hover:opacity-100"><XIcon size={11}/></button>
+                      <Button className="opacity-40 hover:opacity-100"> <XIcon size={11}/> </Button>
                     </div>
                   ))}
-                  <button className="flex items-center gap-1 text-xs px-3 py-1.5 rounded-lg"
-                    style={{backgroundColor:goldBg,color:amber,border:`1px solid ${goldBdr}`}}
-                    onClick={()=>showToast("Track added.")}>
+                  <Button onClick={()=>showToast("Track added.")} 
+                          color={amber} backgroundColor={goldBg} border={`1px solid ${goldBdr}`}
+                          className="text-xs px-3 py-1.5 gap-1">
                     <PlusIcon size={11}/> Add track
-                  </button>
+                  </Button>
                 </div>
                 <div className="grid grid-cols-3 gap-3">
                   {[
@@ -238,16 +239,16 @@ function ProgrammesView(){
                   ))}
                 </div>
                 <div className="flex gap-2 mt-4">
-                  <button onClick={()=>{setProgs(ps=>ps.map(x=>x.id===p.id?{...x,status:x.status==="active"?"draft":"active"}:x));showToast(`Programme ${p.status==="active"?"archived":"activated"}.`);}}
-                    className="text-xs font-medium px-3 py-2 rounded-lg border"
-                    style={{borderColor:border,color:muted}}>
+                  <Button onClick={()=>{setProgs(ps=>ps.map(x=>x.id===p.id?{...x,status:x.status==="active"?"draft":"active"}:x)); showToast(`Programme ${p.status==="active"?"archived":"activated"}.`);}}
+                          color={muted} border={`1px solid ${border}`}
+                          className="text-xs font-medium px-3 py-2">
                     {p.status==="active"?"Archive programme":"Activate programme"}
-                  </button>
-                  <button onClick={()=>showToast("Accreditation dossier opened.")}
-                    className="text-xs font-semibold px-3 py-2 rounded-lg text-white"
-                    style={{backgroundColor:ink}}>
+                  </Button>
+                  <Button onClick={()=>showToast("Accreditation dossier opened.")}
+                          color={white} backgroundColor={ink}
+                          className="text-xs font-semibold px-3 py-2">
                     Open accreditation dossier
-                  </button>
+                  </Button>
                 </div>
               </div>
             )}
@@ -329,17 +330,16 @@ function DegreesView(){
                 </td>
                 <td className="px-4 py-3">
                   {d.status==="approved"
-                    ? <button onClick={()=>award(d.id)}
-                        className="text-xs font-semibold px-3 py-1.5 rounded-lg text-white"
-                        style={{backgroundColor:green}}>
+                    ? <Button onClick={()=>award(d.id)} color={white} backgroundColor={green}
+                              className="text-xs font-semibold px-3 py-1.5">
                         Award degree
-                      </button>
+                      </Button>
                     : d.status==="pending"
-                    ? <button onClick={()=>{setPipeline(p=>p.map(x=>x.id===d.id?{...x,status:"approved"}:x));showToast("Degree approved — awaiting co-sign.");}}
-                        className="text-xs font-semibold px-3 py-1.5 rounded-lg"
-                        style={{backgroundColor:blueBg,color:blue,border:`1px solid #BFDBFE`}}>
+                    ? <Button  onClick={()=>{setPipeline(p=>p.map(x=>x.id===d.id?{...x,status:"approved"}:x)); showToast("Degree approved — awaiting co-sign.");}} 
+                              color={blue} backgroundColor={blueBg} brand={`1px solid ${blueBdr}`}
+                              className="text-xs font-semibold px-3 py-1.5">
                         Approve
-                      </button>
+                      </Button>
                     : <span className="flex items-center gap-1 text-xs font-medium" style={{color:green}}>
                         <CheckIcon size={12}/> VC issued
                       </span>
@@ -399,18 +399,7 @@ function AccreditationView(){
       {/* Overall */}
       <div className="rounded-xl p-5 flex items-center gap-6"
         style={{backgroundColor:white,border:`1px solid ${border}`}}>
-        <div className="relative w-20 h-20 shrink-0">
-          <svg viewBox="0 0 80 80" className="w-full h-full">
-            <circle cx="40" cy="40" r="32" fill="none" stroke={border} strokeWidth="8"/>
-            <circle cx="40" cy="40" r="32" fill="none" stroke={gold} strokeWidth="8"
-              strokeDasharray={`${2*Math.PI*32}`}
-              strokeDashoffset={`${2*Math.PI*32*(1-pct/100)}`}
-              strokeLinecap="round" transform="rotate(-90 40 40)"/>
-          </svg>
-          <div className="absolute inset-0 flex items-center justify-center">
-            <span className="text-base font-bold" style={{color:ink}}>{pct}%</span>
-          </div>
-        </div>
+        <ProgressRing earned={pct} required={100} size={80}/>
         <div className="flex-1">
           <p className="text-sm font-semibold" style={{color:ink}}>Dossier completion</p>
           <p className="text-[11px] mt-0.5" style={{color:muted}}>{doneCount} of {steps.length} phases complete</p>
@@ -427,11 +416,11 @@ function AccreditationView(){
             ))}
           </div>
         </div>
-        <button onClick={()=>showToast("Dossier preview generated.")}
-          className="shrink-0 text-xs font-semibold px-4 py-2.5 rounded-lg border"
-          style={{borderColor:border,color:ink}}>
+        <Button onClick={()=>showToast("Dossier preview generated.")} 
+                color={ink} border={`1px solid ${border}`}
+                className="text-xs font-semibold px-4 py-2.5">
           Preview PDF
-        </button>
+        </Button>
       </div>
 
       <div className="grid lg:grid-cols-3 gap-6">
@@ -513,21 +502,19 @@ function AccreditationView(){
                         </div>
                       ))}
                     </div>
-                    <button onClick={()=>completeStep("s3")}
-                      className="w-full py-2.5 rounded-xl text-sm font-semibold text-white"
-                      style={{backgroundColor:ink}}>
+                    <Button onClick={()=>completeStep("s3")} color={white} backgroundColor={ink}
+                            className="text-sm font-semibold w-full py-2.5 rounded-xl!">
                       Mark step complete → Preview dossier
-                    </button>
+                    </Button>
                   </>
                 )}
 
                 {/* Other active step actions */}
                 {s.id!=="s3"&&s.status==="active"&&(
-                  <button onClick={()=>completeStep(s.id)}
-                    className="w-full py-2.5 rounded-xl text-sm font-semibold text-white"
-                    style={{backgroundColor:ink}}>
+                  <Button onClick={()=>completeStep(s.id)} color={white} backgroundColor={ink}
+                          className="text-sm font-semibold w-full py-2.5 rounded-xl!">
                     Complete this step →
-                  </button>
+                  </Button>
                 )}
 
                 {/* Submit step */}
@@ -599,19 +586,15 @@ function UsersView(){
       <PageHeader rootLabel={"Admin Zupan"} crumb="Users & Roles" title="Users & Roles"
         subtitle={`${users.filter(u=>u.status==="active").length} active · ${users.length} total`}
         action={
-          <button onClick={()=>showToast("User invite sent.")}
-            className="flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-semibold text-white"
-            style={{backgroundColor:ink}}>
+          <Button onClick={()=>showToast("User invite sent.")} color={white} backgroundColor={ink}
+                  className="text-sm font-semibold px-4 py-2 gap-2">
             <PlusIcon size={13}/> Invite user
-          </button>
+          </Button>
         }/>
 
       <div className="flex gap-3 flex-wrap">
         <div className="relative flex-1 min-w-44">
-          <svg className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4" viewBox="0 0 16 16" fill="none">
-            <circle cx="7" cy="7" r="5" stroke={muted} strokeWidth="1.4"/>
-            <path d="M11 11l3 3" stroke={muted} strokeWidth="1.4" strokeLinecap="round"/>
-          </svg>
+          <span className="absolute left-3 top-1/2 -translate-y-1/2"><SearchIcon/></span>
           <input value={search} onChange={e=>setSearch(e.target.value)}
             placeholder="Search by name or email…"
             className="w-full pl-9 pr-4 py-2.5 rounded-lg border text-sm outline-none"
@@ -665,22 +648,22 @@ function UsersView(){
                 </td>
                 <td className="px-4 py-3">
                   <div className="flex gap-2">
-                    <button onClick={()=>{
-                      setUsers(us=>us.map(x=>x.id===u.id?{...x,status:x.status==="active"?"inactive":"active"}:x));
-                      showToast(`${u.name} ${u.status==="active"?"deactivated":"reactivated"}.`);
-                    }} className="text-[11px] font-medium px-2.5 py-1 rounded-lg border"
-                      style={{borderColor:border,color:muted}}>
+                    <Button onClick={()=>{
+                              setUsers(us=>us.map(x=>x.id===u.id?{...x,status:x.status==="active"?"inactive":"active"}:x));
+                              showToast(`${u.name} ${u.status==="active"?"deactivated":"reactivated"}.`);
+                            }} color={muted} border={`1px solid ${border}`}
+                            className="text-[11px] font-medium px-2.5 py-1">
                       {u.status==="active"?"Deactivate":"Activate"}
-                    </button>
-                    <button onClick={()=>{
-                      const roles=["educator","student","admin"];
-                      const next=roles[(roles.indexOf(u.role)+1)%roles.length];
-                      setUsers(us=>us.map(x=>x.id===u.id?{...x,role:next}:x));
-                      showToast(`Role changed to ${next}.`);
-                    }} className="text-[11px] font-medium px-2.5 py-1 rounded-lg border"
-                      style={{borderColor:border,color:muted}}>
+                    </Button>
+                    <Button onClick={()=>{
+                              const roles=["educator","student","admin"];
+                              const next=roles[(roles.indexOf(u.role)+1)%roles.length];
+                              setUsers(us=>us.map(x=>x.id===u.id?{...x,role:next}:x));
+                              showToast(`Role changed to ${next}.`);
+                            }} color={muted} border={`1px solid ${border}`}
+                            className="text-[11px] font-medium px-2.5 py-1">
                       Change role
-                    </button>
+                    </Button>
                   </div>
                 </td>
               </tr>
@@ -760,11 +743,10 @@ function ConfigView(){
                 }
               </div>
             ))}
-            <button onClick={()=>showToast("Branding saved and propagated.")}
-              className="w-full py-2.5 rounded-xl text-sm font-semibold text-white"
-              style={{backgroundColor:ink}}>
+            <Button onClick={()=>showToast("Branding saved and propagated.")} color={white} backgroundColor={ink}
+                    className="text-sm font-semibold w-full py-2.5 rounded-xl!">
               Save branding
-            </button>
+            </Button>
           </div>
         </div>
 
@@ -789,7 +771,7 @@ function ConfigView(){
                 <span className="text-[10px] font-semibold" style={{color:ig.enabled?green:muted}}>
                   {ig.status}
                 </span>
-                <button
+                <button 
                   onClick={()=>{
                     setIntegrations(is=>is.map(x=>x.id===ig.id?{...x,enabled:!x.enabled,status:!x.enabled?"connected":"not connected"}:x));
                     showToast(`${ig.name} ${ig.enabled?"disconnected":"connected"}.`);
@@ -842,18 +824,16 @@ function AuditView(){
 
       <div className="flex gap-2">
         {[["all","All"],["low","Low"],["medium","Medium"],["high","High risk"]].map(([v,l])=>(
-          <button key={v} onClick={()=>setFilter(v)}
-            className="px-3 py-2 rounded-lg text-xs font-semibold transition-colors"
-            style={{backgroundColor:filter===v?(v==="high"?red:v==="medium"?amber:ink):white,
-              color:filter===v?white:muted,
-              border:`1px solid ${filter===v?"transparent":border}`}}>
+          <Button key={v} onClick={()=>setFilter(v)} 
+                  color={filter===v?white:muted} backgroundColor={filter===v?(v==="high"?red:v==="medium"?amber:ink):white} border={`1px solid ${filter===v?"transparent":border}`}
+                  className="text-xs font-semibold px-3 py-2 transition-colors">
             {l}
-          </button>
+          </Button>
         ))}
-        <button className="ml-auto flex items-center gap-1.5 text-xs font-medium px-3 py-2 rounded-lg border"
-          style={{borderColor:border,color:muted}}>
-          <UploadIcon size={12}/> Export CSV
-        </button>
+        <Button color={muted} border={`1px solid ${border}`}
+                className="text-xs font-medium px-3 py-2 ml-auto gap-1.5">
+          <UploadIcon/> Export CSV
+        </Button>
       </div>
 
       <div className="rounded-xl overflow-hidden" style={{backgroundColor:white,border:`1px solid ${border}`}}>
@@ -913,12 +893,11 @@ export default function AdminConsole() {
             <div className="w-3 h-3 rounded-full" style={{backgroundColor:gold}}/>
           </div>
           <h1 className="font-serif text-xl mb-1" style={{color:ink}}>Eduxcert</h1>
-          <p className="text-sm mb-6" style={{color:muted}}>Admin Console · {TENANT.name}</p>
-          <button onClick={()=>setLoggedIn(true)}
-            className="w-full py-2.5 rounded-lg text-sm font-semibold text-white"
-            style={{backgroundColor:ink}}>
+          <p className="text-sm mb-6" style={{color:muted}}>Admin Console · {TENANT.name}</p>          
+          <Button onClick={()=>setLoggedIn(true)} color={white} backgroundColor={ink}
+                  className="text-sm font-semibold py-2.5 w-full">
             Sign in with Keycloak SSO
-          </button>
+          </Button>
         </div>
       </div>
     );

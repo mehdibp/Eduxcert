@@ -16,15 +16,19 @@ export const border     = "#E2E8F0";
 
 export const green      = "#16A34A";
 export const greenBg    = "#DCFCE7";
+export const greenBdr   = "#BBF7D0";
 export const amber      = "#D97706";
 export const amberBg    = "#FEF3C7";
+export const amberBdr   = "#FDE68A";
 export const violet     = "#7C3AED";
 export const violetBg   = "#EDE9FE";
 export const violetBdr  = "#C4B5FD";
 export const blue       = "#2563EB";
 export const blueBg     = "#DBEAFE";
+export const blueBdr    = "#BFDBFE";
 export const red        = "#DC2626";
 export const redBg      = "#FEE2E2";
+export const redBdr     = "#FECACA";
 export const rose       = "#E11D48";
 export const roseBg     = "#FFE4E6";
 export const teal       = "#0D9488";
@@ -35,7 +39,9 @@ export const tealBdr    = "#99F6E4";
 const allColors = {
   ink, inkSoft, gold, goldLight, goldBg, goldBdr, goldTra,
   pageColor, paper, white, muted, mutedBg, border,
-  green, greenBg, amber, amberBg, violet, violetBg, violetBdr, blue, blueBg, red, redBg, rose, roseBg, teal, tealBg, tealBdr,
+
+  green, greenBg, greenBdr, amber, amberBg, amberBdr, violet, violetBg, violetBdr, 
+  blue, blueBg, blueBdr, red, redBg, redBdr, rose, roseBg, teal, tealBg, tealBdr,
 };
 
 export default allColors;

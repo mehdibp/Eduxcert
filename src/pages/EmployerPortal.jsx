@@ -1,14 +1,16 @@
 import { useState, useMemo } from "react";
 import {ink, inkSoft, gold, goldBg, goldBdr, 
   pageColor, white, muted, mutedBg, border, 
-  green, greenBg, amber, amberBg, violet, violetBg, blue, blueBg, red, redBg, rose, roseBg, teal, tealBg, tealBdr} from "../styles/colors";
+  green, greenBg, amber, amberBg, violet, violetBg, violetBdr, blue, blueBg, red, redBg, rose, roseBg, teal, tealBg, tealBdr} from "../styles/colors";
 
 import {GridIcon, SearchPeopleIcon, BriefcaseIcon, BadgeIcon, ChartIcon, PathIcon, LogoutIcon, 
         CheckIcon, XIcon, PlusIcon, AlertIcon, ShieldIcon, SendIcon, } from "../components/icons/icons"
 
+import Logo from '../assets/react.svg'
 import Sidebar from "../components/layout/Sidebar"
 
 import {Badge, StatusBadge} from "../components/commen/Badge"
+import {Button} from "../components/commen/Button"
 import PageHeader from "../components/commen/PageHeader"
 import ProgressRing from "../components/commen/ProgressRing"
 import StatCard from "../components/commen/StatCard"
@@ -97,7 +99,7 @@ function DashboardView({onNav}){
       <div className="rounded-xl p-5" style={{backgroundColor:white,border:`1px solid ${border}`}}>
         <div className="flex items-center justify-between mb-4">
           <p className="text-xs font-semibold" style={{color:ink}}>Workforce skill gaps — top 3</p>
-          <button onClick={()=>onNav("workforce")} className="text-xs font-medium" style={{color:gold}}>Full heatmap →</button>
+          <Button onClick={()=>onNav("workforce")} color={gold} className="text-xs font-medium"> Full heatmap → </Button>
         </div>
         {WORKFORCE_SKILLS.filter(s=>s.market-s.have>15).slice(0,3).map(s=>(
           <div key={s.skill} className="mb-3">
@@ -111,11 +113,10 @@ function DashboardView({onNav}){
             </div>
           </div>
         ))}
-        <button onClick={()=>onNav("pathways")}
-          className="mt-3 w-full py-2 rounded-lg text-xs font-semibold text-white"
-          style={{backgroundColor:teal}}>
+        <Button onClick={()=>onNav("pathways")} color={white} backgroundColor={teal}
+                className="text-xs font-semibold mt-3 w-full py-2">
           Browse upskilling pathways →
-        </button>
+        </Button>
       </div>
 
       {/* Pipeline summary */}
@@ -123,7 +124,7 @@ function DashboardView({onNav}){
         <div className="rounded-xl p-5" style={{backgroundColor:white,border:`1px solid ${border}`}}>
           <div className="flex items-center justify-between mb-4">
             <p className="text-xs font-semibold" style={{color:ink}}>Candidate pipeline</p>
-            <button onClick={()=>onNav("candidates")} className="text-xs font-medium" style={{color:gold}}>View all →</button>
+            <Button onClick={()=>onNav("candidates")} color={gold} className="text-xs font-medium"> View all → </Button>
           </div>
           <div className="grid grid-cols-4 gap-2 mb-4">
             {[["New",1,muted,"#F1F5F9"],["Screen",1,blue,blueBg],["Interview",1,violet,violetBg],["Offer",1,green,greenBg]].map(([l,n,c,bg])=>(
@@ -151,7 +152,7 @@ function DashboardView({onNav}){
         <div className="rounded-xl p-5" style={{backgroundColor:white,border:`1px solid ${border}`}}>
           <div className="flex items-center justify-between mb-4">
             <p className="text-xs font-semibold" style={{color:ink}}>Active job posts</p>
-            <button onClick={()=>onNav("jobs")} className="text-xs font-medium" style={{color:gold}}>Manage →</button>
+            <Button onClick={()=>onNav("jobs")} color={gold} className="text-xs font-medium"> Manage → </Button>
           </div>
           {JOB_POSTS.filter(j=>j.status==="active").map(j=>(
             <div key={j.id} className="flex items-center justify-between py-2.5 border-b last:border-0" style={{borderColor:border}}>
@@ -197,11 +198,11 @@ function CandidatesView(){
 
       <div className="flex gap-2 flex-wrap">
         {[["all","All"],["new","New"],["screening","Screening"],["interview","Interview"],["offer","Offer"]].map(([v,l])=>(
-          <button key={v} onClick={()=>setFilter(v)}
-            className="px-3 py-2 rounded-lg text-xs font-semibold transition-colors"
-            style={{backgroundColor:filter===v?ink:white,color:filter===v?white:muted,border:`1px solid ${filter===v?ink:border}`}}>
+          <Button key={v} onClick={()=>setFilter(v)} 
+                  color={filter===v?white:muted} backgroundColor={filter===v?ink:white} border={`1px solid ${filter===v?ink:border}`}
+                  className="text-xs font-semibold px-3 py-2 transition-colors">
             {l}
-          </button>
+          </Button>
         ))}
       </div>
 
@@ -298,24 +299,22 @@ function CandidatesView(){
                 <StatusBadge config={STATUS_CFG} status={selected.stage} fallbackKey="new"/>
                 <div className="flex gap-2 ml-auto flex-wrap">
                   {selected.stage!=="hired"&&selected.stage!=="rejected"&&(
-                    <button onClick={()=>{advance(selected.id);setSelected(s=>({...s,stage:{new:"screening",screening:"interview",interview:"offer",offer:"hired"}[s.stage]||s.stage}));}}
-                      className="text-xs font-semibold px-4 py-2 rounded-lg text-white"
-                      style={{backgroundColor:green}}>
+                    <Button onClick={()=>{advance(selected.id);setSelected(s=>({...s,stage:{new:"screening",screening:"interview",interview:"offer",offer:"hired"}[s.stage]||s.stage}));}}
+                            color={white} backgroundColor={green} className="text-xs font-semibold px-4 py-2">
                       Advance stage →
-                    </button>
+                    </Button>
                   )}
                   {selected.stage==="offer"&&(
-                    <button onClick={()=>{showToast("Offer letter sent to candidate.");}}
-                      className="flex items-center gap-1.5 text-xs font-semibold px-4 py-2 rounded-lg text-white"
-                      style={{backgroundColor:teal}}>
+                    <Button onClick={()=>{showToast("Offer letter sent to candidate.");}}
+                            color={white} backgroundColor={teal} className="text-xs font-semibold px-4 py-2 gap-1.5">
                       <SendIcon size={12}/> Send offer
-                    </button>
+                    </Button>
                   )}
-                  <button onClick={()=>{setCandidates(cs=>cs.map(c=>c.id===selected.id?{...c,stage:"rejected"}:c));setSelected(s=>({...s,stage:"rejected"}));showToast("Candidate rejected.",false);}}
-                    className="text-xs font-medium px-4 py-2 rounded-lg border"
-                    style={{borderColor:border,color:muted}}>
+                  
+                  <Button onClick={()=>{setCandidates(cs=>cs.map(c=>c.id===selected.id?{...c,stage:"rejected"}:c));setSelected(s=>({...s,stage:"rejected"}));showToast("Candidate rejected.",false);}}
+                          color={muted} border={`1px solid ${border}`} className="text-xs font-medium px-4 py-2">
                     Reject
-                  </button>
+                  </Button>
                 </div>
               </div>
             </div>
@@ -359,11 +358,10 @@ function JobsView(){
       <PageHeader rootLabel={COMPANY.name} crumb="Job Posts" title="Job Posts"
         subtitle={`${jobs.filter(j=>j.status==="active").length} active · ${jobs.reduce((s,j)=>s+j.applicants,0)} total applicants`}
         action={
-          <button onClick={()=>setShowNew(true)}
-            className="flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-semibold text-white"
-            style={{backgroundColor:ink}}>
+          <Button onClick={()=>setShowNew(true)} color={white} backgroundColor={ink}
+                  className="text-sm font-semibold px-4 py-2 gap-2">
             <PlusIcon size={13}/> Post a job
-          </button>
+          </Button>
         }/>
 
       <div className="space-y-4">
@@ -380,9 +378,11 @@ function JobsView(){
               </div>
               <div className="flex gap-2 shrink-0">
                 {j.status==="active"&&(
-                  <button onClick={()=>{setJobs(js=>js.map(x=>x.id===j.id?{...x,status:"closed"}:x));showToast("Job closed.");}}
-                    className="text-xs font-medium px-3 py-1.5 rounded-lg border"
-                    style={{borderColor:border,color:muted}}>Close</button>
+                  <Button onClick={()=>{setJobs(js=>js.map(x=>x.id===j.id?{...x,status:"closed"}:x)); showToast("Job closed.");}}
+                          color={muted} border={`1px solid ${border}`}
+                          className="text-xs font-medium px-3 py-1.5">
+                    Close
+                  </Button>
                 )}
               </div>
             </div>
@@ -421,9 +421,7 @@ function JobsView(){
                 <p className="text-[10px] uppercase tracking-widest font-semibold" style={{color:goldBg}}>New job post</p>
                 <h2 className="font-serif text-lg text-white">{form.title||"Untitled role"}</h2>
               </div>
-              <button onClick={()=>setShowNew(false)} className="p-1.5 rounded-lg hover:bg-white/10">
-                <XIcon color={white}/>
-              </button>
+              <Button onClick={()=>setShowNew(false)} className="p-1.5 hover:bg-white/10"> <XIcon color={white}/> </Button>
             </div>
             <div className="overflow-y-auto flex-1 p-6 space-y-5">
               {[{label:"Job title",key:"title",ph:"e.g. Senior Backend Engineer"},{label:"Department",key:"dept",ph:"Engineering"}].map(({label,key,ph})=>(
@@ -447,17 +445,17 @@ function JobsView(){
                       className="flex-1 rounded-lg border px-3 py-2 text-sm outline-none"
                       style={{borderColor:border,color:ink}}
                       onFocus={e=>e.target.style.borderColor=gold} onBlur={e=>e.target.style.borderColor=border}/>
-                    <button onClick={add} className="px-3 py-2 rounded-lg text-sm font-medium"
-                      style={{backgroundColor:goldBg,color:amber,border:`1px solid ${goldBdr}`}}>Add</button>
+                      <Button onClick={add} color={amber} backgroundColor={goldBg} border={`1px solid ${goldBdr}`}
+                              className="text-sm font-medium px-3 py-2">
+                        Add
+                      </Button>
                   </div>
                   <div className="flex flex-wrap gap-1.5">
                     {form[listKey].map(t=>(
                       <span key={t} className="flex items-center gap-1 text-[11px] px-2.5 py-1 rounded-full"
                         style={{backgroundColor:bg,color}}>
                         {t}
-                        <button onClick={()=>setForm(f=>({...f,[listKey]:f[listKey].filter(x=>x!==t)}))}>
-                          <XIcon size={10} color={color}/>
-                        </button>
+                        <Button onClick={()=>setForm(f=>({...f,[listKey]:f[listKey].filter(x=>x!==t)}))}> <XIcon size={10} color={color}/> </Button>
                       </span>
                     ))}
                   </div>
@@ -465,10 +463,14 @@ function JobsView(){
               ))}
             </div>
             <div className="px-6 py-4 flex gap-3 border-t shrink-0" style={{borderColor:border}}>
-              <button onClick={()=>setShowNew(false)} className="flex-1 py-2 rounded-lg border text-sm font-medium"
-                style={{borderColor:border,color:muted}}>Cancel</button>
-              <button onClick={publish} className="flex-1 py-2 rounded-lg text-sm font-semibold text-white"
-                style={{backgroundColor:ink}}>Publish job</button>
+              <Button onClick={()=>setShowNew(false)} color={muted} border={`1px solid ${border}`}
+                      className="text-sm font-medium flex-1 py-2">
+                Cancel
+              </Button>
+              <Button onClick={publish} color={white} backgroundColor={ink}
+                      className="text-sm font-semibold flex-1 py-2">
+                Publish job
+              </Button>
             </div>
           </div>
         </div>
@@ -599,11 +601,10 @@ function IssueVCView(){
                   <CheckIcon size={14} color={teal}/><p className="text-xs font-medium" style={{color:teal}}>Credential already issued — employee can share it from their EUDI Wallet.</p>
                 </div>
               ):(
-                <button onClick={()=>issue(selected.id)}
-                  className="w-full py-2.5 rounded-xl text-sm font-semibold text-white"
-                  style={{backgroundColor:teal}}>
+                <Button onClick={()=>issue(selected.id)} color={white} backgroundColor={teal}
+                        className="text-sm font-semibold py-2.5 rounded-xl! w-full">
                   Issue work-history credential →
-                </button>
+                </Button>
               )}
             </div>
           </div>
@@ -776,11 +777,10 @@ function PathwaysView(){
                 <p className="text-xs" style={{color:muted}}>{p.provider} · {p.duration}</p>
               </div>
               {p.status==="available"?(
-                <button onClick={()=>enroll(p.id)}
-                  className="shrink-0 text-xs font-semibold px-4 py-2 rounded-lg text-white"
-                  style={{backgroundColor:teal}}>
+                <Button onClick={()=>enroll(p.id)} color={white} backgroundColor={teal}
+                        className="text-xs font-semibold px-4 py-2">
                   Enrol team →
-                </button>
+                </Button>
               ):(
                 <span className="shrink-0 text-xs font-semibold px-4 py-2 rounded-lg"
                   style={{backgroundColor:tealBg,color:teal}}>
@@ -867,10 +867,7 @@ function KYCPage({onComplete}){
         {/* Header */}
         <div className="text-center mb-8">
           <div className="flex items-center justify-center gap-3 mb-4">
-            <div className="w-9 h-9 rounded-full flex items-center justify-center"
-              style={{border:`1.5px solid ${gold}`}}>
-              <div className="w-2.5 h-2.5 rounded-full" style={{backgroundColor:gold}}/>
-            </div>
+            <img className="w-7 h-7 shrink-0" src={Logo}/>
             <span className="font-serif text-xl tracking-wide" style={{color:ink}}>Eduxcert</span>
           </div>
           <h1 className="font-serif text-2xl mb-1" style={{color:ink}}>Register as trusted issuer</h1>
@@ -919,8 +916,10 @@ function KYCPage({onComplete}){
                   <p className="text-xs font-semibold" style={{color:ink}}>{l}</p>
                   <p className="text-[11px]" style={{color:muted}}>{f}</p>
                 </div>
-                <button className="text-xs font-semibold px-3 py-1.5 rounded-lg"
-                  style={{backgroundColor:goldBg,color:amber,border:`1px solid ${goldBdr}`}}>Upload</button>
+                <Button color={amber} backgroundColor={goldBg} border={`1px solid ${goldBdr}`}
+                        className="text-xs font-semibold px-3 py-1.5">
+                  Upload
+                </Button>
               </div>
             ))}
           </>}
@@ -935,10 +934,10 @@ function KYCPage({onComplete}){
                 Work-history credentials you issue will carry Ed25519 cryptographic signatures verifiable by anyone, anywhere.
               </p>
             </div>
-            <button className="w-full py-3 rounded-xl text-sm font-semibold"
-              style={{backgroundColor:violetBg,color:violet,border:`1px solid #C4B5FD`}}>
+            <Button color={violet} backgroundColor={violetBg} border={`1px solid ${violetBdr}`}
+                    className="text-sm font-semibold py-3 rounded-xl! w-full">
               Connect via eIDAS 2.0 Org Wallet →
-            </button>
+            </Button>
           </>}
 
           {step===4&&<>
@@ -957,11 +956,10 @@ function KYCPage({onComplete}){
             ))}
           </>}
 
-          <button onClick={()=>step<4?setStep(s=>s+1):onComplete()}
-            className="w-full py-3 rounded-xl text-sm font-semibold text-white transition-opacity hover:opacity-90"
-            style={{backgroundColor:ink}}>
+          <Button onClick={()=>step<4?setStep(s=>s+1):onComplete()} color={white} backgroundColor={ink}
+                  className="text-sm font-semibold py-3 rounded-xl! w-full transition-opacity hover:opacity-90">
             {step<4?"Continue →":"Enter Employer Portal"}
-          </button>
+          </Button>
         </div>
       </div>
     </div>
@@ -980,24 +978,19 @@ export default function EmployerPortal(){
   if(!loggedIn){
     return(
       <div className="min-h-screen flex items-center justify-center" style={{backgroundColor:pageColor}}>
-        <div className="rounded-2xl p-10 text-center w-full max-w-sm"
-          style={{backgroundColor:white,border:`1px solid ${border}`}}>
-          <div className="w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-4"
-            style={{border:`1.5px solid ${gold}`}}>
-            <div className="w-3 h-3 rounded-full" style={{backgroundColor:gold}}/>
-          </div>
+        <div className="rounded-2xl p-10 text-center w-full max-w-sm" style={{backgroundColor:white,border:`1px solid ${border}`}}>
+          <img className="w-12 h-12 mx-auto shrink-0" src={Logo}/>
           <h1 className="font-serif text-xl mb-1" style={{color:ink}}>Eduxcert</h1>
           <p className="text-sm mb-6" style={{color:muted}}>Employer Portal</p>
-          <button onClick={()=>setLoggedIn(true)}
-            className="w-full py-2.5 rounded-lg text-sm font-semibold text-white mb-3"
-            style={{backgroundColor:ink}}>
+          <Button onClick={()=>setLoggedIn(true)} color={white} backgroundColor={ink}
+                  className="text-sm font-semibold py-2.5 w-full mb-3">
             Sign in with company SSO
-          </button>
-          <button onClick={()=>{setLoggedIn(true);setRegistered(false);}}
-            className="w-full py-2.5 rounded-lg text-sm font-medium border"
-            style={{borderColor:border,color:muted}}>
+          </Button>
+          <Button onClick={()=>{setLoggedIn(true);setRegistered(false);}} 
+                  color={muted} border={`1px solid ${border}`}
+                  className="text-sm font-medium py-2.5 w-full">
             Register as new employer
-          </button>
+          </Button>
         </div>
       </div>
     );

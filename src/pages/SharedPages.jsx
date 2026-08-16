@@ -1,15 +1,16 @@
 import { useState } from "react";
 import {ink, inkSoft, gold, goldBg, goldBdr, goldTra,
         pageColor, white, muted, border, 
-        green, greenBg, amber, amberBg, violet, violetBg, blue, blueBg, red, redBg, teal, tealBg} from "../styles/colors";
+        green, greenBg, amber, amberBg, violet, violetBg, violetBdr, blue, blueBg, red, redBg, redBdr, teal, tealBg} from "../styles/colors";
 
-import {UserIcon, BellIcon, GiftIcon, ShieldIcon, WalletIcon, DownloadIcon, 
+import {UserIcon, BellIcon, CenterDotIcon, DownloadIcon, GiftIcon, ShieldIcon, WalletIcon, 
         KeyIcon, TrashIcon, CheckIcon, XIcon, ExternalIcon } from "../components/icons/icons"
 
 import { USER, CONSENTS, NOTIFICATIONS, NOTIF_PREFS, BENEFITS } from "../data/shared"
 import Logo from '../assets/react.svg'
 
 import {Badge} from "../components/commen/Badge"
+import {Button} from "../components/commen/Button"
 import ToggleSwitch from "../components/commen/ToggleSwitch"
 import StatCard from "../components/commen/StatCard"
 import Toast from "../components/commen/Toast"
@@ -121,16 +122,19 @@ function ProfilePage(){
               action={
                 editMode
                   ? <div className="flex gap-2">
-                      <button onClick={()=>setEditMode(false)}
-                        className="text-xs font-medium px-3 py-1.5 rounded-lg border"
-                        style={{borderColor:border,color:muted}}>Cancel</button>
-                      <button onClick={saveProfile}
-                        className="text-xs font-semibold px-3 py-1.5 rounded-lg text-white"
-                        style={{backgroundColor:ink}}>Save</button>
+                      <Button onClick={saveProfile} color={muted} border={`1px solid ${border}`}
+                              className="text-xs font-medium px-3 py-1.5">
+                        Cancel
+                      </Button>
+                      <Button onClick={saveProfile} color={white} backgroundColor={ink}
+                              className="text-xs font-semibold px-3 py-1.5">
+                        Save
+                      </Button>
                     </div>
-                  : <button onClick={()=>setEditMode(true)}
-                      className="text-xs font-medium px-3 py-1.5 rounded-lg border"
-                      style={{borderColor:border,color:muted}}>Edit</button>
+                  : <Button onClick={()=>setEditMode(true)} color={muted} border={`1px solid ${border}`}
+                              className="text-xs font-medium px-3 py-1.5">
+                        Edit
+                      </Button>
               }>
               <div className="space-y-4">
                 {[
@@ -172,11 +176,11 @@ function ProfilePage(){
                 The archive includes credentials, grades, consents, and audit trail as a signed JSON + PDF bundle.
               </p>
               <div className="flex flex-wrap gap-3">
-                <button onClick={()=>showToast("Export started — you'll receive an email with the download link within 24h.")}
-                  className="flex items-center gap-2 px-4 py-2.5 rounded-lg text-sm font-semibold border"
-                  style={{borderColor:border,color:ink}}>
+                <Button onClick={()=>showToast("Export started — you'll receive an email with the download link within 24h.")}
+                        color={ink} border={`1px solid ${border}`}
+                        className="text-sm font-semibold gap-2 px-4 py-2.5">
                   <DownloadIcon size={14}/> Export my data (JSON + PDF)
-                </button>
+                </Button>
               </div>
             </SectionCard>
 
@@ -188,11 +192,11 @@ function ProfilePage(){
                 per GDPR Art. 17. Issued credentials remain valid on the blockchain — only your
                 Eduxcert account and PII are removed.
               </p>
-              <button onClick={()=>setDelModal(true)}
-                className="flex items-center gap-2 text-xs font-semibold px-4 py-2 rounded-lg"
-                style={{backgroundColor:redBg,color:red,border:`1px solid #FECACA`}}>
+              <Button onClick={()=>setDelModal(true)}
+                      color={red} backgroundColor={redBg} border={`1px solid ${redBdr}`}
+                      className="text-xs font-semibold px-4 py-2 gap-2">
                 <TrashIcon size={13}/> Request account deletion
-              </button>
+              </Button>
             </div>
           </div>
         )}
@@ -270,11 +274,10 @@ function ProfilePage(){
                       <p className="text-[11px]" style={{color:muted}}>Managed by Keycloak SSO · last changed 90 days ago</p>
                     </div>
                   </div>
-                  <button onClick={()=>showToast("Password reset email sent.")}
-                    className="text-xs font-medium px-3 py-1.5 rounded-lg border"
-                    style={{borderColor:border,color:muted}}>
+                  <Button onClick={()=>showToast("Password reset email sent.")} color={muted} border={`1px solid ${border}`}
+                          className="text-xs font-medium px-3 py-1.5">
                     Change
-                  </button>
+                  </Button>
                 </div>
 
                 {/* MFA */}
@@ -289,11 +292,10 @@ function ProfilePage(){
                       <p className="text-[11px]" style={{color:teal}}>✓ Enabled — TOTP authenticator app</p>
                     </div>
                   </div>
-                  <button onClick={()=>showToast("MFA settings opened in Keycloak.")}
-                    className="text-xs font-medium px-3 py-1.5 rounded-lg border"
-                    style={{borderColor:border,color:muted}}>
+                  <Button onClick={()=>showToast("MFA settings opened in Keycloak.")} color={muted} border={`1px solid ${border}`}
+                          className="text-xs font-medium px-3 py-1.5">
                     Manage
-                  </button>
+                  </Button>
                 </div>
 
                 {/* WebAuthn */}
@@ -301,21 +303,18 @@ function ProfilePage(){
                   <div className="flex items-center gap-3">
                     <div className="w-9 h-9 rounded-xl flex items-center justify-center"
                       style={{backgroundColor:violetBg}}>
-                      <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-                        <rect x="3" y="3" width="10" height="10" rx="3" stroke={violet} strokeWidth="1.3"/>
-                        <circle cx="8" cy="8" r="2" fill={violet} opacity="0.6"/>
-                      </svg>
+                      <CenterDotIcon />
                     </div>
                     <div>
                       <p className="text-xs font-semibold" style={{color:ink}}>Passkey (WebAuthn)</p>
                       <p className="text-[11px]" style={{color:muted}}>No passkeys registered yet</p>
                     </div>
                   </div>
-                  <button onClick={()=>showToast("Passkey registration initiated.")}
-                    className="text-xs font-semibold px-3 py-1.5 rounded-lg"
-                    style={{backgroundColor:violetBg,color:violet,border:`1px solid #C4B5FD`}}>
+                  <Button onClick={()=>showToast("Passkey registration initiated.")} 
+                          color={violet} backgroundColor={violetBg} border={`1px solid ${violetBdr}`}
+                          className="text-xs font-semibold px-3 py-1.5">
                     Add passkey
-                  </button>
+                  </Button>
                 </div>
               </div>
             </SectionCard>
@@ -338,10 +337,7 @@ function ProfilePage(){
                       <p className="text-[11px]" style={{color:muted}}>{s.ip} · {s.location}</p>
                     </div>
                     {!s.current&&(
-                      <button onClick={()=>showToast("Session revoked.",false)}
-                        className="text-[11px] font-medium" style={{color:red}}>
-                        Revoke
-                      </button>
+                      <Button onClick={()=>showToast("Session revoked.",false)} color={red} className="text-[11px] font-medium"> Revoke </Button>
                     )}
                   </div>
                 ))}
@@ -396,23 +392,22 @@ function ProfilePage(){
               </div>
               {user.walletConnected?(
                 <div className="grid grid-cols-2 gap-3">
-                  <button onClick={()=>showToast("Wallet sync started.")}
-                    className="py-2.5 rounded-xl text-xs font-semibold border text-center"
-                    style={{borderColor:border,color:ink}}>
+                  <Button onClick={()=>showToast("Wallet sync started.")} color={ink} border={`1px solid ${border}`}
+                          className="text-xs font-semibold py-2.5 rounded-xl!">
                     Sync credentials
-                  </button>
-                  <button onClick={()=>{setUser(u=>({...u,walletConnected:false}));showToast("Wallet disconnected.",false);}}
-                    className="py-2.5 rounded-xl text-xs font-semibold text-center"
-                    style={{backgroundColor:redBg,color:red}}>
+                  </Button>
+                  <Button onClick={()=>{setUser(u=>({...u,walletConnected:false})); showToast("Wallet disconnected.",false);}}
+                          color={red} backgroundColor={redBg}
+                          className="text-xs font-semibold py-2.5 rounded-xl!">
                     Disconnect wallet
-                  </button>
+                  </Button>
                 </div>
               ):(
-                <button onClick={()=>{setUser(u=>({...u,walletConnected:true}));showToast("EUDI Wallet connected via OID4VCI.");}}
-                  className="w-full py-2.5 rounded-xl text-sm font-semibold text-white"
-                  style={{backgroundColor:violet}}>
+                <Button onClick={()=>{setUser(u=>({...u,walletConnected:true})); showToast("EUDI Wallet connected via OID4VCI.");}}
+                        color={white} backgroundColor={violet}
+                        className="text-sm font-semibold py-2.5 rounded-xl! w-full">
                   Connect EUDI Wallet (OID4VCI) →
-                </button>
+                </Button>
               )}
             </SectionCard>
           </div>
@@ -435,14 +430,15 @@ function ProfilePage(){
               This action cannot be undone.
             </p>
             <div className="flex gap-3">
-              <button onClick={()=>setDelModal(false)}
-                className="flex-1 py-2.5 rounded-xl border text-sm font-medium"
-                style={{borderColor:border,color:muted}}>Cancel</button>
-              <button onClick={()=>{setDelModal(false);showToast("Deletion request submitted. You will receive a confirmation email.",false);}}
-                className="flex-1 py-2.5 rounded-xl text-sm font-semibold text-white"
-                style={{backgroundColor:red}}>
+              <Button onClick={()=>setDelModal(false)} color={muted} border={`1px solid ${border}`}
+                      className="text-sm font-medium flex-1 py-2.5 rounded-xl!">
+                Cancel
+              </Button>
+              <Button onClick={()=>{setDelModal(false);showToast("Deletion request submitted. You will receive a confirmation email.",false);}}
+                      color={white} backgroundColor={red}
+                      className="text-sm font-semibold flex-1 py-2.5 rounded-xl!">
                 Confirm deletion
-              </button>
+              </Button>
             </div>
           </div>
         </div>
@@ -492,9 +488,7 @@ function NotificationsPage(){
               </p>}
             </div>
             {tab==="inbox"&&unread>0&&(
-              <button onClick={markAll} className="text-xs font-medium" style={{color:gold}}>
-                Mark all as read
-              </button>
+              <Button onClick={markAll} color={gold} className="text-xs font-medium"> Mark all as read </Button>
             )}
           </div>
           <div className="flex gap-1 mt-6">
@@ -524,12 +518,11 @@ function NotificationsPage(){
             {/* Type filters */}
             <div className="flex flex-wrap gap-2">
               {[["all","All"],["grade","Grades"],["credential","Credentials"],["exam","Exams"],["ects","ECTS"],["roadmap","Roadmap"]].map(([v,l])=>(
-                <button key={v} onClick={()=>setFilter(v)}
-                  className="px-3 py-1.5 rounded-full text-xs font-semibold transition-colors"
-                  style={{backgroundColor:filter===v?ink:white,color:filter===v?white:muted,
-                    border:`1px solid ${filter===v?ink:border}`}}>
+                <Button key={v} onClick={()=>setFilter(v)} 
+                        color={filter===v?white:muted} backgroundColor={filter===v?ink:white} border={`1px solid ${filter===v?ink:border}`}
+                        className="text-xs font-semibold px-3 py-1.5 rounded-full! transition-colors">
                   {l}
-                </button>
+                </Button>
               ))}
             </div>
 
@@ -563,10 +556,10 @@ function NotificationsPage(){
                         <p className="text-[10px] mt-1.5" style={{color:border}}>{n.ts}</p>
                       </div>
                       {/* Actions */}
-                      <button onClick={e=>{e.stopPropagation();del(n.id);}}
-                        className="shrink-0 p-1.5 rounded-lg opacity-30 hover:opacity-100 transition-opacity">
+                      <Button onClick={e=>{e.stopPropagation();del(n.id);}}
+                              className="p-1.5 opacity-30 hover:opacity-100">
                         <XIcon size={13}/>
-                      </button>
+                      </Button>
                     </div>
                   );
                 })}
@@ -676,12 +669,11 @@ function BenefitsPage(){
         {/* Filter */}
         <div className="flex flex-wrap gap-2">
           {cats.map(c=>(
-            <button key={c} onClick={()=>setFilter(c)}
-              className="px-3 py-1.5 rounded-full text-xs font-semibold transition-colors"
-              style={{backgroundColor:filter===c?ink:white,color:filter===c?white:muted,
-                border:`1px solid ${filter===c?ink:border}`}}>
+            <Button key={c} onClick={()=>setFilter(c)} 
+                    color={filter===c?white:muted} backgroundColor={filter===c?ink:white} border={`1px solid ${filter===c?ink:border}`}
+                    className="text-xs font-semibold px-3 py-1.5 rounded-full! transition-colors">
               {c}
-            </button>
+            </Button>
           ))}
         </div>
 
@@ -721,14 +713,11 @@ function BenefitsPage(){
                 {/* Discount + action */}
                 <div className="shrink-0 flex flex-col items-end gap-2">
                   <span className="text-xl font-serif" style={{color:b.color}}>{b.discount}</span>
-                  <button
-                    onClick={()=>setSelected(selected===b.id?null:b.id)}
-                    className="text-xs font-semibold px-3 py-1.5 rounded-lg transition-colors"
-                    style={{backgroundColor:selected===b.id?ink:b.bg,
-                      color:selected===b.id?white:b.color,
-                      border:`1px solid ${b.color}30`}}>
+                  <Button onClick={()=>setSelected(selected===b.id?null:b.id)} 
+                          color={selected===b.id?white:b.color} backgroundColor={selected===b.id?ink:b.bg} border={`1px solid ${b.color}30`}
+                          className="text-xs font-semibold px-3 py-1.5 transition-colors">
                     {selected===b.id?"Hide QR":"Show QR"}
-                  </button>
+                  </Button>
                 </div>
               </div>
 
@@ -785,11 +774,10 @@ function BenefitsPage(){
                           </p>
                         </div>
                       ):(
-                        <button onClick={()=>redeem(b)}
-                          className="w-full py-2.5 rounded-xl text-sm font-semibold text-white"
-                          style={{backgroundColor:b.color}}>
+                        <Button onClick={()=>redeem(b)} color={white} backgroundColor={b.color}
+                                className="text-sm font-semibold w-full py-2.5 rounded-xl!">
                           Redeem benefit →
-                        </button>
+                        </Button>
                       )}
                     </div>
                   </div>
@@ -854,17 +842,15 @@ export default function SharedPages(){
           {PAGES.map(({id,label,Icon})=>{
             const on=activePage===id;
             return(
-              <button key={id} onClick={()=>setActivePage(id)}
-                className="flex items-center gap-2 px-3 py-2 rounded-lg text-xs font-semibold transition-colors relative"
-                style={{backgroundColor:on?{goldTra}:"transparent",
-                  color:on?"#FBF7F0":"#94A3B8"}}>
+              <Button key={id} onClick={()=>setActivePage(id)} 
+                      color={on?"#FBF7F0":"#94A3B8"} backgroundColor={on?{goldTra}:"transparent"}
+                      className="text-xs font-semibold px-3 py-2 gap-2 transition-colors relative">
                 <Icon size={14} color={on?gold:"#64748B"}/>
                 {label}
                 {id==="notifications"&&unread>0&&(
-                  <span className="absolute -top-0.5 -right-0.5 w-4 h-4 rounded-full text-[9px] font-bold flex items-center justify-center"
-                    style={{backgroundColor:amber,color:white}}>{unread}</span>
+                  <span className="absolute -top-0.5 -right-0.5 w-4 h-4 rounded-full text-[9px] font-bold flex items-center justify-center" style={{backgroundColor:amber,color:white}}>{unread}</span>
                 )}
-              </button>
+              </Button>
             );
           })}
         </div>

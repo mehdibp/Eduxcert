@@ -59,6 +59,14 @@ export function CalendarIcon({size=16, color="currentColor"}) {
         <path d="M5 1.5V4M11 1.5V4M1.5 7h13" stroke={color} strokeWidth="1.3" strokeLinecap="round"/></svg>;
     }
 
+// Rounded corner square with a solid circle in the center ---------
+export function CenterDotIcon({size=16, color=violet}){
+    return <svg width={size} height={size} viewBox="0 0 16 16" fill="none">
+                <rect x="3" y="3" width="10" height="10" rx="3" stroke={color} strokeWidth="1.3"/>
+                <circle cx="8" cy="8" r="2" fill={color} opacity="0.6"/>
+            </svg>;
+    }
+
 // Bar chart -------------------------------------------------------
 export function ChartIcon({size=16, color="currentColor"}) {
     return <svg width={size} height={size} viewBox="0 0 16 16" fill="none">
@@ -69,8 +77,9 @@ export function ChartIcon({size=16, color="currentColor"}) {
 
 // Green Check -----------------------------------------------------
 export function CheckIcon({size=14, color=green}) {
-    return <svg width={size} height={size} viewBox="0 0 14 14" fill="none">
-        <path d="M2 7l3.5 3.5L12 3" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>;
+    return  <svg width={size} height={size} viewBox="0 0 14 14" fill="none">
+                <path d="M2 7l3.5 3.5L12 3" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>;
     }
 
 // Down arrow ------------------------------------------------------
@@ -164,6 +173,15 @@ export function LightningIcon({size=16, color="currentColor"}) {
         <path d="M9.5 2L4 9h5l-2.5 6L13 7H9L9.5 2z" stroke={color} strokeWidth="1.3" strokeLinejoin="round"/> </svg>;
     }
 
+// A hamburger menu with a plus sign at the bottom ------------------
+export function ListPlusIcon({size=36, color=violet}) {
+    return <svg width={size} height={size} viewBox="0 0 36 36" fill="none">
+            <path d="M6 8h24M6 14h24M6 20h16" stroke={color} strokeWidth="2.5" strokeLinecap="round"/>
+            <circle cx="27" cy="26" r="7" stroke={color} strokeWidth="2"/>
+            <path d="M25 26h4M27 24v4" stroke={color} strokeWidth="1.8" strokeLinecap="round"/>
+          </svg>;
+    }
+
 // Text in page (log) -----------------------------------------------
 export function LogIcon({size=16, color="currentColor"}) {
     return <svg width={size} height={size} viewBox="0 0 16 16" fill="none">
@@ -233,15 +251,6 @@ export function ScanIcon({size=40, color=muted}){
         <rect x="11" y="22" width="7" height="7" rx="1" stroke={color} strokeWidth="1.5"/>
         <path d="M22 22h2M24 22v2M24 24h3M27 24v5M24 27h3M22 26v3M22 29h2" stroke={color} strokeWidth="1.5" strokeLinecap="round"/>
         <path d="M8 20h24" stroke={color} strokeWidth="1.5" strokeLinecap="round" strokeDasharray="3 2"/> </svg>;
-    }
-
-// A hamburger menu with a plus sign at the bottom ------------------
-export function ListPlusIcon({size=36, color=violet}) {
-    return <svg width={size} height={size} viewBox="0 0 36 36" fill="none">
-            <path d="M6 8h24M6 14h24M6 20h16" stroke={color} strokeWidth="2.5" strokeLinecap="round"/>
-            <circle cx="27" cy="26" r="7" stroke={color} strokeWidth="2"/>
-            <path d="M25 26h4M27 24v4" stroke={color} strokeWidth="1.8" strokeLinecap="round"/>
-          </svg>;
     }
 
 // Circle with a check mark inside it -------------------------------
@@ -328,7 +337,8 @@ export function XIcon({size=14, color=muted}) {
     return <svg width={size} height={size} viewBox="0 0 14 14" fill="none">
         <path d="M2 2l10 10M12 2L2 12" stroke={color} strokeWidth="1.5" strokeLinecap="round"/> </svg>;
     }
-    
+
+
 // Loading - Spin Rotation ------------------------------------------
 export function SpinIcon({size=18}) {
     return <svg width={size} height={size} viewBox="0 0 18 18" fill="none"
@@ -365,5 +375,5 @@ export function SealMark({ size=88, color=gold }) {
       <path d="M35 51 L45 61 L66 38" stroke={color} strokeWidth="4" strokeLinecap="round" strokeLinejoin="round" fill="none" />
     </svg>
   );
-}
+    }
 

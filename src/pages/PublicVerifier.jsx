@@ -10,6 +10,7 @@ import { SCENARIOS, VSTEPS } from "../data/verifier"
 import Logo from '../assets/react.svg'
 
 import {Badge} from "../components/commen/Badge"
+import {Button} from "../components/commen/Button"
 
 
 // ════════════════════════════════════════════════
@@ -157,10 +158,7 @@ function ResultPanel({cred, steps}) {
             Register a free verifier account to get API access, verification history, and audit logs.
           </p>
         </div>
-        <button className="shrink-0 text-xs font-semibold px-3 py-2 rounded-lg text-white"
-          style={{backgroundColor:ink}}>
-          Register
-        </button>
+        <Button color={white} backgroundColor={ink} className="text-xs font-semibold px-3 py-2"> Register </Button>
       </div>
     </div>
   );
@@ -316,20 +314,18 @@ export default function PublicVerifierPage() {
                   {id:"revoked", label:"❌ Revoked credential",  col:red},
                   {id:"unknown", label:"⚠️ Unknown issuer",      col:amber},
                 ].map(({id,label,col})=>(
-                  <button key={id} onClick={()=>setScenario(id)}
-                    className="px-3 py-2 rounded-lg text-xs font-semibold transition-all"
-                    style={{backgroundColor:scenario===id?col+"22":white+"10",
-                      color:scenario===id?col:white,
-                      border:`1px solid ${scenario===id?col:white+"15"}`}}>
+                  <Button key={id} onClick={()=>setScenario(id)} 
+                          color={scenario===id?col:white} backgroundColor={scenario===id?col+"22":white+"10"} border={`1px solid ${scenario===id?col:white+"15"}`}
+                          className="text-xs font-semibold px-3 py-2 transition-all">
                     {label}
-                  </button>
+                  </Button>
                 ))}
               </div>
-              <button onClick={()=>handleVerify(scenario)}
-                className="w-full py-3 rounded-xl text-sm font-semibold text-white transition-opacity hover:opacity-90"
-                style={{backgroundColor:gold}}>
+              <Button onClick={()=>handleVerify(scenario)}
+                      color={white} backgroundColor={gold}
+                      className="text-sm font-semibold py-3 rounded-xl! w-full transition-opacity hover:opacity-90">
                 Run verification demo →
-              </button>
+              </Button>
             </div>
           </div>
         )}
@@ -337,9 +333,7 @@ export default function PublicVerifierPage() {
         {/* ══ QR MODE ══ */}
         {mode==="qr" && (
           <div className="space-y-6">
-            <button onClick={reset} className="text-xs flex items-center gap-1.5" style={{color:muted}}>
-              ← Back
-            </button>
+            <Button onClick={reset} color={muted} className="text-xs gap-1.5"> ← Back </Button>
             <div className="rounded-2xl p-8 flex flex-col items-center gap-5 text-center"
               style={{backgroundColor:white,border:`1px solid ${border}`}}>
               <p className="font-serif text-xl" style={{color:ink}}>Scan QR code</p>
@@ -371,9 +365,7 @@ export default function PublicVerifierPage() {
                 ))}
               </div>
 
-              <button onClick={()=>setMode("manual")} className="text-xs font-medium" style={{color:muted}}>
-                Or enter a link manually →
-              </button>
+              <Button onClick={()=>setMode("manual")} color={muted} className="text-xs font-medium"> Or enter a link manually → </Button>
             </div>
           </div>
         )}
@@ -381,9 +373,7 @@ export default function PublicVerifierPage() {
         {/* ══ MANUAL INPUT ══ */}
         {mode==="manual" && (
           <div className="space-y-6">
-            <button onClick={reset} className="text-xs flex items-center gap-1.5" style={{color:muted}}>
-              ← Back
-            </button>
+            <Button onClick={reset} color={muted} className="text-xs gap-1.5"> ← Back </Button>
             <div className="rounded-2xl p-8 space-y-5"
               style={{backgroundColor:white,border:`1px solid ${border}`}}>
               <div>
@@ -410,21 +400,20 @@ export default function PublicVerifierPage() {
                         setScenario(sc); handleVerify(sc);
                       }
                     }}/>
-                  <button onClick={()=>{
-                    const sc = input.includes("7700")?"revoked":input.includes("0000")?"unknown":"valid";
-                    setScenario(sc); handleVerify(sc);
-                  }} className="px-5 py-2.5 rounded-lg text-sm font-semibold text-white"
-                    style={{backgroundColor:ink}}>
+                  <Button onClick={()=>{
+                            const sc = input.includes("7700")?"revoked":input.includes("0000")?"unknown":"valid";
+                            setScenario(sc); handleVerify(sc);
+                          }} 
+                          color={white} backgroundColor={ink}
+                          className="text-sm font-semibold px-5 py-2.5">
                     Verify
-                  </button>
+                  </Button>
                 </div>
                 <p className="text-[11px] mt-2" style={{color:muted}}>
-                  Example codes to try: <button onClick={()=>setInput("EDX-4401-DB03")}
-                    className="font-mono underline" style={{color:gold}}>EDX-4401-DB03</button>
-                  {" · "}<button onClick={()=>setInput("EDX-7700-XX11")}
-                    className="font-mono underline" style={{color:red}}>EDX-7700-XX11</button>
-                  {" · "}<button onClick={()=>setInput("EDX-0000-UNK9")}
-                    className="font-mono underline" style={{color:amber}}>EDX-0000-UNK9</button>
+                  Example codes to try: {" "}
+                  <Button onClick={()=>setInput("EDX-4401-DB03")} color={gold}  className="font-mono underline"> EDX-4401-DB03 </Button> {" · "}
+                  <Button onClick={()=>setInput("EDX-7700-XX11")} color={red}   className="font-mono underline"> EDX-7700-XX11 </Button> {" · "}
+                  <Button onClick={()=>setInput("EDX-0000-UNK9")} color={amber} className="font-mono underline"> EDX-0000-UNK9 </Button>
                 </p>
               </div>
             </div>
@@ -492,16 +481,12 @@ export default function PublicVerifierPage() {
                   verify.eduxcert.eu/c/{cred.code}
                 </p>
                 <div className="flex items-center gap-2 mt-1">
-                  <button onClick={()=>{setCopiedCode(true);setTimeout(()=>setCopiedCode(false),2000);}}
-                    className="flex items-center gap-1.5 text-[11px] font-medium"
-                    style={{color:copiedCode?green:muted}}>
-                    <CopyIcon size={12}/>
-                    {copiedCode?"Copied!":"Copy link"}
-                  </button>
+                  <Button onClick={()=>{setCopiedCode(true); setTimeout(()=>setCopiedCode(false),2000);}} 
+                          color={copiedCode?green:muted} className="text-[11px] font-medium flex gap-1.5">
+                    <CopyIcon size={12}/> {copiedCode?"Copied!":"Copy link"}
+                  </Button>
                   <span style={{color:border}}>·</span>
-                  <button onClick={reset} className="text-[11px] font-medium" style={{color:muted}}>
-                    Verify another
-                  </button>
+                  <Button onClick={reset} color={muted} className="text-[11px] font-medium"> Verify another </Button>
                 </div>
               </div>
               <p className="text-[11px]" style={{color:muted}}>

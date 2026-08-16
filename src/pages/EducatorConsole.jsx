@@ -1,7 +1,7 @@
 import { useState, useMemo } from "react";
 import {ink, inkSoft, gold, goldBg, goldBdr, 
         pageColor, white, muted, mutedBg, border, 
-        green, greenBg, amber, amberBg, violet, violetBg, violetBdr, blue, blueBg, red, redBg, rose} from "../styles/colors";
+        green, greenBg, amber, amberBg, amberBdr, violet, violetBg, violetBdr, blue, blueBg, red, redBg, rose} from "../styles/colors";
 
 import {GridIcon, BookIcon, GradeIcon, ChartIcon, PeopleIcon, LogoutIcon, CheckIcon, XIcon, 
         PlusIcon, AlertIcon, EditIcon, CalendarIcon, UploadIcon } from "../components/icons/icons"
@@ -9,6 +9,7 @@ import {GridIcon, BookIcon, GradeIcon, ChartIcon, PeopleIcon, LogoutIcon, CheckI
 import Sidebar from "../components/layout/Sidebar"
 
 import {Badge, StatusBadge} from "../components/commen/Badge"
+import {Button} from "../components/commen/Button"
 import PageHeader from "../components/commen/PageHeader"
 import StatCard from "../components/commen/StatCard"
 import Toast from "../components/commen/Toast"
@@ -167,7 +168,7 @@ function CourseModal({course, onClose, onSave}) {
             </p>
             <h2 className="font-serif text-lg text-white">{form.title||"Untitled"}</h2>
           </div>
-          <button onClick={onClose} className="p-1.5 rounded-lg hover:bg-white/10"><XIcon color={white}/></button>
+          <Button onClick={onClose} className="p-1.5 hover:bg-white/10"> <XIcon color={white}/> </Button>
         </div>
 
         <div className="overflow-y-auto flex-1 p-6 space-y-5">
@@ -239,13 +240,16 @@ function CourseModal({course, onClose, onSave}) {
                 placeholder="e.g. Distributed Computing" className="flex-1 rounded-lg border px-3 py-2 text-sm outline-none"
                 style={{borderColor:border,color:ink}}
                 onFocus={e=>e.target.style.borderColor=gold} onBlur={e=>e.target.style.borderColor=border}/>
-              <button onClick={addTag} className="px-3 py-2 rounded-lg text-sm font-medium" style={{backgroundColor:goldBg,color:amber,border:`1px solid ${goldBdr}`}}>Add</button>
+                <Button onClick={addTag} color={amber} backgroundColor={goldBg} border={`1px solid ${goldBdr}`}
+                        className="text-sm font-mediumpx-3 p-2">
+                  Add
+                </Button>
             </div>
             <div className="flex flex-wrap gap-1.5">
               {form.tags.map(t=>(
                 <Badge key={t} color={violet} backgroundColor={violetBg} className="flex items-center gap-1 text-[11px] px-2.5 py-1 rounded-full">
                     {t}
-                    <button onClick={()=>setForm(f=>({...f,tags:f.tags.filter(x=>x!==t)}))}> <XIcon size={10} color={violet}/> </button>
+                    <Button onClick={()=>setForm(f=>({...f,tags:f.tags.filter(x=>x!==t)}))}> <XIcon size={10} color={violet}/> </Button>
                 </Badge>
               ))}
             </div>
@@ -253,12 +257,14 @@ function CourseModal({course, onClose, onSave}) {
         </div>
 
         <div className="px-6 py-4 flex gap-3 border-t shrink-0" style={{borderColor:border}}>
-          <button onClick={onClose} className="flex-1 py-2 rounded-lg border text-sm font-medium"
-            style={{borderColor:border,color:muted}}>Cancel</button>
-          <button onClick={()=>onSave(form)} className="flex-1 py-2 rounded-lg text-sm font-semibold text-white"
-            style={{backgroundColor:ink}}>
+          <Button onClick={onClose} color={muted} border={`1px solid ${border}`}
+                  className="text-sm font-medium flex-1 py-2">
+            Cancel
+          </Button>
+          <Button onClick={()=>onSave(form)} color={white} backgroundColor={ink}
+                  className="text-sm font-medium flex-1 py-2">
             {course?"Save changes":"Create course"}
-          </button>
+          </Button>
         </div>
       </div>
     </div>
@@ -289,11 +295,10 @@ function CoursesView({onNav}) {
       <PageHeader rootLabel={EDUCATOR.name} crumb="My Courses" title="My Courses"
         subtitle={`${EDUCATOR.institution} · ${courses.filter(c=>c.status==="active").length} active`}
         action={
-          <button onClick={()=>setShowNew(true)}
-            className="flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-semibold text-white"
-            style={{backgroundColor:ink}}>
+          <Button onClick={()=>setShowNew(true)} color={white} backgroundColor={ink}
+                  className="text-sm font-semibold px-4 py-2 gap-2">
             <PlusIcon size={14} color={white}/> New Course
-          </button>
+          </Button>
         }/>
 
       <div className="space-y-4">
@@ -320,16 +325,12 @@ function CoursesView({onNav}) {
               </div>
               <div className="shrink-0 flex items-center gap-2">
                 {c.gradingStatus!=="published" &&
-                  <button onClick={()=>onNav("grading")}
-                    className="text-xs font-semibold px-3 py-1.5 rounded-lg"
-                    style={{backgroundColor:amberBg,color:amber,border:`1px solid #FDE68A`}}>
+                  <Button onClick={()=>onNav("grading")} color={amber} backgroundColor={amberBg} border={`1px solid ${amberBdr}`}
+                          className="text-xs font-semibold px-3 py-1.5">
                     Grade
-                  </button>
+                  </Button>
                 }
-                <button onClick={()=>setEditing(c)}
-                  className="p-2 rounded-lg hover:bg-gray-100 transition-colors">
-                  <EditIcon size={14}/>
-                </button>
+                <Button onClick={()=>setEditing(c)} className="p-2 hover:bg-gray-100 transition-colors"> <EditIcon size={14}/> </Button>
               </div>
             </div>
             <div className="px-5 pb-4 flex flex-wrap gap-x-6 gap-y-2 border-t pt-3"
@@ -428,23 +429,20 @@ function GradingView() {
         subtitle="draft → reviewed → published · appeals window: 14 days"
         action={
           counts.reviewed > 0 &&
-          <button onClick={publishAll}
-            className="flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-semibold text-white"
-            style={{backgroundColor:green}}>
+          <Button onClick={publishAll} color={white} backgroundColor={green}
+                  className="text-sm font-semibold px-4 py-2 gap-2">
             <CheckIcon size={14} color={white}/> Publish {counts.reviewed} grade{counts.reviewed>1?"s":""}
-          </button>
+          </Button>
         }/>
 
       {/* Course selector */}
       <div className="flex gap-2 flex-wrap">
         {MY_COURSES.map(c=>(
-          <button key={c.id} onClick={()=>setSelectedCourse(c.id)}
-            className="px-3 py-2 rounded-lg text-xs font-semibold transition-colors"
-            style={{backgroundColor:selectedCourse===c.id?ink:white,
-              color:selectedCourse===c.id?white:muted,
-              border:`1px solid ${selectedCourse===c.id?ink:border}`}}>
+          <Button key={c.id} onClick={()=>setSelectedCourse(c.id)} 
+                  color={selectedCourse===c.id?white:muted} backgroundColor={selectedCourse===c.id?ink:white} border={`1px solid ${selectedCourse===c.id?ink:border}`}
+                  className="text-xs font-semibold px-3 py-2 transition-colors">
             {c.code} · {c.title}
-          </button>
+          </Button>
         ))}
       </div>
 
@@ -463,11 +461,11 @@ function GradingView() {
               <p className="text-[10px] font-semibold uppercase tracking-wide mt-1" style={{color}}>{label}</p>
             </div>
             {arrow && counts[key]>0 && (
-              <button onClick={()=>promoteAll(key,key==="draft"?"reviewed":"published")}
-                className="absolute -right-3 top-1/2 -translate-y-1/2 w-6 h-6 rounded-full flex items-center justify-center z-10 shadow-sm"
-                style={{backgroundColor:white,border:`1px solid ${border}`,fontSize:10,color:muted}}>
+              <Button onClick={()=>promoteAll(key,key==="draft"?"reviewed":"published")}
+                      color={muted} backgroundColor={white} border={`1px solid ${border}`}
+                      className="absolute -right-3 top-1/2 -translate-y-1/2 w-6 h-6 rounded-full! z-10 shadow-sm">
                 →
-              </button>
+              </Button>
             )}
           </div>
         ))}
@@ -482,9 +480,10 @@ function GradingView() {
             <strong>{counts.appealed} appeal{counts.appealed>1?"s":""}</strong> require review.
             Appeals window is 14 days from grade publication.
           </p>
-          <button onClick={()=>setFilter("appealed")} className="ml-auto text-xs font-semibold shrink-0" style={{color:red}}>
+          <Button onClick={()=>setFilter("appealed")} color={red} border={`1px solid ${red}`}
+                  className="text-xs font-semibold p-1.5 ml-auto">
             Show appeals
-          </button>
+          </Button>
         </div>
       )}
 
@@ -545,15 +544,13 @@ function GradingView() {
                   <td className="px-4 py-3">
                     <div className="flex items-center gap-2">
                       {g.status!=="published" && g.status!=="final" && (
-                        <button onClick={()=>setEditingGrade(g.id)}
-                          className="p-1.5 rounded hover:bg-gray-100"><EditIcon size={13}/></button>
+                        <Button onClick={()=>setEditingGrade(g.id)} className="p-1.5 rounded! hover:bg-gray-100"> <EditIcon size={13}/> </Button>
                       )}
                       {g.status==="appealed" && (
-                        <button onClick={()=>setAppealModal(g)}
-                          className="text-[11px] font-semibold px-2.5 py-1 rounded-lg"
-                          style={{backgroundColor:redBg,color:red}}>
+                        <Button onClick={()=>setAppealModal(g)} color={red} backgroundColor={redBg}
+                                className="text-[11px] font-semibold px-2.5 py-1">
                           Resolve
-                        </button>
+                        </Button>
                       )}
                     </div>
                   </td>
@@ -603,9 +600,7 @@ function GradingView() {
                 <p className="text-[10px] uppercase tracking-widest font-semibold" style={{color:red}}>Grade Appeal</p>
                 <p className="text-sm font-semibold mt-0.5" style={{color:ink}}>{appealModal.student}</p>
               </div>
-              <button onClick={()=>setAppealModal(null)} className="p-1.5 rounded-lg hover:bg-red-100">
-                <XIcon size={14}/>
-              </button>
+              <Button onClick={()=>setAppealModal(null)} className="p-1.5 hover:bg-red-100"> <XIcon size={14}/> </Button>
             </div>
             <div className="p-6 space-y-4">
               <div className="rounded-xl p-4" style={{backgroundColor:pageColor}}>
@@ -627,21 +622,21 @@ function GradingView() {
                 </div>
               </div>
               <div className="flex gap-3 pt-2">
-                <button onClick={()=>{
-                  const v=+document.getElementById("new-score").value;
-                  resolveAppeal(appealModal.id,v,v===appealModal.score?"unchanged":"updated");
-                }} className="flex-1 py-2.5 rounded-xl text-sm font-semibold text-white"
-                  style={{backgroundColor:ink}}>
+                <Button onClick={()=>{
+                          const v=+document.getElementById("new-score").value;
+                          resolveAppeal(appealModal.id,v,v===appealModal.score?"unchanged":"updated");
+                        }} color={white} backgroundColor={ink}
+                        className="text-sm font-semibold flex-1 py-2.5 rounded-xl!">
                   Resolve appeal
-                </button>
-                <button onClick={()=>{
-                  setGrades(gs=>gs.map(g=>g.id===appealModal.id?{...g,status:"published",appeal:null}:g));
-                  setAppealModal(null);
-                  showToast("Appeal dismissed — grade unchanged.");
-                }} className="px-4 py-2.5 rounded-xl text-sm font-medium border"
-                  style={{borderColor:border,color:muted}}>
+                </Button>
+                <Button onClick={()=>{
+                          setGrades(gs=>gs.map(g=>g.id===appealModal.id?{...g,status:"published",appeal:null}:g));
+                          setAppealModal(null);
+                          showToast("Appeal dismissed — grade unchanged.");
+                        }} color={muted} border={`1px solid ${border}`}
+                        className="text-sm font-medium px-4 py-2.5 rounded-xl!">
                   Dismiss
-                </button>
+                </Button>
               </div>
             </div>
           </div>
@@ -685,13 +680,11 @@ function AnalyticsView() {
       {/* Course tabs */}
       <div className="flex gap-2 flex-wrap">
         {MY_COURSES.filter(c=>c.status==="active").map(c=>(
-          <button key={c.id} onClick={()=>setSelectedCourse(c.id)}
-            className="px-3 py-2 rounded-lg text-xs font-semibold transition-colors"
-            style={{backgroundColor:selectedCourse===c.id?ink:white,
-              color:selectedCourse===c.id?white:muted,
-              border:`1px solid ${selectedCourse===c.id?ink:border}`}}>
+          <Button key={c.id} onClick={()=>setSelectedCourse(c.id)} 
+                  color={selectedCourse===c.id?white:muted} backgroundColor={selectedCourse===c.id?ink:white} border={`1px solid ${selectedCourse===c.id?ink:border}`}
+                  className="text-xs font-semibold px-3 py-2 transition-colors">
             {c.code}
-          </button>
+          </Button>
         ))}
       </div>
 
@@ -756,9 +749,9 @@ function AnalyticsView() {
       <div className="rounded-xl overflow-hidden" style={{backgroundColor:white,border:`1px solid ${border}`}}>
         <div className="px-5 py-4 border-b flex items-center justify-between" style={{borderColor:border}}>
           <p className="text-xs font-semibold" style={{color:ink}}>Individual results</p>
-          <button className="flex items-center gap-1.5 text-xs font-medium" style={{color:gold}}>
+          <Button onClick={()=>completeStep("s3")} color={gold} className="text-xs font-medium gap-1.5">
             <UploadIcon size={12}/> Export CSV
-          </button>
+          </Button>
         </div>
         <table className="w-full">
           <thead style={{backgroundColor:pageColor}}>
@@ -848,10 +841,10 @@ function AdviseesView() {
                   <h2 className="font-serif text-xl" style={{color:ink}}>{selected.name}</h2>
                   <p className="text-sm" style={{color:muted}}>{selected.programme} · Last meeting: {selected.lastMeeting}</p>
                 </div>
-                <button className="flex items-center gap-2 px-3 py-2 rounded-lg text-xs font-semibold"
-                  style={{backgroundColor:goldBg,color:amber,border:`1px solid ${goldBdr}`}}>
+                <Button color={amber} backgroundColor={goldBg} border={`1px solid ${goldBdr}`}
+                        className="text-xs font-semibold gap-2 px-3 py-2">
                   <CalendarIcon size={12} color={amber}/> Schedule meeting
-                </button>
+                </Button>
               </div>
               <div className="grid grid-cols-3 gap-4 mb-5">
                 {[
@@ -879,8 +872,7 @@ function AdviseesView() {
                         {i===0?"High":i===1?"Med":"Low"}
                       </span>
                       <span className="text-xs" style={{color:ink}}>{g}</span>
-                      <button className="ml-auto text-[11px] font-semibold shrink-0"
-                        style={{color:gold}}>Recommend course →</button>
+                      <Button color={gold} className="text-[11px] font-semibold ml-auto"> Recommend course → </Button>
                     </div>
                   ))}
                 </div>
@@ -895,8 +887,10 @@ function AdviseesView() {
                 style={{borderColor:border,color:ink}}
                 onFocus={e=>e.target.style.borderColor=gold}
                 onBlur={e=>e.target.style.borderColor=border}/>
-              <button className="mt-2 px-4 py-2 rounded-lg text-xs font-semibold text-white"
-                style={{backgroundColor:ink}}>Save notes</button>
+              <Button color={white} backgroundColor={ink}
+                      className="text-xs font-semibold mt-2 px-4 py-2">
+                Save notes
+              </Button>
             </div>
           </div>
         ) : (
@@ -932,11 +926,10 @@ export default function EducatorConsole() {
           </div>
           <h1 className="font-serif text-xl mb-1" style={{color:ink}}>Eduxcert</h1>
           <p className="text-sm mb-6" style={{color:muted}}>Educator Console · University of Ljubljana</p>
-          <button onClick={()=>setLoggedIn(true)}
-            className="w-full py-2.5 rounded-lg text-sm font-semibold text-white"
-            style={{backgroundColor:ink}}>
+          <Button onClick={()=>setLoggedIn(true)} color={white} backgroundColor={ink}
+                  className="text-sm font-semibold py-2.5 w-full">
             Sign in with Keycloak SSO
-          </button>
+          </Button>
         </div>
       </div>
     );

@@ -1,7 +1,7 @@
 import { useState, useMemo } from "react";
 import {ink, inkSoft, gold, goldLight, goldBg, goldBdr, 
         pageColor, white, muted, mutedBg, border, 
-        green, greenBg, amber, amberBg, violet, violetBg, blue, blueBg, red, redBg, rose, roseBg} from "../styles/colors";
+        green, greenBg, greenBdr, amber, amberBg, violet, violetBg, blue, blueBg, red, redBg, rose, roseBg} from "../styles/colors";
 
 import {GridIcon, BookIcon, SealNavIcon, CalendarIcon, MapIcon, CheckIcon, XIcon, ChevronIcon, SearchIcon,
         FilterIcon, ShareIcon, DownloadIcon, WalletIcon, SpinIcon, SealCredIcon, DiplomaIcon, RoomIcon, 
@@ -14,6 +14,7 @@ import Sidebar from "../components/layout/Sidebar"
 import Logo from '../assets/react.svg'
 
 import {Badge, StatusBadge} from "../components/commen/Badge"
+import {Button} from "../components/commen/Button"
 import ProgressRing from "../components/commen/ProgressRing"
 import PageHeader from "../components/commen/PageHeader"
 import QualityBadge from "../components/commen/QualityBadge"
@@ -240,7 +241,7 @@ function DashboardView({onNav}) {
                 <p className="text-sm font-medium mt-0.5 truncate" style={{color:ink}}>{cr.title}</p>
                 <p className="font-mono text-[10px] mt-0.5" style={{color:muted}}>{cr.code}</p>
               </div>
-              <button className="shrink-0 text-xs font-semibold px-3 py-1.5 rounded-lg" style={{backgroundColor:gold,color:white}}>Share</button>
+              <Button backgroundColor={gold} color={white} className="text-xs font-semibold px-3 py-1.5"> Share </Button>
             </div>
           ))}
         </div>
@@ -293,11 +294,15 @@ function CoursesPage() {
     <div>
       <p className="text-[10px] font-semibold uppercase tracking-wider mb-2" style={{color:muted}}>{label}</p>
       <div className="flex flex-wrap gap-1.5">
-        {opts.map(o=>{const a=val===o;return(
-          <button key={o} onClick={()=>set(a?opts[0]:o)}
-            className="px-2.5 py-1 rounded-full text-xs font-medium"
-            style={{backgroundColor:a?ink:white,color:a?white:muted,border:`1px solid ${a?ink:border}`}}>{o}</button>
-        );})}
+        {opts.map(o=>{const a=val===o;
+          return(            
+          <Button key={o} onClick={()=>set(a?opts[0]:o)}
+                  backgroundColor={a?ink:white} color={a?white:muted} border={`1px solid ${a?ink:border}`}
+                  className="text-xs font-medium px-2.5 py-1 rounded-full!"> 
+            {o}
+          </Button>
+          );
+        })}
       </div>
     </div>
   );
@@ -330,12 +335,14 @@ function CoursesPage() {
               style={{backgroundColor:white,borderColor:border,color:ink}}
               onFocus={e=>e.target.style.borderColor=gold} onBlur={e=>e.target.style.borderColor=border}/>
           </div>
-          <button onClick={()=>setShowF(v=>!v)}
-            className="flex items-center gap-2 px-4 py-2.5 rounded-lg border text-sm font-medium"
-            style={{backgroundColor:showF?ink:white,borderColor:showF?ink:border,color:showF?white:muted}}>
+          <Button onClick={() => setShowF(v => !v)}
+                  backgroundColor={showF?ink:white} color={showF?white:muted} border={`1px solid ${showF?ink:border}`}
+                  className="text-sm font-medium px-4 py-2.5 gap-2 hover:shadow-md"> 
             <FilterIcon/> Filters
-            {filters.length>0&&<span className="w-4 h-4 rounded-full text-[10px] font-bold flex items-center justify-center" style={{backgroundColor:gold,color:white}}>{filters.length}</span>}
-          </button>
+            {filters.length>0&&
+              <span className="w-4 h-4 rounded-full text-[10px] font-bold flex items-center justify-center" 
+                    style={{backgroundColor:gold,color:white}}> {filters.length} </span>}
+          </Button>
         </div>
 
         {showF&&<div className="rounded-xl p-5 mb-4 grid sm:grid-cols-2 lg:grid-cols-3 gap-5" style={{backgroundColor:white,border:`1px solid ${border}`}}>
@@ -351,11 +358,12 @@ function CoursesPage() {
         </div>}
 
         {filters.length>0&&<div className="flex flex-wrap gap-2 mb-4">
-          {filters.map(f=><button key={f.k} onClick={f.c}
-            className="flex items-center gap-1.5 text-xs px-2.5 py-1 rounded-full border"
-            style={{backgroundColor:goldBg,borderColor:goldBdr,color:amber}}>
-            {f.l} <XIcon size={12}/>
-          </button>)}
+          {filters.map(f=>
+            <Button key={f.k} onClick={f.c} color={amber} backgroundColor={goldBg} border={`1px solid ${goldBdr}`}
+                    className="text-xs px-2.5 py-1 gap-1.5 rounded-full!">
+              {f.l} <XIcon size={12}/>
+            </Button>
+          )}
         </div>}
 
         <p className="text-xs mb-4" style={{color:muted}}>{filtered.length} course{filtered.length!==1?"s":""} found</p>
@@ -395,14 +403,17 @@ function CoursesPage() {
                       {c.status==="completed"
                         ? <span className="text-xs" style={{color:muted}}>Past term</span>
                         : isEnrolled
-                        ? <button onClick={()=>{setEnrolled(p=>{const s=new Set(p);s.delete(c.id);return s;});toast_(`Withdrawn from ${c.title}.`,false);}}
-                            className="flex items-center gap-1.5 text-xs font-medium px-3 py-1.5 rounded-lg"
-                            style={{backgroundColor:greenBg,color:green}}>
+                        ? <Button onClick={()=>{setEnrolled(p=>{const s=new Set(p);s.delete(c.id);return s;}); toast_(`Withdrawn from ${c.title}.`,false);}}
+                                  color={green} backgroundColor={greenBg}
+                                  className="text-xs font-medium px-3 py-1.5 gap-1.5">
                             <CheckIcon size={12}/> Enrolled
-                          </button>
+                          </Button>
                         : c.status==="full"
-                        ? <button disabled className="text-xs px-3 py-1.5 rounded-lg border" style={{borderColor:border,color:muted,cursor:"not-allowed"}}>Waitlist</button>
-                        : <button onClick={()=>setPending(c)} className="text-xs font-semibold px-3 py-1.5 rounded-lg text-white hover:opacity-80" style={{backgroundColor:ink}}>Enrol</button>
+                        ? <Button disabled className="text-xs px-3 py-1.5 border"> Waitlist </Button>
+                        : <Button onClick={()=>setPending(c)} color={white} backgroundColor={ink}
+                                  className="text-xs font-semibold px-3 py-1.5 hover:opacity-80"> 
+                            Enrol 
+                          </Button>
                       }
                       <button onClick={()=>setExpanded(p=>p===c.id?null:c.id)} className="p-1.5 rounded-lg hover:bg-gray-100">
                         <ChevronIcon open={isExp}/>
@@ -418,7 +429,11 @@ function CoursesPage() {
                       ))}
                     </div>
                     <div className="flex flex-wrap gap-1.5 mt-4">
-                      {c.tags.map(t=><span key={t} className="text-[10px] px-2 py-0.5 rounded-md" style={{backgroundColor:pageColor,color:muted,border:`1px solid ${border}`}}>{t}</span>)}
+                      {c.tags.map(t=>
+                        <Badge key={t} color={muted} backgroundColor={pageColor} border={`1px solid ${border}`}
+                              className="text-[10px] px-2 py-0.5 rounded-md"> {t} 
+                        </Badge>
+                      )}
                     </div>
                     <div className="mt-4">
                       <div className="flex justify-between text-[10px] mb-1" style={{color:muted}}>
@@ -448,9 +463,16 @@ function CoursesPage() {
             <p className="text-xs mt-2" style={{color:muted}}>{pending.ects} ECTS · {pending.language} · {pending.term}</p>
           </div>
           <div className="flex gap-3">
-            <button onClick={()=>setPending(null)} className="flex-1 py-2 rounded-lg border text-sm font-medium" style={{borderColor:border,color:muted}}>Cancel</button>
-            <button onClick={()=>{setEnrolled(p=>new Set([...p,pending.id]));setPending(null);toast_("You're enrolled! Check your email for a calendar invite.");}}
-              className="flex-1 py-2 rounded-lg text-sm font-semibold text-white" style={{backgroundColor:ink}}>Confirm</button>
+            <Button onClick={()=>setPending(null)} color={muted} backgroundColor={white} border={`1px solid ${border}`}
+                    className="text-sm font-medium py-2 flex-1">
+              Cancel
+            </Button>
+
+            <Button onClick={()=>{setEnrolled(p=>new Set([...p,pending.id])); setPending(null); toast_("You're enrolled! Check your email for a calendar invite.");}}
+                    color={white} backgroundColor={ink}
+                    className="text-sm font-semibold py-2 flex-1">
+              Confirm
+            </Button>
           </div>
         </div>
       </div>}
@@ -532,11 +554,11 @@ function CredentialModal({cred,onClose}){
                 <img src="src/assets/QR code.webp"/>
               </div>
               <p className="text-xs text-center" style={{color:muted}}>Anyone can scan this QR to verify without an account.</p>
-              <button onClick={()=>{setCopied(true);setTimeout(()=>setCopied(false),2000);}}
-                className="flex items-center gap-2 text-xs font-semibold px-4 py-2 rounded-lg"
-                style={{backgroundColor:copied?greenBg:goldBg,color:copied?green:amber,border:`1px solid ${copied?"#BBF7D0":goldBdr}`}}>
+              <Button onClick={()=>{setCopied(true); setTimeout(()=>setCopied(false),2000);}}
+                      color={copied?green:amber} backgroundColor={copied?greenBg:goldBg} border={`1px solid ${copied?greenBdr:goldBdr}`}
+                      className="text-xs font-semibold px-4 py-2 gap-2">
                 {copied?<><CheckIcon size={12} color={green}/> Link copied!</>:<><ShareIcon size={12}/> Copy verify link</>}
-              </button>
+              </Button>
             </div>
             <div>
               <p className="text-xs font-semibold mb-1" style={{color:ink}}>Selective disclosure <span style={{color:muted,fontWeight:400}}>(SD-JWT)</span></p>
@@ -549,14 +571,21 @@ function CredentialModal({cred,onClose}){
                   </div>
                   <button onClick={()=>toggle(f.id)} className="relative w-9 h-5 rounded-full shrink-0" style={{backgroundColor:f.shown?green:border}}>
                     <span className="absolute top-0.5 w-4 h-4 rounded-full bg-white shadow transition-transform"
-                      style={{transform:f.shown?"translateX(17px)":"translateX(2px)"}}/>
+                      style={{transform:f.shown?"translateX(0px)":"translateX(-17px)"}}/>
                   </button>
                 </div>
               ))}
             </div>
             <div className="grid grid-cols-2 gap-3">
-              <button className="flex items-center justify-center gap-2 py-2.5 rounded-xl text-xs font-semibold border" style={{borderColor:border,color:ink}}><DownloadIcon size={14}/> Download PDF</button>
-              <button className="flex items-center justify-center gap-2 py-2.5 rounded-xl text-xs font-semibold" style={{backgroundColor:inkSoft,color:white}}><WalletIcon size={14}/> Add to EUDI Wallet</button>
+              <Button color={ink} backgroundColor={white} border={`1px solid ${border}`}
+                      className="text-xs font-semibold py-2.5 gap-2 rounded-xl!">
+                <DownloadIcon size={14}/> Download PDF
+              </Button>
+      
+              <Button color={white} backgroundColor={inkSoft}
+                      className="text-xs font-semibold py-2.5 gap-2 rounded-xl!">
+                <WalletIcon size={14}/> Add to EUDI Wallet
+              </Button>
             </div>
           </div>}
 
@@ -567,10 +596,10 @@ function CredentialModal({cred,onClose}){
                     <p className="text-xs font-semibold mb-2" style={{color:ink}}>Public verify link</p>
                     <p className="text-[11px] font-mono break-all" style={{color:muted}}>{cred.verifyUrl}</p>
                   </div>
-                  <button onClick={()=>{setShowV(true);setVstep(0);}}
-                    className="w-full py-2.5 rounded-xl text-sm font-semibold text-white" style={{backgroundColor:ink}}>
+                  <Button onClick={()=>{setShowV(true);setVstep(0);}} color={white} backgroundColor={ink}
+                          className="text-sm font-semibold w-full py-2.5 rounded-xl">
                     Run verification demo
-                  </button>
+                  </Button>
                 </>
               : vstep<4
               ? <>
@@ -587,10 +616,11 @@ function CredentialModal({cred,onClose}){
                         </div>
                       </li>
                     ))}
-                  </ol>
-                  <button onClick={()=>setVstep(s=>s+1)} className="w-full py-2.5 rounded-lg text-xs font-semibold text-white" style={{backgroundColor:ink}}>
+                  </ol> 
+                  <Button onClick={()=>setVstep(s=>s+1)} color={white} backgroundColor={ink}
+                          className="text-xs font-semibold w-full py-2.5">
                     {vstep===0?"Start verification":vstep<3?"Next step":"Complete"}
-                  </button>
+                  </Button>
                 </>
               : <div className="flex flex-col items-center text-center gap-3 py-2">
                   <div className="w-14 h-14 rounded-full flex items-center justify-center" style={{backgroundColor:greenBg}}>
@@ -598,8 +628,11 @@ function CredentialModal({cred,onClose}){
                   </div>
                   <p className="font-serif text-xl" style={{color:green}}>Valid</p>
                   <p className="text-xs" style={{color:muted}}>Authentic, unrevoked, and issued by a trusted institution in EBSI.</p>
-                  <button onClick={()=>{setShowV(false);setVstep(0);}} className="w-full py-2.5 rounded-lg text-xs font-semibold text-white" style={{backgroundColor:ink}}>Done</button>
-                </div>
+                  <Button onClick={()=>{setShowV(false); setVstep(0);}} color={white} backgroundColor={ink}
+                          className="text-xs font-semibold w-full py-2.5">
+                    Done
+                  </Button>
+              </div>
             }
           </div>}
         </div>
@@ -858,14 +891,13 @@ function RoadmapPage({onNav}){
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
             {CAREER_TARGETS.map(ct=>{
               const on=target===ct.id;
-              return <button key={ct.id} onClick={()=>setTarget(ct.id)}
-                className="rounded-2xl p-4 flex flex-col items-center gap-3 transition-all"
-                style={{backgroundColor:on?inkSoft:white,border:`2px solid ${on?ink:border}`,
-                  boxShadow:on?"0 8px 24px -6px rgba(15,23,41,0.35)":"none"}}>
-                <span className="text-2xl">{ct.icon}</span>
-                <ProgressRing earned={ct.match} required={100} size={56} dark={on}/>
-                <p className="text-xs font-semibold text-center leading-tight" style={{color:on?white:ink}}>{ct.title}</p>
-              </button>;
+              return  <Button key={ct.id} onClick={()=>setTarget(ct.id)} 
+                              color={on?white:ink} backgroundColor={on?inkSoft:white} border={`2px solid ${on?ink:border}`}
+                              className="p-4 gap-3 rounded-2xl flex-col">
+                        <span className="text-2xl">{ct.icon}</span>
+                        <ProgressRing earned={ct.match} required={100} size={56} dark={on}/>
+                        <p className="text-xs font-semibold text-center leading-tight" style={{color:on?white:ink}}>{ct.title}</p>
+                      </Button>;
             })}
           </div>
         </section>
@@ -959,10 +991,11 @@ function RoadmapPage({onNav}){
                   ? <span className="text-[11px] font-semibold" style={{color:green}}>✓ Enrolled</span>
                   : r.status==="full"
                   ? <span className="text-[11px]" style={{color:muted}}>Full</span>
-                  : <button onClick={()=>{setEnrolled2(p=>new Set([...p,r.id]));onNav("courses");}}
-                      className="text-[11px] font-semibold px-3 py-1.5 rounded-lg text-white" style={{backgroundColor:ink}}>
+                  : <Button onClick={()=>{setEnrolled2(p=>new Set([...p,r.id])); onNav("courses");}} 
+                            color={white} backgroundColor={ink}
+                            className="text-[11px] font-semibold px-3 py-1.5">
                       Enrol
-                    </button>
+                    </Button>
                 }
               </div>
             </div>;
@@ -990,7 +1023,7 @@ function RoadmapPage({onNav}){
                   <div className="absolute top-0.5 -left-[28.5px] w-7 flex justify-center">
                     <div className="w-4 h-4 rounded-full flex items-center justify-center z-10"
                       style={{backgroundColor:m.done?green:isCur?gold:white,border:`2px solid ${m.done?green:isCur?gold:border}`}}>
-                      {m.done&&<svg width="8" height="8" viewBox="0 0 8 8" fill="none"><path d="M1.5 4L3 5.5 6.5 2" stroke={white} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>}
+                      {m.done&&<CheckIcon size={8} color={white}/>}
                       {isCur&&<div className="w-1.5 h-1.5 rounded-full" style={{backgroundColor:white}}/>}
                     </div>
                   </div>
