@@ -1,7 +1,6 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
-import StudentLoginPage from "./pages/StudentLoginPage";
-import StudentPage from "./pages/StudentPage";
+import StudentPortal from "./pages/student/StudentPortal";
 import EducatorConsolePage from "./pages/EducatorConsole";
 import PublicVerifierPage  from "./pages/PublicVerifier";
 import AdminConsolePage    from "./pages/AdminConsole";
@@ -16,8 +15,8 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<StudentLoginPage />} />
-        <Route path="/student"  element={<StudentPage />} />
+        {/* <Route path="/" element={<StudentLoginPage />} /> */}
+        <Route path="/student"  element={<StudentPortal />} />
         <Route path="/educator" element={<EducatorConsolePage />} />
         <Route path="/verify"   element={<PublicVerifierPage />} />
         <Route path="/admin"    element={<AdminConsolePage />} />
