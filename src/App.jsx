@@ -1,7 +1,7 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
-import StudentPortal from "./pages/student/StudentPortal";
-import EducatorConsolePage from "./pages/EducatorConsole";
+import StudentPortal  from "./pages/student/StudentPortal";
+import EducatorPortal from "./pages/educator/EducatorPortal";
 import PublicVerifierPage  from "./pages/PublicVerifier";
 import AdminConsolePage    from "./pages/AdminConsole";
 import EmployerPage        from "./pages/EmployerPortal";
@@ -17,7 +17,7 @@ function App() {
       <Routes>
         {/* <Route path="/" element={<StudentLoginPage />} /> */}
         <Route path="/student"  element={<StudentPortal />} />
-        <Route path="/educator" element={<EducatorConsolePage />} />
+        <Route path="/educator" element={<EducatorPortal />} />
         <Route path="/verify"   element={<PublicVerifierPage />} />
         <Route path="/admin"    element={<AdminConsolePage />} />
         <Route path="/employer" element={<EmployerPage />} />

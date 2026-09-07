@@ -4,14 +4,9 @@ import { GridIcon, BookIcon, GradeIcon, ChartIcon, PeopleIcon } from "../../comp
 import { EDUCATOR, GRADES } from "../../data/educator";
 import Logo from '../../assets/react.svg'
 
-import DashboardPage from "./DashboardPage";
-import CoursesPage   from "./CoursesPage";
-import GradingPage   from "./GradingPage";
-import AnalyticsPage from "./AnalyticsPage";
-import AdviseesPage  from "./AdviseesPage";
+import { Button } from "../../components/commen/Button"
 
 import Sidebar from "../../components/layout/Sidebar"
-
 const NAV_ITEMS = [
   { id:"dashboard", label:"Dashboard",  Icon:GridIcon  },
   { id:"courses",   label:"My Courses", Icon:BookIcon  },
@@ -20,12 +15,14 @@ const NAV_ITEMS = [
   { id:"advisees",  label:"Advisees",   Icon:PeopleIcon },
 ];
 
-import { Button } from "../../components/commen/Button"
+import DashboardPage from "./DashboardPage";
+import CoursesPage   from "./CoursesPage";
+import GradingPage   from "./GradingPage";
+import AnalyticsPage from "./AnalyticsPage";
+import AdviseesPage  from "./AdviseesPage";
 
 
-// ─────────────────────────────────────────────────────────
-// EducatorPortal — پوسته‌ی اصلی کنسول استاد
-// ─────────────────────────────────────────────────────────
+// --------------------------------------------------------------------------------------
 export default function EducatorConsole() {
   const [nav, setNav]             = useState("dashboard");
   const [collapsed, setCollapsed] = useState(false);

@@ -4,15 +4,8 @@ import { pageColor } from "../../styles/colors";
 import { BookIcon, CalendarIcon, GridIcon, MapIcon, SealNavIcon } from "../../components/icons/icons";
 import { STUDENT } from "../../data/student"
 
-import LoginPage       from "./LoginPage";
-import DashboardPage   from "./DashboardPage";
-import CoursesPage     from "./CoursesPage";
-import CredentialsPage from "./CredentialsPage";
-import TimetablePage   from "./TimetablePage";
-import RoadmapPage     from "./RoadmapPage";
 
-import Sidebar         from "../../components/layout/Sidebar"
-
+import Sidebar from "../../components/layout/Sidebar"
 const NAV_ITEMS = [
   {id:"dashboard",  label:"Dashboard",   Icon:GridIcon},
   {id:"courses",    label:"My Courses",  Icon:BookIcon},
@@ -20,6 +13,13 @@ const NAV_ITEMS = [
   {id:"timetable",  label:"Timetable",   Icon:CalendarIcon},
   {id:"roadmap",    label:"Roadmap",     Icon:MapIcon},
 ];
+
+import LoginPage       from "./LoginPage";
+import DashboardPage   from "./DashboardPage";
+import CoursesPage     from "./CoursesPage";
+import CredentialsPage from "./CredentialsPage";
+import TimetablePage   from "./TimetablePage";
+import RoadmapPage     from "./RoadmapPage";
 
 // ─────────────────────────────────────────────────────────
 // StudentPortal — the main skin for the student portal
