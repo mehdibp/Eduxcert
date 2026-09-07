@@ -5,7 +5,7 @@ import EducatorPortal from "./pages/educator/EducatorPortal";
 import AdminPortal    from "./pages/admin/AdminPortal";
 import EmployerPortal from "./pages/employer/EmployerPortal";
 import VerifierPortal from "./pages/verifier/VerifierPortal";
-import SharedPages    from "./pages/SharedPages";
+import SharedPortal   from "./pages/shared/SharedPortal";
 
 import Test from "./test";
 
@@ -21,7 +21,7 @@ function App() {
         <Route path="/admin"    element={<AdminPortal />} />
         <Route path="/employer" element={<EmployerPortal />} />
         <Route path="/verify"   element={<VerifierPortal />} />
-        <Route path="/account"  element={<SharedPages />} />
+        <Route path="/account"  element={<SharedPortal />} />
 
         <Route path="/test" element={<Test/>} />
         
